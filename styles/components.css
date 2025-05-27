@@ -12,7 +12,8 @@
 }
 
 .card p {
-    font-weight: bold;
+    font-size: 1.2em;
+    text-transform: uppercase;
 }
 
 .card-title {

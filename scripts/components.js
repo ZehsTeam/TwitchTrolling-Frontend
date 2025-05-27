@@ -2,7 +2,7 @@
 class CustomCard extends HTMLElement {
     connectedCallback() {
         const name = this.getAttribute('name') || 'Unnamed';
-        const image = this.getAttribute('image') || './images/placeholder.png';
+        const image = this.getAttribute('image') || './images/empty.png';
         const price = this.getAttribute('price') || '0';
 
         this.classList.add('card');
