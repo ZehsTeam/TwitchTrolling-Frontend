@@ -1,1 +1,1 @@
-const apiOrigin = 'twitchtrolling.up.railway.app';
+const apiOrigin = 'https://twitchtrolling.up.railway.app';
