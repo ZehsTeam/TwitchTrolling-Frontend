@@ -1,1 +1,1 @@
-const apiOrigin = 'http://localhost:5000';
+const apiOrigin = 'twitchtrolling.up.railway.app';
