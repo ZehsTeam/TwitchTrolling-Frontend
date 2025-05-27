@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>TwitchTrolling</title>
+        <link rel="stylesheet" href="./styles/style.css">
+        <link rel="stylesheet" href="./styles/components.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Teko">
+    </head>
+    <body>
+        <header>
+            <h1>TwitchTrolling</h1>
+            <p>by <a href="https://solo.to/crithaxxog" target="_blank">CritHaxXoG</a> for <a href="https://www.twitch.tv/psychohypnotic" target="_blank">PsychoHypnotic</a></p>
+        </header>
+
+        <main>
+            <section class="main-info">
+                <div class="name-container">
+                    <img src="./images/twitch-64x64.png">
+                    <h2 id="twitch-channel">Loading...</h2>
+                </div>
+                <p id="expire-countdown">Loading...</p>
+            </section>
+            
+            <section class="card-section">
+                <h2>ENEMIES</h2>
+                <section class="card-container" id="enemy-card-container">
+                </section>
+            </section>
+            
+            <section class="card-section">
+                <h2>EVENTS</h2>
+                <section class="card-container" id="event-card-container">
+                </section>
+            </section>
+        </main>
+        
+        <script src="./scripts/config.js"></script>
+        <script src="./scripts/page.js"></script>
+        <script src="./scripts/components.js"></script>
+    </body>
+</html>

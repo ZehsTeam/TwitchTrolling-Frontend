@@ -1,0 +1,1 @@
+const apiOrigin = 'http://localhost:5000';
