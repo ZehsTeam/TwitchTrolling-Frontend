@@ -24,23 +24,6 @@ a {
     color: #efeff1;
 }
 
-header {
-    display: flex;
-    align-items: end;
-    background-color: #9146FF; /* Twitch purple */
-    padding: 1rem 20em;
-    user-select: none;
-}
-
-header h1 {
-    margin-right: 8px;
-    font-size: 1.75rem;
-}
-
-header p {
-    font-weight: bold;
-}
-
 main {
     margin: 0 20em;
 }
@@ -48,6 +31,7 @@ main {
 .main-info {
     padding: 1rem 0;
     display: flex;
+    flex-direction: row;
     justify-content: space-between;
     align-items: center;
 }
@@ -88,7 +72,7 @@ main {
 }
 
 @media only screen and (max-width: 1420px) {
-    header {
+    .header {
         padding: 1rem 15em;
     }
 
@@ -98,7 +82,7 @@ main {
 }
 
 @media only screen and (max-width: 1250px) {
-    header {
+    .header {
         padding: 1rem 10em;
     }
 
@@ -108,7 +92,7 @@ main {
 }
 
 @media only screen and (max-width: 960px) {
-    header {
+    .header {
         padding: 1rem 2em;
     }
 
@@ -117,8 +101,18 @@ main {
     }
 }
 
+@media only screen and (max-width: 570px) {
+    .main-info {
+        flex-direction: column;
+        justify-content: start;
+        align-items: start;
+        gap: 8px;
+    }
+}
+
 @media only screen and (max-width: 400px) {
-    header p {
-        display: none;
+    .header {
+        flex-direction: column;
+        align-items: start;
     }
 }

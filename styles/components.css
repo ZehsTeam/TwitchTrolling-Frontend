@@ -1,3 +1,21 @@
+.header {
+    display: flex;
+    flex-direction: row;
+    align-items: end;
+    background-color: #9146FF; /* Twitch purple */
+    padding: 1rem 20em;
+    user-select: none;
+}
+
+.header h1 {
+    margin-right: 8px;
+    font-size: 1.75rem;
+}
+
+.header p {
+    font-weight: bold;
+}
+
 .card {
     width: 100%;
     border-radius: 8px;

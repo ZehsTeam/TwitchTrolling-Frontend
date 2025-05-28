@@ -1,4 +1,15 @@
 
+class CustomHeader extends HTMLElement {
+    connectedCallback() {
+        this.classList.add('header');
+
+        this.innerHTML = `
+            <h1>TwitchTrolling</h1>
+            <p>by <a href="https://solo.to/crithaxxog" target="_blank">CritHaxXoG</a> for <a href="https://www.twitch.tv/psychohypnotic" target="_blank">PsychoHypnotic</a></p>
+        `;
+    }
+}
+
 class CustomCard extends HTMLElement {
     connectedCallback() {
         const name = this.getAttribute('name') || 'Unnamed';
@@ -23,4 +34,5 @@ class CustomCard extends HTMLElement {
 }
 
 // Register all custom elements
+customElements.define('custom-header', CustomHeader);
 customElements.define('custom-card', CustomCard);
