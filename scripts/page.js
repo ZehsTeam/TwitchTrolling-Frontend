@@ -7,6 +7,36 @@ let pageId = undefined;
 let expirationTime = null;
 let countdownInterval = null;
 
+let eventSource = null;
+let sseClosed = false;
+
+const enemyImages = {
+    randomenemy: './images/random.png',
+    animal: "./images/Enemies/Animal.png",
+    apexpredator: "./images/Enemies/Apex Predator.png",
+    banger: "./images/Enemies/Banger.png",
+    bowtie: "./images/Enemies/Bowtie.png",
+    chef: "./images/Enemies/Chef.png",
+    clown: "./images/Enemies/Clown.png",
+    gnome: "./images/Enemies/Gnome.png",
+    headman: "./images/Enemies/Headman.png",
+    hidden: "./images/Enemies/Hidden.png",
+    huntsman: "./images/Enemies/Huntsman.png",
+    mentalist: "./images/Enemies/Mentalist.png",
+    peeper: "./images/Enemies/Peeper.png",
+    reaper: "./images/Enemies/Reaper.png",
+    robe: "./images/Enemies/Robe.png",
+    rugrat: "./images/Enemies/Rugrat.png",
+    shadowchild: "./images/Enemies/Shadow Child.png",
+    spewer: "./images/Enemies/Spewer.png",
+    trudge: "./images/Enemies/Trudge.png",
+    upscream: "./images/Enemies/Upscream.png",
+};
+
+const eventImages = {
+    randomevent: './images/random.png',
+};
+
 window.onload = () => {
     getPageId();
     fetchPageData();
@@ -24,6 +54,12 @@ const fetchPageData = async () => {
         
         if (!res.ok) {
             alert('This page does not exist.');
+
+            if (eventSource) {
+                eventSource.close();
+                sseClosed = true;
+            }
+
             throw new Error('Failed to fetch page.');
         }
 
@@ -33,17 +69,19 @@ const fetchPageData = async () => {
     catch (error) {
         console.error('Error fetching page: ', error);
     }
-}
+};
 
 const startPageSSE = () => {
-    const eventSource = new EventSource(`${apiOrigin}/api/pages/${pageId}/sse`);
+    if (sseClosed) return;
+
+    eventSource = new EventSource(`${apiOrigin}/api/pages/${pageId}/sse`);
 
     eventSource.onopen = () => {
-        console.log(`Successfully connected to page ${pageId} SSE!`);
+        console.log(`Connected to page ${pageId} SSE`);
     };
 
     eventSource.onerror = () => {
-        console.error(`Error with page SSE.`);
+        console.error(`Error with SSE.`);
     };
 
     eventSource.addEventListener('update', (event) => {
@@ -51,10 +89,12 @@ const startPageSSE = () => {
         handlePageData(data);
     });
 
-    eventSource.addEventListener('delete', (event) => {
+    eventSource.addEventListener('delete', () => {
         alert('This page has been deleted.');
+        eventSource.close();
+        sseClosed = true;
     });
-}
+};
 
 const handlePageData = (page) => {
     if (page.channel) {
@@ -67,31 +107,37 @@ const handlePageData = (page) => {
     }
 
     if (page.enemies) {
-        renderCards(enemyCardContainer, page.enemies);
+        renderCards('enemy', enemyCardContainer, page.enemies);
     }
 
     if (page.events) {
-        renderCards(eventCardContainer, page.events);
+        renderCards('event', eventCardContainer, page.events);
     }
 };
 
 const startCountdown = () => {
     if (countdownInterval) clearInterval(countdownInterval);
 
-    updateCoutdown();
+    updateCountdown();
 
     countdownInterval = setInterval(() => {
-        updateCoutdown();
+        updateCountdown();
     }, 1000);
 };
 
-const updateCoutdown = () => {
+const updateCountdown = () => {
     const now = new Date();
     const diff = expirationTime - now;
 
     if (diff <= 0) {
         expireCountdown.innerText = 'Expired';
         clearInterval(countdownInterval);
+
+        if (eventSource && !sseClosed) {
+            eventSource.close();
+            sseClosed = true;
+        }
+
         return;
     }
 
@@ -109,9 +155,9 @@ const updateCoutdown = () => {
     }
 
     expireCountdown.innerText = timeStr;
-}
+};
 
-const renderCards = (container, data) => {
+const renderCards = (type, container, data) => {
     container.innerHTML = '';
 
     data.forEach(item => {
@@ -119,14 +165,25 @@ const renderCards = (container, data) => {
         card.setAttribute('name', item.name);
         card.setAttribute('price', item.price);
 
-        const image = item.image;
+        const imageKey = item.name.toLowerCase().replace(/\s+/g, '');
+        let cardImages;
 
-        if (image) {
-            card.setAttribute('image', image);
+        if (type === "enemy") {
+            cardImages = enemyImages;
+        }
+
+        if (type === "event") {
+            cardImages = eventImages;
+        }
+
+        if (cardImages && cardImages[imageKey]) {
+            card.setAttribute('image', cardImages[imageKey]);
+        } else if (item.image) {
+            card.setAttribute('image', item.image);
         } else {
             card.setAttribute('image', '../images/empty.png');
         }
-        
+
         container.appendChild(card);
     });
 };

@@ -55,6 +55,10 @@ main {
     font-size: 1.8rem;
 }
 
+.use-info {
+    color: #bdc3c7;
+}
+
 .card-section {
     width: 100%;
     margin-bottom: 30px;
