@@ -12,6 +12,7 @@ let sseClosed = false;
 
 const enemyImages = {
     randomenemy: './images/random.png',
+
     animal: "./images/Enemies/Animal.png",
     apexpredator: "./images/Enemies/Apex Predator.png",
     banger: "./images/Enemies/Banger.png",
@@ -31,10 +32,40 @@ const enemyImages = {
     spewer: "./images/Enemies/Spewer.png",
     trudge: "./images/Enemies/Trudge.png",
     upscream: "./images/Enemies/Upscream.png",
+
+    zombie: "./images/Enemies/Zombie.png",
+    puppet: "./images/Enemies/Puppet.png",
+    gusher: "./images/Enemies/Gusher.png",
+    voodoo: "./images/Enemies/Voodoo.png",
+    freddyfazbear: "./images/Enemies/Freddy Fazbear.png",
+    driller: "./images/Enemies/Driller.png",
+    weepingangel: "./images/Enemies/Weeping Angel.png",
+    roaster: "./images/Enemies/Roaster.png",
+    lostdroid: "./images/Enemies/Lost droid.png",
+    soldier: "./images/Enemies/Soldier.png",
+    lostdestroyer: "./images/Enemies/Lost Destroyer.png",
 };
 
 const eventImages = {
     randomevent: './images/random.png',
+
+    animalcrate: '../images/Valuables/Animal Crate.png',
+    bottle: '../images/Valuables/Bottle.png',
+    chompbook: '../images/Valuables/Chomp Book.png',
+    clown: '../images/Valuables/Clown.png',
+    ducttapedgrenades: '../images/Items/Duct Taped Grenades.png',
+    dumgolfsstaff: '../images/Valuables/Wizard Dumgolfs Staff.png',
+    fan: '../images/Valuables/Fan.png',
+    flamethrower: '../images/Valuables/Arctic Flamethrower.png',
+    frog: '../images/Valuables/Frog.png',
+    icesaw: '../images/Valuables/Ice Saw.png',
+    minefield: '../images/Items/Explosive Mine.png',
+    playerspeed: '../images/Items/Sprint Speed Upgrade.png',
+    propanetank: '../images/Valuables/Arctic Propane Tank.png',
+    psycho: '../images/Valuables/Psycho.png',
+    rolldrone: '../images/Items/Roll Drone.png',
+    rubberduck: '../images/Items/Rubber Duck.png',
+    zerogravityorb: '../images/Items/Zero Gravity Orb.png',
 };
 
 window.onload = () => {
