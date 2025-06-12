@@ -41,9 +41,9 @@ const enemyImages = {
     driller: "./images/Enemies/Driller.png",
     weepingangel: "./images/Enemies/Weeping Angel.png",
     roaster: "./images/Enemies/Roaster.png",
-    lostdroid: "./images/Enemies/Lost droid.png",
+    lostdroid: "./images/Enemies/Lost droid.gif",
     soldier: "./images/Enemies/Soldier.png",
-    lostdestroyer: "./images/Enemies/Lost Destroyer.png",
+    lostdestroyer: "./images/Enemies/Lost Destroyer.gif",
 };
 
 const eventImages = {
