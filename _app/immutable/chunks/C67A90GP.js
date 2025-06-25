@@ -1,0 +1,1 @@
+import{f as a,a as r}from"./BAiBh3Ml.js";import"./C48ui4iD.js";var s=a('<section class="svelte-1xpxjfp"><h1 class="svelte-1xpxjfp">TwitchTrolling</h1> <p>by <a href="https://solo.to/crithaxxog" target="_blank">CritHaxXoG</a> for <a href="https://www.twitch.tv/psychohypnotic" target="_blank">PsychoHypnotic</a></p></section>');function c(t){var o=s();r(t,o)}export{c as H};

@@ -1,0 +1,1 @@
+import{f as s,a as t}from"../chunks/BAiBh3Ml.js";import"../chunks/C48ui4iD.js";import{f as e,q as i}from"../chunks/DonayehE.js";import{H as m}from"../chunks/C67A90GP.js";var n=s('<!> <main class="svelte-1nfs0sx"><br/> <h2>This page is not finished.</h2></main>',1);function c(r){var a=n(),o=e(a);m(o),i(2),t(r,a)}export{c as component};
