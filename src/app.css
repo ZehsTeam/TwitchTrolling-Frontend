@@ -1,61 +1,62 @@
 * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
 }
 
 body {
-    color: #efeff1;
-    font-family: Teko;
-    font-weight: 400;
-    line-height: 1.6;
-    background-color: #0e0e10;
+	color: #efeff1;
+	font-family: Teko;
+	font-weight: 400;
+	line-height: 1.6;
+	background-color: #0e0e10;
 }
 
-h1, h2 {
-    font-weight: 500;
+h1,
+h2 {
+	font-weight: 500;
 }
 
 p {
-    font-size: 1.1rem;
-    letter-spacing: 1px;
+	font-size: 1.1rem;
+	letter-spacing: 1px;
 }
 
 a {
-    color: #efeff1;
-    text-decoration: underline;
+	color: #efeff1;
+	text-decoration: underline;
 }
 
 img {
-    user-select: none;
-    pointer-events: none;
+	user-select: none;
+	pointer-events: none;
 }
 
 input {
-    padding: 0.75em;
-    border: none;
-    color: #efeff1;
-    background: #2f2f35;
-    border: 0.5px solid rgba(189, 195, 199, 0.5);
-    border-radius: 3px;
+	padding: 0.75em;
+	border: none;
+	color: #efeff1;
+	background: #2f2f35;
+	border: 0.5px solid rgba(189, 195, 199, 0.5);
+	border-radius: 3px;
 }
 
 input::placeholder {
-    color: rgba(239, 239, 241, 0.75);
+	color: rgba(239, 239, 241, 0.75);
 }
 
 input:focus {
-    outline: none;
+	outline: none;
 }
 
 select {
-    padding: 0.75em;
-    border: none;
-    color: #efeff1;
-    background: #2f2f35;
-    border-radius: 3px;
+	padding: 0.75em;
+	border: none;
+	color: #efeff1;
+	background: #2f2f35;
+	border-radius: 3px;
 }
 
 select:focus {
-    outline: none;
+	outline: none;
 }

@@ -3,7 +3,7 @@
 
 	let { children } = $props();
 
-    export const prerender = true;
+	export const prerender = true;
 </script>
 
 {@render children()}
