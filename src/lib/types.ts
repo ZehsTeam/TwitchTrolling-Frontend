@@ -5,7 +5,6 @@ export type CardData = {
 };
 
 export type PageData = {
-    id: string;
     channel: string;
     enemies: CardData[];
     events: CardData[];
@@ -13,5 +12,5 @@ export type PageData = {
 };
 
 export type PageState = "loading" | "loaded" | "not found" | "expired" | "deleted";
-export type CardFilter = "none" | "name" | "price";
-export type CardPriceFilter = "lowest to highest" | "highest to lowest";
+export type CardSort = "default" | "name";
+export type CardSortPrice = "default" | "lowest to highest" | "highest to lowest";

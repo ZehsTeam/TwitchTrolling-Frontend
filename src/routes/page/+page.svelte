@@ -1,26 +1,28 @@
 <script lang="ts">
-    import { page } from "$app/state";
     import { onMount, onDestroy } from "svelte";
-	import type { PageState, PageData } from "$lib/types";
+	import type { PageState, PageData, CardData } from "$lib/types";
     import { enemyImageMap, eventImageMap } from "$lib/imageMaps";
 	import Header from "../Header.svelte";
 	import CardList from "./CardList.svelte";
 	import PageInfo from "./PageInfo.svelte";
 
+    const apiOrigin = 'https://twitchtrolling.up.railway.app';
+
     let pageState = $state<PageState>("loading");
 
     let pageId: string | null = null;
 
-    let pageData = $state<PageData>({
-        id: "",
-        channel: "",
-        enemies: [],
-        events: [],
-        expiresAt: "",
-    });
+    let channel = $state("");
+    let enemies = $state<CardData[]>([]);
+    let events = $state<CardData[]>([]);
+    let expiresAt = $state("");
 
     let eventSource: EventSource | null = null;
 	let sseClosed = false;
+
+    let countdown = $state("");
+    
+    let countdownInterval: ReturnType<typeof setInterval> | null = null;
 
     async function fetchPageData() {
         if (!pageId) {
@@ -31,7 +33,7 @@
 		pageState = "loading";
 
 		try {
-			const res = await fetch(`https://twitchtrolling.up.railway.app/api/pages/${pageId}`);
+			const res = await fetch(`${apiOrigin}/api/pages/${pageId}`);
 
 			if (!res.ok) {
                 pageState = "not found";
@@ -39,51 +41,99 @@
             }
 
 			const data: PageData = await res.json();
-			pageData = data;
+            handlePageData(data);
+
             pageState = "loaded";
 		} catch (err) {
 			console.error('Fetch error:', err);
 
-			pageData = {
-				id: '',
-				channel: '',
-				enemies: [],
-				events: [],
-				expiresAt: ''
-			};
+			handlePageData({
+                channel: "",
+                enemies: [],
+                events: [],
+                expiresAt: ""
+            });
+
             pageState = "not found";
 		}
     }
 
-    function handleExpired() {
-        pageState = "expired";
-    }
+	function closePageSSE() {
+		if (eventSource) {
+			eventSource.close();
+			eventSource = null;
+            console.log("Closed page SSE");
+		}
 
-    function handlePageUpdate(update: Partial<PageData>) {
-        if (update.id) {
-            pageData.id = update.id;
+		sseClosed = true;
+	}
+
+    function handlePageData(data: Partial<PageData>) {
+		if (data.channel) {
+            channel = data.channel;
         }
 
-		if (update.channel) {
-            pageData.channel = update.channel;
+        if (data.enemies) {
+            enemies = data.enemies;
         }
 
-        if (update.enemies) {
-            pageData.enemies = update.enemies;
+        if (data.events) {
+            events = data.events;
         }
 
-        if (update.events) {
-            pageData.events = update.events;
-        }
-
-        if (update.expiresAt) {
-            pageData.expiresAt = update.expiresAt;
+        if (data.expiresAt) {
+            expiresAt = data.expiresAt;
         }
 	}
 
+    function formatRemaining(ms: number) {
+		const totalSeconds = Math.max(Math.floor(ms / 1000), 0);
+		const hours = Math.floor(totalSeconds / 3600);
+		const minutes = Math.floor((totalSeconds % 3600) / 60);
+		const seconds = totalSeconds % 60;
+
+		const parts = [];
+		if (hours > 0) parts.push(`${hours} hr`);
+		if (minutes > 0) parts.push(`${minutes} min`);
+		parts.push(`${seconds} sec`);
+
+		return parts.join(' ');
+	}
+    
+	$effect(() => {
+		if (!expiresAt) return;
+
+        let stopped = false;
+
+		const update = () => {
+            if (stopped) return;
+
+			const now = new Date();
+			const target = new Date(expiresAt);
+			const diff = target.getTime() - now.getTime();
+            const expired = diff <= 0;
+
+			countdown = expired ? 'Expired' : formatRemaining(diff);
+
+            if (expired) {
+                pageState = "expired";
+                clearInterval(countdownInterval!);
+                stopped = true;
+            }
+		};
+
+		update();
+		clearInterval(countdownInterval!);
+
+		countdownInterval = setInterval(update, 1000);
+
+		// Clean up on invalidate
+		return () => clearInterval(countdownInterval!);
+	});
+
     $effect(() => {
 		if (pageState === "loaded" && !sseClosed && pageId && !eventSource) {
-			eventSource = new EventSource(`https://twitchtrolling.up.railway.app/api/pages/${pageId}/sse`);
+			eventSource = new EventSource(`${apiOrigin}/api/pages/${pageId}/sse`);
 
 			eventSource.onopen = () => {
 				console.log(`✅ Connected to page ${pageId} SSE`);
@@ -96,7 +146,7 @@
 			eventSource.addEventListener("update", (event) => {
 				try {
 					const data = JSON.parse(event.data);
-					handlePageUpdate(data);
+					handlePageData(data);
 				} catch (err) {
 					console.warn("Invalid SSE update payload:", event.data);
 				}
@@ -113,22 +163,17 @@
 		}
 	});
 
-	function closePageSSE() {
-		if (eventSource) {
-			eventSource.close();
-			eventSource = null;
-            console.log("Closed page SSE");
-		}
-		sseClosed = true;
-	}
-
     onMount(() => {
         const urlParams = new URLSearchParams(window.location.search);
         pageId = urlParams.get('id');
 
         fetchPageData();
     });
-    onDestroy(closePageSSE);
+
+    onDestroy(() => {
+        clearInterval(countdownInterval!);
+        closePageSSE();
+    });
 </script>
 
 <Header />
@@ -143,24 +188,30 @@
     {:else if pageState === "deleted"}
         <br>
 		<h2>This page has been deleted.</h2>
-	{:else if pageData.channel}
-		<PageInfo channel={pageData.channel} expiresAt={pageData.expiresAt} {handleExpired} />
+	{:else if pageState == "loaded"}
+		<PageInfo {channel} {countdown}  />
 
-        <div class="usage-info">
-            <p>To spawn enemies or trigger events, simply cheer the specified amount of bits in the streamer's chat.</p>
-            <p>If multiple enemies or events share the same bit amount, one will be chosen at random from that group.</p>
-        </div>
+        {#if enemies.length || events.length}
+            <div class="usage-info">
+                <p>To spawn enemies or trigger events, simply cheer the specified amount of bits in the streamer's chat.</p>
+                <p>If multiple enemies or events share the same bit amount, one will be chosen at random from that group.</p>
+            </div>
+        {/if}
 
-		{#if pageData.enemies.length}
-			<CardList title="Enemies" cards={pageData.enemies} cardImageMap={enemyImageMap} />
+		{#if enemies.length}
+			<CardList title="Enemies" cards={enemies} cardImageMap={enemyImageMap} />
 		{/if}
 
-		{#if pageData.events.length}
-			<CardList title="Events" cards={pageData.events} cardImageMap={eventImageMap} />
+		{#if events.length}
+			<CardList title="Events" cards={events} cardImageMap={eventImageMap} />
 		{/if}
+
+        {#if !enemies.length && !events.length}
+            <p>No enemies or events enabled.</p>
+        {/if}
 	{:else}
         <br>
-		<h2>No page found.</h2>
+		<h2>This page does not exist.</h2>
 	{/if}
 </main>
 

@@ -1,7 +1,8 @@
 <script lang="ts">
-	import type { CardData, CardFilter, CardPriceFilter } from "$lib/types";
+	import type { CardData, CardSort, CardSortPrice } from "$lib/types";
 	import Card from "./Card.svelte";
     import emptyImage from '$lib/assets/empty.png';
+	import Select from "../Select.svelte";
 
     let { title, cards, cardImageMap }: {
         title: string;
@@ -11,24 +12,19 @@
 
     let search = $state("");
 
-    const cardFilterOptions: CardFilter[] = ['none', 'name', 'price'];
-	const cardPriceFilterOptions: CardPriceFilter[] = [
-		'lowest to highest',
-		'highest to lowest'
-	];
-
-    const cardFilterLabels: Record<CardFilter, string> = {
-        none: 'None',
-        name: 'Name',
-        price: 'Price'
+    const cardSortOptions: Record<CardSort, string> = {
+        default: 'Default',
+        name: 'Name'
     };
-    const cardPriceFilterLabels: Record<CardPriceFilter, string> = {
+
+    const cardSortPriceOptions: Record<CardSortPrice, string> = {
+        'default': 'Default',
         'lowest to highest': 'Lowest to Highest',
         'highest to lowest': 'Highest to Lowest'
     };
 
-    let cardFilter = $state<CardFilter>("none");
-    let cardPriceFilter = $state<CardPriceFilter>("lowest to highest");
+    let cardSort = $state<CardSort>("default");
+    let cardSortPrice = $state<CardSortPrice>("default");
     
     let filteredCards = $derived.by(() => {
         let result = [...cards];
@@ -48,12 +44,19 @@
             }
         }
 
-        if (cardFilter === 'name') {
-            result.sort((a, b) => a.name.localeCompare(b.name));
-        } else if (cardFilter === 'price') {
-            const dir = cardPriceFilter === 'lowest to highest' ? 1 : -1;
-            result.sort((a, b) => (a.price - b.price) * dir);
-        }
+        result.sort((a, b) => {
+            if (cardSort === 'name') {
+                const nameCompare = a.name.localeCompare(b.name);
+                if (nameCompare !== 0) return nameCompare;
+            }
+
+            if (cardSortPrice !== 'default') {
+                const dir = cardSortPrice === 'lowest to highest' ? 1 : -1;
+                return (a.price - b.price) * dir;
+            }
+
+            return 0;
+        });
 
         return result;
     });
@@ -70,25 +73,20 @@
 <section>
     <div class="header">
         <h2>{title}</h2>
-        <input bind:value={search} type="text" placeholder="Search">
-        <div class="filter">
-            <p>Filter:</p>
-            <select bind:value={cardFilter}>
-                {#each cardFilterOptions as option}
-                    <option value={option}>{cardFilterLabels[option]}</option>
-                {/each}
-            </select>
-        </div>
-        {#if cardFilter === 'price'}
-            <div class="filter">
-                <p>Filter Price:</p>
-                <select bind:value={cardPriceFilter}>
-                    {#each cardPriceFilterOptions as option}
-                        <option value={option}>{cardPriceFilterLabels[option]}</option>
-                    {/each}
-                </select>
+        <div class="filters">
+            <div class="input-container">
+                <p>Search:</p>
+                <input bind:value={search} type="text" placeholder="Name or price">
             </div>
-        {/if}
+            <div class="input-container">
+                <p>Sort:</p>
+                <Select options={cardSortOptions} value={cardSort} handleChanged={(value) => cardSort = (value as CardSort)}  />
+            </div>
+            <div class="input-container">
+                <p>Sort Price:</p>
+                <Select options={cardSortPriceOptions} value={cardSortPrice} handleChanged={(value) => cardSortPrice = (value as CardSortPrice)}  />
+            </div>
+        </div>
     </div>
     <div class="cards">
         {#each filteredCards as card (card._id) }
@@ -105,31 +103,25 @@
     .header {
         margin-bottom: 1em;
         display: flex;
+        justify-content: space-between;
         align-items: center;
+        gap: 1em;
+    }
+
+    .filters {
+        display: flex;
         gap: 2em;
     }
 
-    .header input,
-    .filter select {
-        padding: 0.5em;
-        border: none;
-        border-radius: 3px;
-    }
-
-    .header input:focus,
-    .filter select:focus {
-        outline: none;
+    .input-container {
+        display: flex;
+        align-items: center;
+        gap: 0.5em;
     }
 
     h2 {
         font-size: 1.5em;
         text-transform: uppercase;
-    }
-
-    .filter {
-        display: flex;
-        align-items: center;
-        gap: 0.5em;
     }
 
     .cards {
@@ -138,10 +130,17 @@
         gap: 1rem;
     }
 
-    @media only screen and (max-width: 750px) {
+    @media only screen and (max-width: 1070px) {
         .header {
             flex-direction: column;
             align-items: start;
+            gap: 1em;
+        }
+    }
+
+    @media only screen and (max-width: 990px) {
+        .filters {
+            flex-direction: column;
             gap: 1em;
         }
     }
