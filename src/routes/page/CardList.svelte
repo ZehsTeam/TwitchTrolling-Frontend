@@ -131,7 +131,7 @@
 		gap: 1rem;
 	}
 
-	@media only screen and (max-width: 1070px) {
+	@media only screen and (max-width: 650px) {
 		.header {
 			flex-direction: column;
 			align-items: start;
@@ -139,7 +139,7 @@
 		}
 	}
 
-	@media only screen and (max-width: 990px) {
+	@media only screen and (max-width: 570px) {
 		.filters {
 			flex-direction: column;
 			gap: 1em;
