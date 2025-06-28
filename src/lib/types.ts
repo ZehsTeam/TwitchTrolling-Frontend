@@ -12,5 +12,9 @@ export type PageData = {
 };
 
 export type PageState = 'loading' | 'loaded' | 'not found' | 'expired' | 'deleted';
-export type CardSort = 'default' | 'name';
-export type CardSortPrice = 'default' | 'lowest to highest' | 'highest to lowest';
+export type CardSort =
+	| 'default'
+	| 'name: a-z'
+	| 'name: z-a'
+	| 'price: lowest to highest'
+	| 'price: highest to lowest';

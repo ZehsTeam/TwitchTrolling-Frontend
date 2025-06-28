@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { CardData, CardSort, CardSortPrice } from '$lib/types';
+	import type { CardData, CardSort } from '$lib/types';
 	import Card from './Card.svelte';
 	import emptyImage from '$lib/assets/empty.png';
 	import Select from '../Select.svelte';
@@ -18,45 +18,46 @@
 
 	const cardSortOptions: Record<CardSort, string> = {
 		default: 'Default',
-		name: 'Name'
-	};
-
-	const cardSortPriceOptions: Record<CardSortPrice, string> = {
-		default: 'Default',
-		'lowest to highest': 'Lowest to Highest',
-		'highest to lowest': 'Highest to Lowest'
+		'name: a-z': 'Name: A-Z',
+		'name: z-a': 'Name: Z-A',
+		'price: lowest to highest': 'Price: Lowest to Highest',
+		'price: highest to lowest': 'Price: Highest to Lowest'
 	};
 
 	let cardSort = $state<CardSort>('default');
-	let cardSortPrice = $state<CardSortPrice>('default');
 
 	let filteredCards = $derived.by(() => {
-		let result = [...cards];
+		let result = cards;
 
-		const searchTerm = search.trim().toLowerCase();
-		const isNumericSearch = /^\d+(\.\d+)?$/.test(searchTerm); // matches integers or floats
-
-		if (searchTerm !== '') {
-			if (isNumericSearch) {
-				result = result.filter((card) => card.price.toString().startsWith(searchTerm));
-			} else {
-				result = result.filter((card) => card.name.toLowerCase().includes(searchTerm));
-			}
+		// Apply search filter
+		if (search.trim()) {
+			const searchTerm = search.toLowerCase().trim();
+			result = result.filter(
+				(card) =>
+					card.name.toLowerCase().includes(searchTerm) ||
+					card.price.toString().startsWith(searchTerm)
+			);
 		}
 
-		result.sort((a, b) => {
-			if (cardSort === 'name') {
-				const nameCompare = a.name.localeCompare(b.name);
-				if (nameCompare !== 0) return nameCompare;
-			}
-
-			if (cardSortPrice !== 'default') {
-				const dir = cardSortPrice === 'lowest to highest' ? 1 : -1;
-				return (a.price - b.price) * dir;
-			}
-
-			return 0;
-		});
+		// Apply sorting
+		switch (cardSort) {
+			case 'name: a-z':
+				result = [...result].sort((a, b) => a.name.localeCompare(b.name));
+				break;
+			case 'name: z-a':
+				result = [...result].sort((a, b) => b.name.localeCompare(a.name));
+				break;
+			case 'price: lowest to highest':
+				result = [...result].sort((a, b) => a.price - b.price);
+				break;
+			case 'price: highest to lowest':
+				result = [...result].sort((a, b) => b.price - a.price);
+				break;
+			case 'default':
+			default:
+				// Keep original order
+				break;
+		}
 
 		return result;
 	});
@@ -76,7 +77,7 @@
 		<div class="filters">
 			<div class="input-container">
 				<p>Search:</p>
-				<input bind:value={search} type="text" placeholder="Name or price" />
+				<input bind:value={search} type="text" placeholder="Name or Price" />
 			</div>
 			<div class="input-container">
 				<p>Sort:</p>
@@ -84,14 +85,6 @@
 					options={cardSortOptions}
 					value={cardSort}
 					handleChanged={(value) => (cardSort = value as CardSort)}
-				/>
-			</div>
-			<div class="input-container">
-				<p>Sort Price:</p>
-				<Select
-					options={cardSortPriceOptions}
-					value={cardSortPrice}
-					handleChanged={(value) => (cardSortPrice = value as CardSortPrice)}
 				/>
 			</div>
 		</div>
