@@ -2,10 +2,19 @@ export type CardData = {
 	_id: string;
 	name: string;
 	price: number;
+	spawnCount?: number;
+	subPrice?: number;
+};
+
+export type SubMultipliers = {
+	tier1: number;
+	tier2: number;
+	tier3: number;
 };
 
 export type PageData = {
 	channel: string;
+	subEnemySpawnCountMultipliers?: SubMultipliers;
 	enemies: CardData[];
 	events: CardData[];
 	expiresAt: string;

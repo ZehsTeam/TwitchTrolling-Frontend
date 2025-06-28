@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount, onDestroy } from 'svelte';
-	import type { PageState, PageData, CardData } from '$lib/types';
+	import type { PageState, SubMultipliers, PageData, CardData } from '$lib/types';
 	import { enemyImageMap, eventImageMap } from '$lib/imageMaps';
 	import Header from '../Header.svelte';
 	import CardList from './CardList.svelte';
@@ -13,6 +13,7 @@
 	let pageId: string | null = null;
 
 	let channel = $state('');
+	let subEnemySpawnCountMultipliers = $state<SubMultipliers | null>(null);
 	let enemies = $state<CardData[]>([]);
 	let events = $state<CardData[]>([]);
 	let expiresAt = $state('');
@@ -62,7 +63,7 @@
 		if (eventSource) {
 			eventSource.close();
 			eventSource = null;
-			console.log('Closed page SSE');
+			//console.log('Closed page SSE');
 		}
 
 		sseClosed = true;
@@ -71,6 +72,10 @@
 	function handlePageData(data: Partial<PageData>) {
 		if (data.channel) {
 			channel = data.channel;
+		}
+
+		if (data.subEnemySpawnCountMultipliers) {
+			subEnemySpawnCountMultipliers = data.subEnemySpawnCountMultipliers;
 		}
 
 		if (data.enemies) {
@@ -136,11 +141,11 @@
 			eventSource = new EventSource(`${apiOrigin}/api/pages/${pageId}/sse`);
 
 			eventSource.onopen = () => {
-				console.log(`✅ Connected to page ${pageId} SSE`);
+				//console.log(`✅ Connected to page ${pageId} SSE`);
 			};
 
 			eventSource.onerror = () => {
-				console.error('❌ SSE connection error');
+				//console.error('❌ SSE connection error');
 			};
 
 			eventSource.addEventListener('update', (event) => {
@@ -204,6 +209,15 @@
 			</div>
 		{/if}
 
+		{#if enemies.length && subEnemySpawnCountMultipliers}
+			<div class="sub-info">
+				<h2>Sub Tier Multipliers</h2>
+				<p>Tier 1: Multiplies enemy spawn count by {subEnemySpawnCountMultipliers.tier1}</p>
+				<p>Tier 2: Multiplies enemy spawn count by {subEnemySpawnCountMultipliers.tier2}</p>
+				<p>Tier 3: Multiplies enemy spawn count by {subEnemySpawnCountMultipliers.tier3}</p>
+			</div>
+		{/if}
+
 		{#if enemies.length}
 			<CardList title="Enemies" cards={enemies} cardImageMap={enemyImageMap} />
 		{/if}
@@ -228,7 +242,10 @@
 
 	.usage-info {
 		margin-bottom: 1em;
-		font-size: 1.1em;
+	}
+
+	.sub-info {
+		margin-bottom: 1em;
 	}
 
 	@media only screen and (max-width: 1420px) {
