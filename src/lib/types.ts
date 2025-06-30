@@ -1,3 +1,10 @@
+export type SEOData = {
+	title: string;
+	description: string;
+	image: string;
+	url: string;
+};
+
 export type CardData = {
 	_id: string;
 	name: string;

@@ -2,6 +2,7 @@
 	import { onMount, onDestroy } from 'svelte';
 	import type { PageState, SubMultipliers, PageData, CardData } from '$lib/types';
 	import { enemyImageMap, eventImageMap } from '$lib/imageMaps';
+	import SEO from '../SEO.svelte';
 	import Header from '../Header.svelte';
 	import CardList from './CardList.svelte';
 	import PageInfo from './PageInfo.svelte';
@@ -191,11 +192,12 @@
 	});
 </script>
 
-<svelte:head>
-    <meta name="description" content="See the streamer's prices and info for enabled enemies and events." />
-    <meta property="og:title" content="Streamer's Page – TwitchTrolling" />
-    <meta property="og:description" content="See the streamer's prices and info for enabled enemies and events." />
-</svelte:head>
+<SEO
+	overrides={{
+		title: `Streamer's Page - TwitchTrolling`,
+		description: "See the streamer's prices and info for enabled enemies and events."
+	}}
+/>
 
 <Header />
 

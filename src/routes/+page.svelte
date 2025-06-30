@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import SEO from './SEO.svelte';
 	import type { PageCardData } from '$lib/types';
 	import Header from './Header.svelte';
 	import PageCardList from './PageCardList.svelte';
@@ -30,6 +31,8 @@
 		fetchPagesData();
 	});
 </script>
+
+<SEO />
 
 <Header />
 

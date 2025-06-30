@@ -1,6 +1,11 @@
 <script lang="ts">
+	import SEO from '../SEO.svelte';
 	import Header from '../Header.svelte';
 </script>
+
+<SEO
+	overrides={{ title: 'Error 404 - TwitchTrolling', description: 'This page does not exist.' }}
+/>
 
 <Header />
 
