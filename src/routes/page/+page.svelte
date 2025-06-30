@@ -191,6 +191,12 @@
 	});
 </script>
 
+<svelte:head>
+    <meta name="description" content="See the streamer's prices and info for enabled enemies and events." />
+    <meta property="og:title" content="Streamer's Page – TwitchTrolling" />
+    <meta property="og:description" content="See the streamer's prices and info for enabled enemies and events." />
+</svelte:head>
+
 <Header />
 
 <main>
