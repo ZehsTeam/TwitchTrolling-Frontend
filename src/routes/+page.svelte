@@ -25,6 +25,8 @@
 	}
 
     onMount(() => {
+        document.title = `TwitchTrolling`;
+
 		fetchPagesData();
 	});
 </script>
