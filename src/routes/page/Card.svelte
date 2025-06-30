@@ -65,7 +65,7 @@
 	.spawn-count {
 		font-size: 0.8em;
 		color: #a78bfa;
-        text-transform: none;
+		text-transform: none;
 	}
 
 	.image-container {

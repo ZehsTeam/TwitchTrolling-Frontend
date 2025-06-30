@@ -1,9 +1,9 @@
 <script lang="ts">
-
+    import { base } from '$app/paths';
 </script>
 
 <section>
-	<h1><a href="/">TwitchTrolling</a></h1>
+	<h1><a href="{base}/">TwitchTrolling</a></h1>
 	<p>
 		by <a href="https://solo.to/crithaxxog" target="_blank">CritHaxXoG</a> for
 		<a href="https://www.twitch.tv/psychohypnotic" target="_blank">PsychoHypnotic</a>
@@ -26,9 +26,9 @@
 		font-weight: 500;
 	}
 
-    h1 a {
-        text-decoration: none;
-    }
+	h1 a {
+		text-decoration: none;
+	}
 
 	@media only screen and (max-width: 1420px) {
 		section {

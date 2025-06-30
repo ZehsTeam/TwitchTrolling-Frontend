@@ -109,11 +109,11 @@
 		gap: 1em;
 	}
 
-    .count {
-        font-size: 1.2rem;
-        color: #a78bfa;
-        text-transform: none;
-    }
+	.count {
+		font-size: 1.2rem;
+		color: #a78bfa;
+		text-transform: none;
+	}
 
 	.filters {
 		display: flex;

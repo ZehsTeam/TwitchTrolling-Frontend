@@ -1,14 +1,14 @@
 <script lang="ts">
-    import { onMount } from 'svelte';
+	import { onMount } from 'svelte';
 	import type { PageCardData } from '$lib/types';
 	import Header from './Header.svelte';
 	import PageCardList from './PageCardList.svelte';
 
-    const apiOrigin = 'https://twitchtrolling.up.railway.app';
+	const apiOrigin = 'https://twitchtrolling.up.railway.app';
 
-    let pages = $state<PageCardData[]>([]);
+	let pages = $state<PageCardData[]>([]);
 
-    async function fetchPagesData() {
+	async function fetchPagesData() {
 		try {
 			const res = await fetch(`${apiOrigin}/api/pages`);
 
@@ -17,15 +17,15 @@
 			}
 
 			const data: PageCardData[] = await res.json();
-            pages = data;
+			pages = data;
 		} catch (err) {
 			console.error('Fetch error:', err);
-            pages = [];
+			pages = [];
 		}
 	}
 
-    onMount(() => {
-        document.title = `TwitchTrolling`;
+	onMount(() => {
+		document.title = `TwitchTrolling`;
 
 		fetchPagesData();
 	});
@@ -34,13 +34,20 @@
 <Header />
 
 <main>
-    <div class="header">
-        <p>Let Twitch chat spawn monsters and trigger events with custom bit amounts and subs. Highly configurable, easy to use, no extension or app needed.</p>
-        <p>Download the <a href="https://thunderstore.io/c/repo/p/Zehs/TwitchTrolling/" target="_blank">TwitchTrolling</a> mod on Thunderstore.</p>
-    </div>
+	<div class="header">
+		<p>
+			Let Twitch chat spawn monsters and trigger events with custom bit amounts and subs. Highly
+			configurable, easy to use, no extension or app needed.
+		</p>
+		<p>
+			Download the <a href="https://thunderstore.io/c/repo/p/Zehs/TwitchTrolling/" target="_blank"
+				>TwitchTrolling</a
+			> mod on Thunderstore.
+		</p>
+	</div>
 	{#if pages.length}
-        <PageCardList pages={pages} />
-    {/if}
+		<PageCardList {pages} />
+	{/if}
 </main>
 
 <style>
@@ -48,9 +55,9 @@
 		margin: 0 20em;
 	}
 
-    .header {
-        margin: 1em 0;
-    }
+	.header {
+		margin: 1em 0;
+	}
 
 	@media only screen and (max-width: 1420px) {
 		main {
