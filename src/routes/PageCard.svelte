@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { base } from '$app/paths';
+	import { base } from '$app/paths';
 	import type { PageCardData } from '$lib/types';
 	import twitchImage from '$lib/assets/twitch-64x64.png';
 
