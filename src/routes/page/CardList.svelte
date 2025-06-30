@@ -73,7 +73,7 @@
 
 <section>
 	<div class="header">
-		<h2>{title}</h2>
+		<h2>{title} <span class="count">(x{filteredCards.length})</span></h2>
 		<div class="filters">
 			<div class="input-container">
 				<p>Search:</p>
@@ -108,6 +108,12 @@
 		align-items: center;
 		gap: 1em;
 	}
+
+    .count {
+        font-size: 1.2rem;
+        color: #a78bfa;
+        text-transform: none;
+    }
 
 	.filters {
 		display: flex;

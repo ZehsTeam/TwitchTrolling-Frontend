@@ -21,10 +21,10 @@
 		</p>
 	</div>
 	<div class="image-container">
-		<img src={image} alt="card" />
+		<img src={image} alt="Icon" />
 	</div>
 	<div class="price-container">
-		<img src={bitsImage} alt="twitch bits" />
+		<img src={bitsImage} alt="Twitch Bits" />
 		<p class="price">{card.price}</p>
 		{#if card.subPrice}
 			<p class="price-separator">/</p>
@@ -65,6 +65,7 @@
 	.spawn-count {
 		font-size: 0.8em;
 		color: #a78bfa;
+        text-transform: none;
 	}
 
 	.image-container {

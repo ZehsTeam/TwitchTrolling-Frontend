@@ -13,12 +13,23 @@ export type SubMultipliers = {
 };
 
 export type PageData = {
+    id: string;
 	channel: string;
 	subEnemySpawnCountMultipliers?: SubMultipliers;
 	enemies: CardData[];
 	events: CardData[];
 	expiresAt: string;
+    createdAt: string;
+    updatedAt: string;
 };
+
+export type PageCardData = {
+    id: string;
+    channel: string;
+    expiresAt: string;
+    createdAt: string;
+    updatedAt: string;
+}
 
 export type PageState = 'loading' | 'loaded' | 'not found' | 'expired' | 'deleted';
 export type CardSort =

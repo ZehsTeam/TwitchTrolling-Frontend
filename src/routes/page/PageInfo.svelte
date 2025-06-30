@@ -3,19 +3,19 @@
 
 	let {
 		channel,
-		countdown
+		expiresInCountdown
 	}: {
 		channel: string;
-		countdown: string;
+		expiresInCountdown: string;
 	} = $props();
 </script>
 
 <section>
 	<div class="channel-container">
-		<img src={twitchImage} alt="twitch" />
-		<h2><a href="https://www.twitch.tv/{channel}" target="_blank">{channel}</a></h2>
+		<img src={twitchImage} alt="Twitch" />
+		<h1><a href="https://www.twitch.tv/{channel}" target="_blank">{channel}</a></h1>
 	</div>
-	<p>Expires in: {countdown}</p>
+	<p>Expires in {expiresInCountdown}</p>
 </section>
 
 <style>
@@ -38,7 +38,7 @@
 		margin-right: 0.5em;
 	}
 
-	.channel-container h2 {
+	h1 {
 		font-size: 1.8rem;
 	}
 

@@ -21,9 +21,9 @@
 	let eventSource: EventSource | null = null;
 	let sseClosed = false;
 
-	let countdown = $state('');
+	let expiresInCountdown = $state('');
 
-	let countdownInterval: ReturnType<typeof setInterval> | null = null;
+	let expiresInCountdownInterval: ReturnType<typeof setInterval> | null = null;
 
 	async function fetchPageData() {
 		if (!pageId) {
@@ -91,16 +91,27 @@
 		}
 	}
 
-	function formatRemaining(ms: number) {
+	function getRemaining(date: string) {
+        const now = new Date();
+        const target = new Date(date);
+        const diff = target.getTime() - now.getTime();
+        return diff;
+    }
+
+    function formatRemaining(ms: number) {
 		const totalSeconds = Math.max(Math.floor(ms / 1000), 0);
 		const hours = Math.floor(totalSeconds / 3600);
 		const minutes = Math.floor((totalSeconds % 3600) / 60);
 		const seconds = totalSeconds % 60;
 
-		const parts = [];
-		if (hours > 0) parts.push(`${hours} hr`);
-		if (minutes > 0) parts.push(`${minutes} min`);
-		parts.push(`${seconds} sec`);
+        const parts = [];
+		if (hours > 0) parts.push(`${hours} hr${hours > 1 ? 's' : ''}`);
+        
+        if (minutes > 0) {
+            parts.push(`${minutes} min${minutes > 1 ? 's' : ''}`);
+        } else {
+            parts.push(`${seconds} sec${seconds > 1 ? 's' : ''}`);
+        }
 
 		return parts.join(' ');
 	}
@@ -113,27 +124,25 @@
 		const update = () => {
 			if (stopped) return;
 
-			const now = new Date();
-			const target = new Date(expiresAt);
-			const diff = target.getTime() - now.getTime();
-			const expired = diff <= 0;
+			const remaining = getRemaining(expiresAt);
+			const expired = remaining <= 0;
 
-			countdown = expired ? 'Expired' : formatRemaining(diff);
+			expiresInCountdown = expired ? 'Expired' : formatRemaining(remaining);
 
 			if (expired) {
 				pageState = 'expired';
-				clearInterval(countdownInterval!);
+				clearInterval(expiresInCountdownInterval!);
 				stopped = true;
 			}
 		};
 
 		update();
-		clearInterval(countdownInterval!);
+		clearInterval(expiresInCountdownInterval!);
 
-		countdownInterval = setInterval(update, 1000);
+		expiresInCountdownInterval = setInterval(update, 1000);
 
 		// Clean up on invalidate
-		return () => clearInterval(countdownInterval!);
+		return () => clearInterval(expiresInCountdownInterval!);
 	});
 
 	$effect(() => {
@@ -176,7 +185,7 @@
 	});
 
 	onDestroy(() => {
-		clearInterval(countdownInterval!);
+		clearInterval(expiresInCountdownInterval!);
 		closePageSSE();
 	});
 </script>
@@ -194,7 +203,7 @@
 		<br />
 		<h2>This page has been deleted.</h2>
 	{:else if pageState == 'loaded'}
-		<PageInfo {channel} {countdown} />
+		<PageInfo {channel} {expiresInCountdown} />
 
 		{#if enemies.length || events.length}
 			<div class="usage-info">
