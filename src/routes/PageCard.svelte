@@ -23,7 +23,7 @@
 		</div>
 		<div class="bottom">
 			<p>Created {createdAgo} ago</p>
-			<p>Last updated {updatedAgo} ago</p>
+			<p>Updated {updatedAgo} ago</p>
 			<p>Expires in {expiresIn}</p>
 		</div>
 	</section>

@@ -2,7 +2,7 @@
 	import { onMount, onDestroy } from 'svelte';
 	import type { PageState, SubMultipliers, PageData, CardData } from '$lib/types';
 	import { enemyImageMap, eventImageMap } from '$lib/imageMaps';
-	import { formatRemaining, getRemaining } from '$lib/utils';
+	import { timeAgo, formatRemaining, getRemaining } from '$lib/utils';
 	import SEO from '../SEO.svelte';
 	import Header from '../Header.svelte';
 	import CardList from './CardList.svelte';
@@ -19,13 +19,17 @@
 	let enemies = $state<CardData[]>([]);
 	let events = $state<CardData[]>([]);
 	let expiresAt = $state('');
+	let createdAt = $state('');
+	let updatedAt = $state('');
 
 	let eventSource: EventSource | null = null;
 	let sseClosed = false;
 
 	let expiresInCountdown = $state('');
+	let createdAgo = $state('');
+	let updatedAgo = $state('');
 
-	let expiresInCountdownInterval: ReturnType<typeof setInterval> | null = null;
+	let timesInterval: ReturnType<typeof setInterval> | null = null;
 
 	async function fetchPageData() {
 		if (!pageId) {
@@ -93,14 +97,41 @@
 		if (data.expiresAt) {
 			expiresAt = data.expiresAt;
 		}
+
+		if (data.createdAt) {
+			createdAt = data.createdAt;
+		}
+
+		if (data.updatedAt) {
+			updatedAt = data.updatedAt;
+		}
 	}
 
+	// Times
 	$effect(() => {
 		if (!expiresAt) return;
 
 		let stopped = false;
 
-		const update = () => {
+		const updateTimes = () => {
+			updateCreatedAgo();
+			updateUpdatedAgo();
+			updateExpiresInCountdown();
+		};
+
+		const updateCreatedAgo = () => {
+			if (stopped) return;
+
+			createdAgo = timeAgo(createdAt);
+		};
+
+		const updateUpdatedAgo = () => {
+			if (stopped) return;
+
+			updatedAgo = timeAgo(updatedAt);
+		};
+
+		const updateExpiresInCountdown = () => {
 			if (stopped) return;
 
 			const remaining = getRemaining(expiresAt);
@@ -110,20 +141,21 @@
 
 			if (expired) {
 				pageState = 'expired';
-				clearInterval(expiresInCountdownInterval!);
+				clearInterval(timesInterval!);
 				stopped = true;
 			}
 		};
 
-		update();
-		clearInterval(expiresInCountdownInterval!);
+		updateTimes();
+		clearInterval(timesInterval!);
 
-		expiresInCountdownInterval = setInterval(update, 1000);
+		timesInterval = setInterval(updateTimes, 1000);
 
 		// Clean up on invalidate
-		return () => clearInterval(expiresInCountdownInterval!);
+		return () => clearInterval(timesInterval!);
 	});
 
+	// SSE
 	$effect(() => {
 		if (pageState === 'loaded' && !sseClosed && pageId && !eventSource) {
 			eventSource = new EventSource(`${apiOrigin}/api/pages/${pageId}/sse`);
@@ -164,7 +196,7 @@
 	});
 
 	onDestroy(() => {
-		clearInterval(expiresInCountdownInterval!);
+		clearInterval(timesInterval!);
 		closePageSSE();
 	});
 </script>
@@ -189,7 +221,7 @@
 		<br />
 		<h2>This page has been deleted.</h2>
 	{:else if pageState == 'loaded'}
-		<PageInfo {channel} {expiresInCountdown} />
+		<PageInfo {channel} {createdAgo} {updatedAgo} {expiresInCountdown} />
 
 		{#if enemies.length || events.length}
 			<div class="usage-info">

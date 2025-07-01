@@ -3,9 +3,13 @@
 
 	let {
 		channel,
+		createdAgo,
+		updatedAgo,
 		expiresInCountdown
 	}: {
 		channel: string;
+		createdAgo: string;
+		updatedAgo: string;
 		expiresInCountdown: string;
 	} = $props();
 </script>
@@ -15,7 +19,11 @@
 		<img src={twitchImage} alt="Twitch" />
 		<h1><a href="https://www.twitch.tv/{channel}" target="_blank">{channel}</a></h1>
 	</div>
-	<p>Expires in {expiresInCountdown}</p>
+	<div class="times-container">
+		<p>Created {createdAgo} ago</p>
+		<p>Updated {updatedAgo} ago</p>
+		<p>Expires in {expiresInCountdown}</p>
+	</div>
 </section>
 
 <style>
@@ -38,6 +46,16 @@
 		margin-right: 0.5em;
 	}
 
+	.times-container {
+		display: flex;
+		gap: 0.75em;
+	}
+
+	.times-container p:not(:last-child)::after {
+		content: '/';
+		margin-left: 0.75em;
+	}
+
 	h1 {
 		font-size: 1.8rem;
 	}
@@ -50,12 +68,22 @@
 		text-decoration: underline;
 	}
 
-	@media only screen and (max-width: 570px) {
+	@media only screen and (max-width: 1150px) {
 		section {
 			flex-direction: column;
 			justify-content: start;
 			align-items: start;
 			gap: 8px;
+		}
+	}
+
+	@media only screen and (max-width: 550px) {
+		.times-container {
+			flex-direction: column;
+		}
+
+		.times-container p:not(:last-child)::after {
+			display: none;
 		}
 	}
 </style>
