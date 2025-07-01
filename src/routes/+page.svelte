@@ -7,7 +7,7 @@
 
 	const apiOrigin = 'https://twitchtrolling.up.railway.app';
 
-	let pages = $state<PageCardData[]>([]);
+	let pageCards = $state<PageCardData[]>([]);
 
 	async function fetchPagesData() {
 		try {
@@ -18,10 +18,10 @@
 			}
 
 			const data: PageCardData[] = await res.json();
-			pages = data;
+			pageCards = data;
 		} catch (err) {
 			console.error('Fetch error:', err);
-			pages = [];
+			pageCards = [];
 		}
 	}
 
@@ -39,8 +39,8 @@
 <main>
 	<div class="header">
 		<p>
-			Let Twitch chat spawn monsters and trigger events with custom bit amounts and subs. Highly
-			configurable, easy to use, no extension or app needed.
+			R.E.P.O. mod to let Twitch chat spawn monsters and trigger events with custom bit amounts and
+			subs. Highly configurable, easy to use, no extension or app needed.
 		</p>
 		<p>
 			Download the <a href="https://thunderstore.io/c/repo/p/Zehs/TwitchTrolling/" target="_blank"
@@ -48,8 +48,8 @@
 			> mod on Thunderstore.
 		</p>
 	</div>
-	{#if pages.length}
-		<PageCardList {pages} />
+	{#if pageCards.length}
+		<PageCardList {pageCards} />
 	{/if}
 </main>
 

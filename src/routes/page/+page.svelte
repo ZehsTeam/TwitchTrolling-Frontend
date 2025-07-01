@@ -2,6 +2,7 @@
 	import { onMount, onDestroy } from 'svelte';
 	import type { PageState, SubMultipliers, PageData, CardData } from '$lib/types';
 	import { enemyImageMap, eventImageMap } from '$lib/imageMaps';
+	import { formatRemaining, getRemaining } from '$lib/utils';
 	import SEO from '../SEO.svelte';
 	import Header from '../Header.svelte';
 	import CardList from './CardList.svelte';
@@ -94,30 +95,6 @@
 		}
 	}
 
-	function getRemaining(date: string) {
-		const now = new Date();
-		const target = new Date(date);
-		const diff = target.getTime() - now.getTime();
-		return Math.max(diff, 0);
-	}
-
-	function formatRemaining(ms: number) {
-		const totalSeconds = Math.max(Math.floor(ms / 1000), 0);
-		const hours = Math.floor(totalSeconds / 3600);
-		const minutes = Math.floor((totalSeconds % 3600) / 60);
-		const seconds = totalSeconds % 60;
-
-		const parts = [];
-		if (hours > 0) parts.push(`${hours} hr${hours > 1 ? 's' : ''}`);
-		if (minutes > 0) parts.push(`${minutes} min${minutes > 1 ? 's' : ''}`);
-
-		if (seconds > 0 && parts.length === 0) {
-			parts.push(`${seconds} sec${seconds > 1 ? 's' : ''}`);
-		}
-
-		return parts.join(' ');
-	}
-
 	$effect(() => {
 		if (!expiresAt) return;
 
@@ -194,7 +171,7 @@
 
 <SEO
 	overrides={{
-		title: `Streamer's Page - TwitchTrolling`,
+		title: `Streamer's Page - TwitchTrolling for R.E.P.O.`,
 		description: "See the streamer's prices and info for enabled enemies and events."
 	}}
 />

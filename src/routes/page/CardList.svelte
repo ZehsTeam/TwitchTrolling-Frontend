@@ -53,10 +53,6 @@
 			case 'price: highest to lowest':
 				result = [...result].sort((a, b) => b.price - a.price);
 				break;
-			case 'default':
-			default:
-				// Keep original order
-				break;
 		}
 
 		return result;
@@ -80,7 +76,7 @@
 				<input bind:value={search} type="text" placeholder="Name or Price" />
 			</div>
 			<div class="input-container">
-				<p>Sort:</p>
+				<p>Sort by:</p>
 				<Select
 					options={cardSortOptions}
 					value={cardSort}

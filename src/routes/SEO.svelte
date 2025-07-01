@@ -11,9 +11,9 @@
 	const twitterHandle = '@ZehsStudios';
 
 	const defaults: SEOData = {
-		title: 'TwitchTrolling',
+		title: 'TwitchTrolling for R.E.P.O.',
 		description:
-			'Let Twitch chat spawn monsters and trigger events with custom bit amounts and subs. Highly configurable, easy to use, no extension or app needed.',
+			'R.E.P.O. mod to let Twitch chat spawn monsters and trigger events with custom bit amounts and subs. Highly configurable, easy to use, no extension or app needed.',
 		image: '/icon.png',
 		url: 'https://twitchtrolling.com'
 	};
