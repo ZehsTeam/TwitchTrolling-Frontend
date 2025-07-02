@@ -22,7 +22,7 @@
 	let createdAt = $state('');
 	let updatedAt = $state('');
 
-    let pageViewers = $state(0);
+	let pageViewers = $state(0);
 
 	let eventSource: EventSource | null = null;
 	let sseClosed = false;
@@ -183,7 +183,7 @@
 				}
 			});
 
-            eventSource.addEventListener('page-viewers', (event) => {
+			eventSource.addEventListener('page-viewers', (event) => {
 				try {
 					pageViewers = parseInt(event.data);
 				} catch (err) {

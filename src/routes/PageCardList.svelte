@@ -17,6 +17,8 @@
 		'created: oldest to newest': 'Created: Oldest to Newest',
 		'updated: newest to oldest': 'Updated: Newest to Oldest',
 		'updated: oldest to newest': 'Updated: Oldest to Newest',
+		'live viewers: highest to lowest': 'Live Viewers: Highest to Lowest',
+		'live viewers: lowest to highest': 'Live Viewers: Lowest to Highest',
 		'expires: latest to soonest': 'Expires: Latest to Soonest',
 		'expires: soonest to latest': 'Expires: Soonest to Latest'
 	};
@@ -53,6 +55,12 @@
 				result = [...result].sort(
 					(a, b) => new Date(a.updatedAt).getTime() - new Date(b.updatedAt).getTime()
 				);
+				break;
+			case 'live viewers: highest to lowest':
+				result = [...result].sort((a, b) => (b.pageViewers || 0) - (a.pageViewers || 0));
+				break;
+			case 'live viewers: lowest to highest':
+				result = [...result].sort((a, b) => (a.pageViewers || 0) - (b.pageViewers || 0));
 				break;
 			case 'expires: latest to soonest':
 				result = [...result].sort(

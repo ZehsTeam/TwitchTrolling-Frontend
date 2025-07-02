@@ -14,7 +14,7 @@ export type PageData = {
 	expiresAt: string;
 	createdAt: string;
 	updatedAt: string;
-    pageViewers?: number;
+	pageViewers?: number;
 };
 
 export type SubMultipliers = {
@@ -45,6 +45,7 @@ export type PageCardData = {
 	expiresAt: string;
 	createdAt: string;
 	updatedAt: string;
+	pageViewers?: number;
 };
 
 export type PageCardSort =
@@ -53,5 +54,7 @@ export type PageCardSort =
 	| 'created: oldest to newest'
 	| 'updated: newest to oldest'
 	| 'updated: oldest to newest'
+	| 'live viewers: highest to lowest'
+	| 'live viewers: lowest to highest'
 	| 'expires: latest to soonest'
 	| 'expires: soonest to latest';

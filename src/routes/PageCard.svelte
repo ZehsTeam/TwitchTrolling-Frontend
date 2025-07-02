@@ -22,6 +22,9 @@
 			<h2>{pageCard.channel}</h2>
 		</div>
 		<div class="bottom">
+			{#if pageCard.pageViewers !== undefined}
+				<p>Live Viewers: {pageCard.pageViewers}</p>
+			{/if}
 			<p>Created {createdAgo} ago</p>
 			<p>Updated {updatedAgo} ago</p>
 			<p>Expires in {expiresIn}</p>
