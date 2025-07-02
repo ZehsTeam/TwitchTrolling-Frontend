@@ -22,6 +22,8 @@
 	let createdAt = $state('');
 	let updatedAt = $state('');
 
+    let pageViewers = $state(0);
+
 	let eventSource: EventSource | null = null;
 	let sseClosed = false;
 
@@ -105,6 +107,10 @@
 		if (data.updatedAt) {
 			updatedAt = data.updatedAt;
 		}
+
+		if (data.pageViewers) {
+			pageViewers = data.pageViewers;
+		}
 	}
 
 	// Times
@@ -177,6 +183,14 @@
 				}
 			});
 
+            eventSource.addEventListener('page-viewers', (event) => {
+				try {
+					pageViewers = parseInt(event.data);
+				} catch (err) {
+					console.warn('Invalid SSE viewers payload:', event.data);
+				}
+			});
+
 			eventSource.addEventListener('delete', () => {
 				pageState = 'deleted';
 				closePageSSE();
@@ -204,7 +218,7 @@
 <SEO
 	overrides={{
 		title: `Streamer's Page - TwitchTrolling for R.E.P.O.`,
-		description: "See the streamer's prices and info for enabled enemies and events."
+		description: `See the streamer's prices and info for enabled enemies and events.`
 	}}
 />
 
@@ -221,7 +235,7 @@
 		<br />
 		<h2>This page has been deleted.</h2>
 	{:else if pageState == 'loaded'}
-		<PageInfo {channel} {createdAgo} {updatedAgo} {expiresInCountdown} />
+		<PageInfo {channel} {createdAgo} {updatedAgo} {expiresInCountdown} {pageViewers} />
 
 		{#if enemies.length || events.length}
 			<div class="usage-info">

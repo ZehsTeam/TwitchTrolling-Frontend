@@ -5,35 +5,46 @@
 		channel,
 		createdAgo,
 		updatedAgo,
-		expiresInCountdown
+		expiresInCountdown,
+        pageViewers
 	}: {
 		channel: string;
 		createdAgo: string;
 		updatedAgo: string;
 		expiresInCountdown: string;
+        pageViewers: number;
 	} = $props();
 </script>
 
 <section>
-	<div class="channel-container">
-		<img src={twitchImage} alt="Twitch" />
-		<h1><a href="https://www.twitch.tv/{channel}" target="_blank">{channel}</a></h1>
-	</div>
-	<div class="times-container">
-		<p>Created {createdAgo} ago</p>
-		<p>Updated {updatedAgo} ago</p>
-		<p>Expires in {expiresInCountdown}</p>
-	</div>
+    <div class="header">
+        <div class="channel-container">
+            <img src={twitchImage} alt="Twitch" />
+            <h1><a href="https://www.twitch.tv/{channel}" target="_blank">{channel}</a></h1>
+        </div>
+        <div class="times-container">
+            <p>Created {createdAgo} ago</p>
+            <p>Updated {updatedAgo} ago</p>
+            <p>Expires in {expiresInCountdown}</p>
+        </div>
+    </div>
+    <div>
+        <p>Page Viewers: {pageViewers}</p>
+    </div>
 </section>
 
 <style>
-	section {
-		padding: 1rem 0;
+    section {
+        padding: 1em 0;
+    }
+
+    .header {
+        margin-bottom: 0.5em;
 		display: flex;
 		flex-direction: row;
 		justify-content: space-between;
 		align-items: center;
-	}
+    }
 
 	.channel-container {
 		display: flex;
@@ -69,7 +80,7 @@
 	}
 
 	@media only screen and (max-width: 1150px) {
-		section {
+		.header {
 			flex-direction: column;
 			justify-content: start;
 			align-items: start;

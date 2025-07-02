@@ -14,6 +14,7 @@ export type PageData = {
 	expiresAt: string;
 	createdAt: string;
 	updatedAt: string;
+    pageViewers?: number;
 };
 
 export type SubMultipliers = {
