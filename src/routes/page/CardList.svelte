@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { CardData, CardSort } from '$lib/types';
+	import type { CardData } from './PageState.svelte';
 	import Card from './Card.svelte';
 	import emptyImage from '$lib/assets/empty.png';
 	import Select from '../Select.svelte';
@@ -13,6 +13,13 @@
 		cards: CardData[];
 		cardImageMap?: Record<string, string>;
 	} = $props();
+
+	type CardSort =
+		| 'default'
+		| 'name: a-z'
+		| 'name: z-a'
+		| 'price: lowest to highest'
+		| 'price: highest to lowest';
 
 	let search = $state('');
 

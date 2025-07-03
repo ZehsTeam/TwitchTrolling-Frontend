@@ -1,29 +1,29 @@
 <script lang="ts">
 	import { base } from '$app/paths';
-	import type { PageCardData } from '$lib/types';
+	import type { PageData } from './PagesState.svelte';
 	import twitchImage from '$lib/assets/twitch-64x64.png';
 	import { timeAgo, formatRemaining, getRemaining } from '$lib/utils';
 
 	let {
-		pageCard
+		page
 	}: {
-		pageCard: PageCardData;
+		page: PageData;
 	} = $props();
 
-	let createdAgo = $derived.by(() => timeAgo(pageCard.createdAt));
-	let updatedAgo = $derived.by(() => timeAgo(pageCard.updatedAt));
-	let expiresIn = $derived.by(() => formatRemaining(getRemaining(pageCard.expiresAt)));
+	let createdAgo = $derived.by(() => timeAgo(page.createdAt));
+	let updatedAgo = $derived.by(() => timeAgo(page.updatedAt));
+	let expiresIn = $derived.by(() => formatRemaining(getRemaining(page.expiresAt)));
 </script>
 
-<a href="{base}/page?id={pageCard.id}">
+<a href="{base}/page?id={page.id}">
 	<section>
 		<div class="top">
 			<img src={twitchImage} alt="Twitch" />
-			<h2>{pageCard.channel}</h2>
+			<h2>{page.channel}</h2>
 		</div>
 		<div class="bottom">
-			{#if pageCard.pageViewers !== undefined}
-				<p>Live Viewers: {pageCard.pageViewers}</p>
+			{#if page.pageViewers !== undefined}
+				<p>Live Viewers: {page.pageViewers}</p>
 			{/if}
 			<p>Created {createdAgo} ago</p>
 			<p>Updated {updatedAgo} ago</p>

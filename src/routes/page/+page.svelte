@@ -1,217 +1,29 @@
 <script lang="ts">
 	import { onMount, onDestroy } from 'svelte';
-	import type { PageState, SubMultipliers, PageData, CardData } from '$lib/types';
 	import { enemyImageMap, eventImageMap } from '$lib/imageMaps';
-	import { timeAgo, formatRemaining, getRemaining } from '$lib/utils';
+	import { getPageState } from './PageState.svelte';
 	import SEO from '../SEO.svelte';
 	import Header from '../Header.svelte';
-	import CardList from './CardList.svelte';
 	import PageInfo from './PageInfo.svelte';
+	import CardList from './CardList.svelte';
 
-	const apiOrigin = 'https://twitchtrolling.up.railway.app';
+	const pageState = getPageState();
 
-	let pageState = $state<PageState>('loading');
-
-	let pageId: string | null = null;
-
-	let channel = $state('');
-	let subEnemySpawnCountMultipliers = $state<SubMultipliers | null>(null);
-	let enemies = $state<CardData[]>([]);
-	let events = $state<CardData[]>([]);
-	let expiresAt = $state('');
-	let createdAt = $state('');
-	let updatedAt = $state('');
-
-	let pageViewers = $state(0);
-
-	let eventSource: EventSource | null = null;
-	let sseClosed = false;
-
-	let expiresInCountdown = $state('');
-	let createdAgo = $state('');
-	let updatedAgo = $state('');
-
-	let timesInterval: ReturnType<typeof setInterval> | null = null;
-
-	async function fetchPageData() {
-		if (!pageId) {
-			pageState = 'not found';
-			return;
-		}
-
-		pageState = 'loading';
-
-		try {
-			const res = await fetch(`${apiOrigin}/api/pages/${pageId}`);
-
-			if (!res.ok) {
-				pageState = 'not found';
-				throw new Error('Failed to fetch page data');
-			}
-
-			const data: PageData = await res.json();
-			handlePageData(data);
-
-			pageState = 'loaded';
-		} catch (err) {
-			console.error('Fetch error:', err);
-
-			handlePageData({
-				channel: '',
-				enemies: [],
-				events: [],
-				expiresAt: ''
-			});
-
-			pageState = 'not found';
-		}
-	}
-
-	function closePageSSE() {
-		if (eventSource) {
-			eventSource.close();
-			eventSource = null;
-			//console.log('Closed page SSE');
-		}
-
-		sseClosed = true;
-	}
-
-	function handlePageData(data: Partial<PageData>) {
-		if (data.channel) {
-			channel = data.channel;
-
-			document.title = `${channel} - TwitchTrolling`;
-		}
-
-		if (data.subEnemySpawnCountMultipliers) {
-			subEnemySpawnCountMultipliers = data.subEnemySpawnCountMultipliers;
-		}
-
-		if (data.enemies) {
-			enemies = data.enemies;
-		}
-
-		if (data.events) {
-			events = data.events;
-		}
-
-		if (data.expiresAt) {
-			expiresAt = data.expiresAt;
-		}
-
-		if (data.createdAt) {
-			createdAt = data.createdAt;
-		}
-
-		if (data.updatedAt) {
-			updatedAt = data.updatedAt;
-		}
-
-		if (data.pageViewers) {
-			pageViewers = data.pageViewers;
-		}
-	}
-
-	// Times
 	$effect(() => {
-		if (!expiresAt) return;
-
-		let stopped = false;
-
-		const updateTimes = () => {
-			updateCreatedAgo();
-			updateUpdatedAgo();
-			updateExpiresInCountdown();
-		};
-
-		const updateCreatedAgo = () => {
-			if (stopped) return;
-
-			createdAgo = timeAgo(createdAt);
-		};
-
-		const updateUpdatedAgo = () => {
-			if (stopped) return;
-
-			updatedAgo = timeAgo(updatedAt);
-		};
-
-		const updateExpiresInCountdown = () => {
-			if (stopped) return;
-
-			const remaining = getRemaining(expiresAt);
-			const expired = remaining <= 0;
-
-			expiresInCountdown = expired ? 'Expired' : formatRemaining(remaining);
-
-			if (expired) {
-				pageState = 'expired';
-				clearInterval(timesInterval!);
-				stopped = true;
-			}
-		};
-
-		updateTimes();
-		clearInterval(timesInterval!);
-
-		timesInterval = setInterval(updateTimes, 1000);
-
-		// Clean up on invalidate
-		return () => clearInterval(timesInterval!);
-	});
-
-	// SSE
-	$effect(() => {
-		if (pageState === 'loaded' && !sseClosed && pageId && !eventSource) {
-			eventSource = new EventSource(`${apiOrigin}/api/pages/${pageId}/sse`);
-
-			eventSource.onopen = () => {
-				//console.log(`✅ Connected to page ${pageId} SSE`);
-			};
-
-			eventSource.onerror = () => {
-				//console.error('❌ SSE connection error');
-			};
-
-			eventSource.addEventListener('update', (event) => {
-				try {
-					const data = JSON.parse(event.data);
-					handlePageData(data);
-				} catch (err) {
-					console.warn('Invalid SSE update payload:', event.data);
-				}
-			});
-
-			eventSource.addEventListener('page-viewers', (event) => {
-				try {
-					pageViewers = parseInt(event.data);
-				} catch (err) {
-					console.warn('Invalid SSE viewers payload:', event.data);
-				}
-			});
-
-			eventSource.addEventListener('delete', () => {
-				pageState = 'deleted';
-				closePageSSE();
-			});
-		}
-
-		if (pageState === 'expired' || pageState === 'deleted') {
-			closePageSSE();
+		if (pageState.state === 'loaded') {
+			document.title = `${pageState.channel} - TwitchTrolling`;
 		}
 	});
 
 	onMount(() => {
 		const urlParams = new URLSearchParams(window.location.search);
-		pageId = urlParams.get('id');
+		const pageId = urlParams.get('id');
 
-		fetchPageData();
+		pageState.load(pageId || '');
 	});
 
 	onDestroy(() => {
-		clearInterval(timesInterval!);
-		closePageSSE();
+		pageState.unload();
 	});
 </script>
 
@@ -225,19 +37,25 @@
 <Header />
 
 <main>
-	{#if pageState === 'loading'}
+	{#if pageState.state === 'loading'}
 		<br />
 		<h2>Loading...</h2>
-	{:else if pageState === 'expired'}
+	{:else if pageState.state === 'expired'}
 		<br />
 		<h2>This page has expired.</h2>
-	{:else if pageState === 'deleted'}
+	{:else if pageState.state === 'deleted'}
 		<br />
 		<h2>This page has been deleted.</h2>
-	{:else if pageState == 'loaded'}
-		<PageInfo {channel} {createdAgo} {updatedAgo} {expiresInCountdown} {pageViewers} />
+	{:else if pageState.state == 'loaded'}
+		<PageInfo
+			channel={pageState.channel}
+			createdAgo={pageState.createdAgo}
+			updatedAgo={pageState.updatedAgo}
+			expiresInCountdown={pageState.expiresInCountdown}
+			pageViewers={pageState.pageViewers}
+		/>
 
-		{#if enemies.length || events.length}
+		{#if pageState.enemies.length || pageState.events.length}
 			<div class="usage-info">
 				<p>
 					To spawn enemies or trigger events, simply cheer the specified amount of bits in the
@@ -250,24 +68,30 @@
 			</div>
 		{/if}
 
-		{#if enemies.length && subEnemySpawnCountMultipliers}
+		{#if pageState.enemies.length && pageState.subEnemySpawnCountMultipliers}
 			<div class="sub-info">
 				<h2>Sub Tier Multipliers</h2>
-				<p>Tier 1: Multiplies enemy spawn count by {subEnemySpawnCountMultipliers.tier1}</p>
-				<p>Tier 2: Multiplies enemy spawn count by {subEnemySpawnCountMultipliers.tier2}</p>
-				<p>Tier 3: Multiplies enemy spawn count by {subEnemySpawnCountMultipliers.tier3}</p>
+				<p>
+					Tier 1: Multiplies enemy spawn count by {pageState.subEnemySpawnCountMultipliers.tier1}
+				</p>
+				<p>
+					Tier 2: Multiplies enemy spawn count by {pageState.subEnemySpawnCountMultipliers.tier2}
+				</p>
+				<p>
+					Tier 3: Multiplies enemy spawn count by {pageState.subEnemySpawnCountMultipliers.tier3}
+				</p>
 			</div>
 		{/if}
 
-		{#if enemies.length}
-			<CardList title="Enemies" cards={enemies} cardImageMap={enemyImageMap} />
+		{#if pageState.enemies.length}
+			<CardList title="Enemies" cards={pageState.enemies} cardImageMap={enemyImageMap} />
 		{/if}
 
-		{#if events.length}
-			<CardList title="Events" cards={events} cardImageMap={eventImageMap} />
+		{#if pageState.events.length}
+			<CardList title="Events" cards={pageState.events} cardImageMap={eventImageMap} />
 		{/if}
 
-		{#if !enemies.length && !events.length}
+		{#if !pageState.enemies.length && !pageState.events.length}
 			<p>No enemies or events enabled.</p>
 		{/if}
 	{:else}

@@ -1,34 +1,15 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import SEO from './SEO.svelte';
-	import type { PageCardData } from '$lib/types';
 	import Header from './Header.svelte';
 	import PageCardList from './PageCardList.svelte';
+	import { getPagesState } from './PagesState.svelte';
 
-	const apiOrigin = 'https://twitchtrolling.up.railway.app';
-
-	let pageCards = $state<PageCardData[]>([]);
-
-	async function fetchPagesData() {
-		try {
-			const res = await fetch(`${apiOrigin}/api/pages`);
-
-			if (!res.ok) {
-				throw new Error('Failed to fetch pages data');
-			}
-
-			const data: PageCardData[] = await res.json();
-			pageCards = data;
-		} catch (err) {
-			console.error('Fetch error:', err);
-			pageCards = [];
-		}
-	}
+	const pagesState = getPagesState();
 
 	onMount(() => {
 		document.title = `TwitchTrolling`;
-
-		fetchPagesData();
+		pagesState.load();
 	});
 </script>
 
@@ -48,8 +29,8 @@
 			> mod on Thunderstore.
 		</p>
 	</div>
-	{#if pageCards.length}
-		<PageCardList {pageCards} />
+	{#if pagesState.pages.length}
+		<PageCardList pages={pagesState.pages} />
 	{/if}
 </main>
 

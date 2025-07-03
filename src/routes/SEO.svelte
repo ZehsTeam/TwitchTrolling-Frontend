@@ -1,11 +1,16 @@
 <script lang="ts">
-	import type { SEOData } from '$lib/types';
-
 	let {
 		overrides
 	}: {
 		overrides?: Partial<SEOData>;
 	} = $props();
+
+	export type SEOData = {
+		title: string;
+		description: string;
+		image: string;
+		url: string;
+	};
 
 	const author = 'CritHaxXoG / Zehs';
 	const twitterHandle = '@ZehsStudios';

@@ -1,17 +1,28 @@
 <script lang="ts">
-	import type { PageCardData, PageCardSort } from '$lib/types';
+	import type { PageData } from './PagesState.svelte';
 	import PageCard from './PageCard.svelte';
 	import Select from './Select.svelte';
 
 	let {
-		pageCards
+		pages
 	}: {
-		pageCards: PageCardData[];
+		pages: PageData[];
 	} = $props();
 
 	let search = $state('');
 
-	const pageCardSortOptions: Record<PageCardSort, string> = {
+	type PageSort =
+		| 'default'
+		| 'created: newest to oldest'
+		| 'created: oldest to newest'
+		| 'updated: newest to oldest'
+		| 'updated: oldest to newest'
+		| 'live viewers: highest to lowest'
+		| 'live viewers: lowest to highest'
+		| 'expires: latest to soonest'
+		| 'expires: soonest to latest';
+
+	const pageSortOptions: Record<PageSort, string> = {
 		default: 'Default',
 		'created: newest to oldest': 'Created: Newest to Oldest',
 		'created: oldest to newest': 'Created: Oldest to Newest',
@@ -23,10 +34,10 @@
 		'expires: soonest to latest': 'Expires: Soonest to Latest'
 	};
 
-	let pageCardSort = $state<PageCardSort>('created: newest to oldest');
+	let pageSort = $state<PageSort>('created: newest to oldest');
 
-	let filteredPageCards = $derived.by(() => {
-		let result = pageCards;
+	let filteredPages = $derived.by(() => {
+		let result = pages;
 
 		// Apply search filter
 		if (search.trim()) {
@@ -35,7 +46,7 @@
 		}
 
 		// Apply sorting
-		switch (pageCardSort) {
+		switch (pageSort) {
 			case 'created: newest to oldest':
 				result = [...result].sort(
 					(a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
@@ -80,7 +91,7 @@
 
 <section>
 	<div class="header">
-		<h2>Pages <span class="count">(x{filteredPageCards.length})</span></h2>
+		<h2>Pages <span class="count">(x{filteredPages.length})</span></h2>
 		<div class="filters">
 			<div class="input-container">
 				<p>Search:</p>
@@ -89,16 +100,16 @@
 			<div class="input-container">
 				<p>Sort by:</p>
 				<Select
-					options={pageCardSortOptions}
-					value={pageCardSort}
-					handleChanged={(value) => (pageCardSort = value as PageCardSort)}
+					options={pageSortOptions}
+					value={pageSort}
+					handleChanged={(value) => (pageSort = value as PageSort)}
 				/>
 			</div>
 		</div>
 	</div>
 	<div class="cards">
-		{#each filteredPageCards as pageCard}
-			<PageCard {pageCard} />
+		{#each filteredPages as page}
+			<PageCard {page} />
 		{/each}
 	</div>
 </section>
