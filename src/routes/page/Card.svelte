@@ -44,9 +44,9 @@
 	section {
 		width: 100%;
 		border-radius: 8px;
-		border: #9146ff solid 2px;
+		border: var(--purple) solid 2px;
 		box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-		background: #201c24;
+		background: var(--background-light);
 	}
 
 	p {
@@ -64,7 +64,7 @@
 
 	.spawn-count {
 		font-size: 0.8em;
-		color: #a78bfa;
+		color: var(--purple-light);
 		text-transform: none;
 	}
 
@@ -97,7 +97,7 @@
 		width: 17px;
 		height: 17px;
 		margin-right: 4px;
-		fill: #a78bfa;
+		fill: var(--purple-light);
 	}
 
 	.price-container img,
@@ -106,11 +106,11 @@
 	}
 
 	.price {
-		color: #a78bfa;
+		color: var(--purple-light);
 	}
 
 	.price-separator {
 		margin: 0 8px;
-		color: #efeff1;
+		color: var(--white);
 	}
 </style>

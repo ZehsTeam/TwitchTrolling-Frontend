@@ -27,7 +27,7 @@ export class PagesStateClass implements PagesState {
 			const res = await fetch(`${apiOrigin}/api/pages`);
 
 			if (!res.ok) {
-				throw new Error('Failed to fetch page data');
+				throw new Error('Failed to fetch pages data');
 			}
 
 			const data: PageData[] = await res.json();

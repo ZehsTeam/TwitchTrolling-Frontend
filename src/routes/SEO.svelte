@@ -37,6 +37,7 @@
 		content="twitch, trolling, fun, streaming, interaction, interactions, twitch trolling, twitch trolling prices, twitch trolling enemies, twitch trolling events"
 	/>
 	<meta name="author" content={author} />
+	<meta name="theme-color" content="#9146ff" />
 
 	<meta property="og:type" content="website" />
 	<meta property="og:site_name" content="TwitchTrolling" />

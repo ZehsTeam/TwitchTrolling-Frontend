@@ -129,7 +129,7 @@
 
 	.count {
 		font-size: 1.2rem;
-		color: #a78bfa;
+		color: var(--purple-light);
 		text-transform: none;
 	}
 

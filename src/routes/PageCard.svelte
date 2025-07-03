@@ -36,9 +36,9 @@
 	section {
 		padding: 0.5em;
 		border-radius: 8px;
-		border: #9146ff solid 2px;
+		border: var(--purple) solid 2px;
 		box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-		background: #201c24;
+		background: var(--background-light);
 	}
 
 	img {
@@ -57,6 +57,6 @@
 	}
 
 	.bottom p {
-		color: #adadb8;
+		color: var(--gray);
 	}
 </style>

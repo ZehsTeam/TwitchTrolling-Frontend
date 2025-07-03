@@ -15,7 +15,7 @@
 		display: flex;
 		flex-direction: row;
 		align-items: end;
-		background-color: #9146ff; /* Twitch purple */
+		background-color: var(--purple);
 		padding: 1rem 20em;
 		user-select: none;
 	}
