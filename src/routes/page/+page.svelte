@@ -11,7 +11,7 @@
 
 	$effect(() => {
 		if (pageState.state === 'loaded') {
-			document.title = `${pageState.channel} - TwitchTrolling`;
+			document.title = `${pageState.channel} - TwitchTrolling for R.E.P.O.`;
 		}
 	});
 

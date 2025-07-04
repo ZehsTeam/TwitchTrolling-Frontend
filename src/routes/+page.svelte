@@ -8,7 +8,6 @@
 	const pagesState = getPagesState();
 
 	onMount(() => {
-		document.title = `TwitchTrolling`;
 		pagesState.load();
 	});
 </script>
