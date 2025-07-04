@@ -102,7 +102,7 @@
 
 <style>
 	main {
-		margin: 0 var(--page-width-margin-1);
+		margin: 0 20em;
 	}
 
 	.usage-info {
@@ -113,21 +113,21 @@
 		margin-bottom: 1em;
 	}
 
-	@media only screen and (max-width: var(--page-width-2)) {
+	@media only screen and (max-width: 1420px) {
 		main {
-			margin: 0 var(--page-width-margin-2);
+			margin: 0 15em;
 		}
 	}
 
-	@media only screen and (max-width: var(--page-width-3)) {
+	@media only screen and (max-width: 1250px) {
 		main {
-			margin: 0 var(--page-width-margin-3);
+			margin: 0 10em;
 		}
 	}
 
-	@media only screen and (max-width: var(--page-width-4)) {
+	@media only screen and (max-width: 960px) {
 		main {
-			margin: 0 var(--page-width-margin-4);
+			margin: 0 2em;
 		}
 	}
 </style>
