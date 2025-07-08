@@ -4,8 +4,9 @@
 	import { getPageState } from '$lib/state/PageState.svelte';
 	import SEO from '$lib/components/SEO.svelte';
 	import Header from '$lib/components/ui/Header.svelte';
-	import PageInfo from './PageInfo.svelte';
-	import CardList from './CardList.svelte';
+	import Main from '$lib/components/ui/Main.svelte';
+	import PageInfo from '$lib/components/repo/PageInfo.svelte';
+	import CardList from '$lib/components/repo/CardList.svelte';
 
 	const pageState = getPageState();
 
@@ -36,7 +37,7 @@
 
 <Header />
 
-<main>
+<Main>
 	{#if pageState.state === 'loading'}
 		<br />
 		<h2>Loading...</h2>
@@ -98,36 +99,14 @@
 		<br />
 		<h2>This page does not exist.</h2>
 	{/if}
-</main>
+</Main>
 
 <style>
-	main {
-		margin: 0 20em;
-	}
-
 	.usage-info {
 		margin-bottom: 1em;
 	}
 
 	.sub-info {
 		margin-bottom: 1em;
-	}
-
-	@media only screen and (max-width: 1420px) {
-		main {
-			margin: 0 15em;
-		}
-	}
-
-	@media only screen and (max-width: 1250px) {
-		main {
-			margin: 0 10em;
-		}
-	}
-
-	@media only screen and (max-width: 960px) {
-		main {
-			margin: 0 2em;
-		}
 	}
 </style>

@@ -4,7 +4,7 @@
 	import Main from '$lib/components/ui/Main.svelte';
 </script>
 
-<SEO overrides={{ title: `TwitchTrolling for Lethal Company.` }} />
+<SEO overrides={{ title: `Streamer's Page - TwitchTrolling for Lethal Company.` }} />
 
 <Header />
 

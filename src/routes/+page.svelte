@@ -3,22 +3,16 @@
 
 	import SEO from '$lib/components/SEO.svelte';
 	import Header from '$lib/components/ui/Header.svelte';
+	import Main from '$lib/components/ui/Main.svelte';
 	import PageCardList from '$lib/components/home/PageCardList.svelte';
-	import { getPagesState } from '$lib/state/PagesState.svelte';
-
-	const pagesState = getPagesState();
-
-	onMount(() => {
-		pagesState.load();
-	});
 </script>
 
 <SEO />
 
 <Header />
 
-<main>
-	<div class="header">
+<Main>
+	<div class="info">
 		<p>
 			R.E.P.O. mod to let Twitch chat spawn monsters and trigger events with custom bit amounts and
 			subs. Highly configurable, easy to use, no extension or app needed.
@@ -29,35 +23,10 @@
 			> mod on Thunderstore.
 		</p>
 	</div>
-	{#if pagesState.pages.length}
-		<PageCardList pages={pagesState.pages} />
-	{/if}
-</main>
+</Main>
 
 <style>
-	main {
-		margin: 0 20em;
-	}
-
-	.header {
+	.info {
 		margin: 1em 0;
-	}
-
-	@media only screen and (max-width: 1420px) {
-		main {
-			margin: 0 15em;
-		}
-	}
-
-	@media only screen and (max-width: 1250px) {
-		main {
-			margin: 0 10em;
-		}
-	}
-
-	@media only screen and (max-width: 960px) {
-		main {
-			margin: 0 2em;
-		}
 	}
 </style>
