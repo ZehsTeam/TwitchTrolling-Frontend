@@ -3,8 +3,8 @@ import { apiOrigin } from '$lib/config';
 import type { BaseListItem } from '$lib/types';
 
 export interface PageData extends BaseListItem {
-    id: string;
-    game?: string;
+	id: string;
+	game?: string;
 	channel: string;
 	expiresAt: string;
 	createdAt: string;
@@ -14,17 +14,17 @@ export interface PageData extends BaseListItem {
 
 interface PagesState {
 	pages: PageData[];
-    game: string;
+	game: string;
 	load: () => Promise<void>;
 }
 
 export class PagesStateClass implements PagesState {
 	pages = $state<PageData[]>([]);
-    game = '';
+	game = '';
 
-    constructor(game: string) {
-        this.game = game;
-    }
+	constructor(game: string) {
+		this.game = game;
+	}
 
 	load = async () => {
 		await this.fetchData();
@@ -40,10 +40,10 @@ export class PagesStateClass implements PagesState {
 
 			const data: PageData[] = await res.json();
 
-            data.forEach(page => {
-                page.getId = () => page.id;
-                page.game = this.game;
-            });
+			data.forEach((page) => {
+				page.getId = () => page.id;
+				page.game = this.game;
+			});
 
 			this.pages = data;
 		} catch (err) {

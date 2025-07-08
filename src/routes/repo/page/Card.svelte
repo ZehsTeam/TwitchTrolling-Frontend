@@ -1,6 +1,6 @@
 <script lang="ts">
-	import bitsImage from '$lib/assets/bits.png';
-	import type { CardData } from './PageState.svelte';
+	import bitsImage from '$lib/media/bits.png';
+	import type { CardData } from '$lib/state/PageState.svelte';
 
 	let {
 		card,

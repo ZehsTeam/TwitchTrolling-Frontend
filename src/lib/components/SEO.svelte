@@ -12,11 +12,12 @@
 		url: string;
 	};
 
-    const keywords = 'twitch, trolling, fun, streaming, interaction, interactions, twitch trolling, twitch trolling prices, twitch trolling enemies, twitch trolling events';
+	const keywords =
+		'twitch, trolling, fun, streaming, interaction, interactions, twitch trolling, twitch trolling prices, twitch trolling enemies, twitch trolling events';
 
-    const author = 'CritHaxXoG / Zehs';
+	const author = 'CritHaxXoG / Zehs';
 	const twitterHandle = '@ZehsStudios';
-    
+
 	const themeColor = '#9146ff';
 
 	const defaults: SEOData = {
@@ -36,12 +37,9 @@
 <svelte:head>
 	<title>{seo.title}</title>
 	<meta name="description" content={seo.description} />
-	<meta
-		name="keywords"
-		content="{keywords}"
-	/>
+	<meta name="keywords" content={keywords} />
 	<meta name="author" content={author} />
-	<meta name="theme-color" content="{themeColor}" />
+	<meta name="theme-color" content={themeColor} />
 
 	<meta property="og:type" content="website" />
 	<meta property="og:site_name" content="TwitchTrolling" />

@@ -1,9 +1,10 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import SEO from './SEO.svelte';
-	import Header from './Header.svelte';
-	import PageCardList from './PageCardList.svelte';
-	import { getPagesState } from './PagesState.svelte';
+
+	import SEO from '$lib/components/SEO.svelte';
+	import Header from '$lib/components/ui/Header.svelte';
+	import PageCardList from '$lib/components/home/PageCardList.svelte';
+	import { getPagesState } from '$lib/state/PagesState.svelte';
 
 	const pagesState = getPagesState();
 

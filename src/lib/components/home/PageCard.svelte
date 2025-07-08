@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { base } from '$app/paths';
-	import type { PageData } from './PagesState.svelte';
-	import twitchImage from '$lib/assets/twitch-64x64.png';
+	import type { PageData } from '../../state/PagesState.svelte';
+	import twitchImage from '$lib/media/twitch-64x64.png';
 	import { timeAgo, formatRemaining, getRemaining } from '$lib/utils';
 
 	let {

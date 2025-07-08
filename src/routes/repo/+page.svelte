@@ -1,22 +1,20 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import SEO from '../SEO.svelte';
-	import Header from '../Header.svelte';
-	import CardList from '../CardList.svelte';
-	import PageCard from '../PageCard.svelte';
-	import { getPagesState, type PageData } from '../PagesState.svelte';
+	import SEO from '$lib/components/SEO.svelte';
+	import Header from '$lib/components/ui/Header.svelte';
+	import CardList from '$lib/components/ui/CardList.svelte';
+	import PageCard from '$lib/components/home/PageCard.svelte';
+	import { getPagesState, type PageData } from '$lib/state/PagesState.svelte';
 
-    const pagesState = getPagesState();
+	const pagesState = getPagesState();
 
-    function renderPageCard(page: PageData) {
-        return `<PageCard page={${page}} />`;
-    }
+	function renderPageCard(page: PageData) {
+		return `<PageCard page={${page}} />`;
+	}
 
-    function getSearchMatch(page: PageData, term: string) {
+	function getSearchMatch(page: PageData, term: string) {}
 
-    }
-
-    type Sort =
+	type Sort =
 		| 'default'
 		| 'created: newest to oldest'
 		| 'created: oldest to newest'
@@ -39,18 +37,14 @@
 		'expires: soonest to latest': 'Expires: Soonest to Latest'
 	};
 
-    function getSortValue(page: PageData, sortKey: string) {
-
-    }
+	function getSortValue(page: PageData, sortKey: string) {}
 
 	onMount(() => {
 		pagesState.load();
 	});
 </script>
 
-<SEO
-	overrides={{ title: `TwitchTrolling for R.E.P.O.` }}
-/>
+<SEO overrides={{ title: `TwitchTrolling for R.E.P.O.` }} />
 
 <Header />
 
@@ -66,9 +60,9 @@
 			> mod on Thunderstore.
 		</p>
 	</div>
-	{#if pagesState.pages.length}
+	<!-- {#if pagesState.pages.length}
 		<CardList title="Pages" cards={pagesState.pages} renderCard={renderPageCard} searchPlaceholder="Name" {getSearchMatch} {sortOptions} {getSortValue} />
-	{/if}
+	{/if} -->
 </main>
 
 <style>

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import '../../app.css';
-	import { setPageState } from './PageState.svelte';
+	import { setPageState } from '../../../lib/state/PageState.svelte';
 
 	let { children } = $props();
 

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import twitchImage from '$lib/assets/twitch-64x64.png';
+	import twitchImage from '$lib/media/twitch-64x64.png';
 
 	let {
 		channel,
