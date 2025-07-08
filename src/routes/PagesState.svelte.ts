@@ -1,22 +1,30 @@
 import { getContext, setContext } from 'svelte';
 import { apiOrigin } from '$lib/config';
+import type { BaseListItem } from '$lib/types';
 
-export type PageData = {
-	id: string;
+export interface PageData extends BaseListItem {
+    id: string;
+    game?: string;
 	channel: string;
 	expiresAt: string;
 	createdAt: string;
 	updatedAt: string;
 	pageViewers?: number;
-};
+}
 
 interface PagesState {
 	pages: PageData[];
+    game: string;
 	load: () => Promise<void>;
 }
 
 export class PagesStateClass implements PagesState {
 	pages = $state<PageData[]>([]);
+    game = '';
+
+    constructor(game: string) {
+        this.game = game;
+    }
 
 	load = async () => {
 		await this.fetchData();
@@ -31,6 +39,12 @@ export class PagesStateClass implements PagesState {
 			}
 
 			const data: PageData[] = await res.json();
+
+            data.forEach(page => {
+                page.getId = () => page.id;
+                page.game = this.game;
+            });
+
 			this.pages = data;
 		} catch (err) {
 			console.error('Fetch error:', err);
@@ -44,7 +58,7 @@ export const getPagesState = (key = DEFAULT_KEY) => {
 	return getContext<PagesState>(key);
 };
 
-export const setPagesState = (key = DEFAULT_KEY) => {
-	const pagesState = new PagesStateClass();
+export const setPagesState = (game: string, key = DEFAULT_KEY) => {
+	const pagesState = new PagesStateClass(game);
 	return setContext(key, pagesState);
 };

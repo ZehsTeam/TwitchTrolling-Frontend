@@ -184,7 +184,11 @@ export class PageStateClass implements PageState {
 		const updateUpdatedAgo = () => {
 			if (expired || !this.updatedAt) return;
 
-			this.updatedAgo = timeAgo(this.updatedAt);
+			if (this.updatedAt === this.createdAt) {
+                this.updatedAgo = 'never';
+            } else {
+                this.updatedAgo = timeAgo(this.updatedAt);
+            }
 		};
 
 		const updateExpiresInCountdown = () => {

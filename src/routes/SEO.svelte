@@ -12,13 +12,17 @@
 		url: string;
 	};
 
-	const author = 'CritHaxXoG / Zehs';
+    const keywords = 'twitch, trolling, fun, streaming, interaction, interactions, twitch trolling, twitch trolling prices, twitch trolling enemies, twitch trolling events';
+
+    const author = 'CritHaxXoG / Zehs';
 	const twitterHandle = '@ZehsStudios';
+    
+	const themeColor = '#9146ff';
 
 	const defaults: SEOData = {
-		title: 'TwitchTrolling for R.E.P.O.',
+		title: 'TwitchTrolling',
 		description:
-			'R.E.P.O. mod to let Twitch chat spawn monsters and trigger events with custom bit amounts and subs. Highly configurable, easy to use, no extension or app needed.',
+			'R.E.P.O. and Lethal Company mods to let Twitch chat spawn monsters and trigger events with custom bit amounts and subs. Highly configurable, easy to use, no extension or app needed.',
 		image: '/icon.png',
 		url: 'https://twitchtrolling.com'
 	};
@@ -34,10 +38,10 @@
 	<meta name="description" content={seo.description} />
 	<meta
 		name="keywords"
-		content="twitch, trolling, fun, streaming, interaction, interactions, twitch trolling, twitch trolling prices, twitch trolling enemies, twitch trolling events"
+		content="{keywords}"
 	/>
 	<meta name="author" content={author} />
-	<meta name="theme-color" content="#9146ff" />
+	<meta name="theme-color" content="{themeColor}" />
 
 	<meta property="og:type" content="website" />
 	<meta property="og:site_name" content="TwitchTrolling" />

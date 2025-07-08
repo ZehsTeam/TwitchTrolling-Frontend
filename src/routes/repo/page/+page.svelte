@@ -2,8 +2,8 @@
 	import { onMount, onDestroy } from 'svelte';
 	import { enemyImageMap, eventImageMap } from '$lib/imageMaps';
 	import { getPageState } from './PageState.svelte';
-	import SEO from '../SEO.svelte';
-	import Header from '../Header.svelte';
+	import SEO from '../../SEO.svelte';
+	import Header from '../../Header.svelte';
 	import PageInfo from './PageInfo.svelte';
 	import CardList from './CardList.svelte';
 

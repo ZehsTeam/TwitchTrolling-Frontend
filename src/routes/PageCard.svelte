@@ -11,7 +11,12 @@
 	} = $props();
 
 	let createdAgo = $derived.by(() => timeAgo(page.createdAt));
-	let updatedAgo = $derived.by(() => timeAgo(page.updatedAt));
+	let updatedAgo = $derived.by(() => {
+		if (page.updatedAt === page.createdAt) {
+			return 'never';
+		}
+		return timeAgo(page.updatedAt);
+	});
 	let expiresIn = $derived.by(() => formatRemaining(getRemaining(page.expiresAt)));
 </script>
 
