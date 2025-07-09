@@ -19,7 +19,7 @@
 	]);
 </script>
 
-<CardHolder title="Games" searchPlaceholder="Name" cardCount={games.length}>
+<CardHolder title="Games" cardCount={games.length}>
 	<div class="cards">
 		{#each games as game (game.name)}
 			<GameCard {game} />
