@@ -11,7 +11,12 @@
 	} = $props();
 
 	let createdAgo = $derived.by(() => timeAgo(page.createdAt));
-	let updatedAgo = $derived.by(() => timeAgo(page.updatedAt));
+	let updatedAgo = $derived.by(() => {
+		if (page.updatedAt === page.createdAt) {
+			return 'never';
+		}
+		return timeAgo(page.updatedAt);
+	});
 	let expiresIn = $derived.by(() => formatRemaining(getRemaining(page.expiresAt)));
 </script>
 
@@ -25,8 +30,8 @@
 			{#if page.pageViewers !== undefined}
 				<p>Live Viewers: {page.pageViewers}</p>
 			{/if}
-			<p>Created {createdAgo} ago</p>
-			<p>Updated {updatedAgo} ago</p>
+			<p>Created {createdAgo}</p>
+			<p>Updated {updatedAgo}</p>
 			<p>Expires in {expiresIn}</p>
 		</div>
 	</section>

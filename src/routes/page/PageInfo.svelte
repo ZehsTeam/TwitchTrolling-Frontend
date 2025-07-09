@@ -23,8 +23,8 @@
 	</div>
 	<div class="times-container">
 		<p>Live Viewers: {pageViewers}</p>
-		<p>Created {createdAgo} ago</p>
-		<p>Updated {updatedAgo} ago</p>
+		<p>Created {createdAgo}</p>
+		<p>Updated {updatedAgo}</p>
 		<p>Expires in {expiresInCountdown}</p>
 	</div>
 </section>

@@ -20,7 +20,7 @@ export function timeAgo(date: string) {
 		parts.push(`${seconds} sec${seconds > 1 ? 's' : ''}`);
 	}
 
-	return parts.join(' ');
+	return `${parts.join(' ')} ago`;
 }
 
 export function getRemaining(date: string) {
