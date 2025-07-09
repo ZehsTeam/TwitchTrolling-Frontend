@@ -10,7 +10,7 @@ export type SubMultipliers = {
 	tier3: number;
 };
 
-export type CardData = {
+export type EffectData = {
 	_id: string;
 	name: string;
 	price: number;
@@ -22,8 +22,8 @@ export type PageData = {
 	id: string;
 	channel: string;
 	subEnemySpawnCountMultipliers?: SubMultipliers;
-	enemies: CardData[];
-	events: CardData[];
+	enemies: EffectData[];
+	events: EffectData[];
 	expiresAt: string;
 	createdAt: string;
 	updatedAt: string;
@@ -35,8 +35,8 @@ interface PageState {
 	id: string;
 	channel: string;
 	subEnemySpawnCountMultipliers: SubMultipliers | undefined;
-	enemies: CardData[];
-	events: CardData[];
+	enemies: EffectData[];
+	events: EffectData[];
 	expiresAt: string;
 	createdAt: string;
 	updatedAt: string;
@@ -46,7 +46,6 @@ interface PageState {
 	updatedAgo: string;
 	load: (id: string) => Promise<void>;
 	unload: () => Promise<void>;
-	stopTimer: () => void;
 }
 
 export class PageStateClass implements PageState {
@@ -54,8 +53,8 @@ export class PageStateClass implements PageState {
 	id = $state('');
 	channel = $state('');
 	subEnemySpawnCountMultipliers = $state<SubMultipliers | undefined>(undefined);
-	enemies = $state<CardData[]>([]);
-	events = $state<CardData[]>([]);
+	enemies = $state<EffectData[]>([]);
+	events = $state<EffectData[]>([]);
 	expiresAt = $state('');
 	createdAt = $state('');
 	updatedAt = $state('');
@@ -214,7 +213,7 @@ export class PageStateClass implements PageState {
 		}
 	};
 
-	stopTimer = () => {
+	private stopTimer = () => {
 		clearInterval(this.timerInterval!);
 	};
 }

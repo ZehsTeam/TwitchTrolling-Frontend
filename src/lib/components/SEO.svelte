@@ -23,7 +23,7 @@
 	const defaults: SEOData = {
 		title: 'TwitchTrolling',
 		description:
-			'R.E.P.O. and Lethal Company mods to let Twitch chat spawn monsters and trigger events with custom bit amounts and subs. Highly configurable, easy to use, no extension or app needed.',
+			'Mods to let Twitch chat interact with your game. Highly configurable, easy to use, no extension or app needed.',
 		image: '/icon.png',
 		url: 'https://twitchtrolling.com'
 	};

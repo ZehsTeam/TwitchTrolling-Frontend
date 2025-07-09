@@ -1,7 +1,7 @@
 <script lang="ts">
-	import type { PageData } from '$lib/state/PagesState.svelte';
-	import PageCard from './PageCard.svelte';
-	import Select from '$lib/components/ui/Select.svelte';
+	import type { PageData } from '$lib/state/repo/PagesState.svelte';
+	import CardHolder from '$lib/components/ui/CardHolder.svelte';
+	import PageCard from '$lib/components/repo/PageCard.svelte';
 
 	let {
 		pages
@@ -11,7 +11,7 @@
 
 	let search = $state('');
 
-	type PageSort =
+	type Sort =
 		| 'default'
 		| 'created: newest to oldest'
 		| 'created: oldest to newest'
@@ -22,7 +22,7 @@
 		| 'expires: latest to soonest'
 		| 'expires: soonest to latest';
 
-	const pageSortOptions: Record<PageSort, string> = {
+	const sortOptions: Record<Sort, string> = {
 		default: 'Default',
 		'created: newest to oldest': 'Created: Newest to Oldest',
 		'created: oldest to newest': 'Created: Oldest to Newest',
@@ -34,9 +34,9 @@
 		'expires: soonest to latest': 'Expires: Soonest to Latest'
 	};
 
-	let pageSort = $state<PageSort>('created: newest to oldest');
+	let sort = $state<Sort>('created: newest to oldest');
 
-	let filteredPages = $derived.by(() => {
+	let filteredCards = $derived.by(() => {
 		let result = pages;
 
 		// Apply search filter
@@ -46,7 +46,7 @@
 		}
 
 		// Apply sorting
-		switch (pageSort) {
+		switch (sort) {
 			case 'created: newest to oldest':
 				result = [...result].sort(
 					(a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
@@ -87,86 +87,36 @@
 
 		return result;
 	});
+
+	function handleSearch(term: string) {
+		search = term;
+	}
+
+	function handleSort(sortKey: string) {
+		sort = sortKey as Sort;
+	}
 </script>
 
-<section>
-	<div class="header">
-		<h2>Pages <span class="count">(x{filteredPages.length})</span></h2>
-		<div class="filters">
-			<div class="input-container">
-				<p>Search:</p>
-				<input bind:value={search} type="text" placeholder="Name" />
-			</div>
-			<div class="input-container">
-				<p>Sort by:</p>
-				<Select
-					options={pageSortOptions}
-					value={pageSort}
-					handleChanged={(value) => (pageSort = value as PageSort)}
-				/>
-			</div>
-		</div>
-	</div>
+<CardHolder
+	title="Pages"
+	searchPlaceholder="Name"
+	{handleSearch}
+	{sortOptions}
+	defaultSort={sort}
+	{handleSort}
+	cardCount={filteredCards.length}
+>
 	<div class="cards">
-		{#each filteredPages as page}
+		{#each filteredCards as page (page.id)}
 			<PageCard {page} />
 		{/each}
 	</div>
-</section>
+</CardHolder>
 
 <style>
-	section {
-		margin-bottom: 2em;
-	}
-
-	.header {
-		margin-bottom: 1em;
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		gap: 1em;
-	}
-
-	.count {
-		font-size: 1.2rem;
-		color: var(--purple-light);
-		text-transform: none;
-	}
-
-	.filters {
-		display: flex;
-		gap: 2em;
-	}
-
-	.input-container {
-		display: flex;
-		align-items: center;
-		gap: 0.5em;
-	}
-
-	h2 {
-		font-size: 1.5em;
-		text-transform: uppercase;
-	}
-
 	.cards {
 		display: grid;
 		grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr));
 		gap: 1rem;
-	}
-
-	@media only screen and (max-width: 650px) {
-		.header {
-			flex-direction: column;
-			align-items: start;
-			gap: 1em;
-		}
-	}
-
-	@media only screen and (max-width: 570px) {
-		.filters {
-			flex-direction: column;
-			gap: 1em;
-		}
 	}
 </style>

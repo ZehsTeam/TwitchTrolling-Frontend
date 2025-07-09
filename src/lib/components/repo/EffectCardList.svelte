@@ -1,29 +1,33 @@
 <script lang="ts">
-	import type { CardData } from '$lib/state/PageState.svelte';
-	import Card from './Card.svelte';
+	import type { EffectData } from '$lib/state/repo/PageState.svelte';
+	import CardHolder from '$lib/components/ui/CardHolder.svelte';
+	import EffectCard from '$lib/components/repo/EffectCard.svelte';
 	import emptyImage from '$lib/media/empty.png';
-	import Select from '$lib/components/ui/Select.svelte';
 
 	let {
 		title,
+		searchPlaceholder,
+		defaultSort = 'default',
 		cards,
 		cardImageMap
 	}: {
 		title: string;
-		cards: CardData[];
+		searchPlaceholder: string;
+		defaultSort: Sort;
+		cards: EffectData[];
 		cardImageMap?: Record<string, string>;
 	} = $props();
 
-	type CardSort =
+	let search = $state('');
+
+	type Sort =
 		| 'default'
 		| 'name: a-z'
 		| 'name: z-a'
 		| 'price: lowest to highest'
 		| 'price: highest to lowest';
 
-	let search = $state('');
-
-	const cardSortOptions: Record<CardSort, string> = {
+	const sortOptions: Record<Sort, string> = {
 		default: 'Default',
 		'name: a-z': 'Name: A-Z',
 		'name: z-a': 'Name: Z-A',
@@ -31,7 +35,7 @@
 		'price: highest to lowest': 'Price: Highest to Lowest'
 	};
 
-	let cardSort = $state<CardSort>('default');
+	let sort = $state<Sort>(defaultSort);
 
 	let filteredCards = $derived.by(() => {
 		let result = cards;
@@ -47,7 +51,7 @@
 		}
 
 		// Apply sorting
-		switch (cardSort) {
+		switch (sort) {
 			case 'name: a-z':
 				result = [...result].sort((a, b) => a.name.localeCompare(b.name));
 				break;
@@ -65,93 +69,43 @@
 		return result;
 	});
 
-	function getCardImage(card: CardData) {
+	function getCardImage(card: EffectData) {
 		if (!cardImageMap) {
 			return emptyImage;
 		}
 
 		return cardImageMap[card.name] || emptyImage;
 	}
+
+	function handleSearch(term: string) {
+		search = term;
+	}
+
+	function handleSort(sortKey: string) {
+		sort = sortKey as Sort;
+	}
 </script>
 
-<section>
-	<div class="header">
-		<h2>{title} <span class="count">(x{filteredCards.length})</span></h2>
-		<div class="filters">
-			<div class="input-container">
-				<p>Search:</p>
-				<input bind:value={search} type="text" placeholder="Name or Price" />
-			</div>
-			<div class="input-container">
-				<p>Sort by:</p>
-				<Select
-					options={cardSortOptions}
-					value={cardSort}
-					handleChanged={(value) => (cardSort = value as CardSort)}
-				/>
-			</div>
-		</div>
-	</div>
+<CardHolder
+	{title}
+	{searchPlaceholder}
+	{handleSearch}
+	{sortOptions}
+	defaultSort={sort}
+	{handleSort}
+	cardCount={filteredCards.length}
+>
 	<div class="cards">
 		{#each filteredCards as card (card._id)}
-			<Card {card} image={getCardImage(card)} />
+			<EffectCard {card} image={getCardImage(card)} />
 		{/each}
 	</div>
-</section>
+</CardHolder>
 
 <style>
-	section {
-		margin-bottom: 2em;
-	}
-
-	.header {
-		margin-bottom: 1em;
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		gap: 1em;
-	}
-
-	.count {
-		font-size: 1.2rem;
-		color: var(--purple-light);
-		text-transform: none;
-	}
-
-	.filters {
-		display: flex;
-		gap: 2em;
-	}
-
-	.input-container {
-		display: flex;
-		align-items: center;
-		gap: 0.5em;
-	}
-
-	h2 {
-		font-size: 1.5em;
-		text-transform: uppercase;
-	}
-
 	.cards {
 		display: grid;
 		grid-template-columns: repeat(auto-fill, minmax(min(180px, 100%), 1fr));
 		gap: 1rem;
-	}
-
-	@media only screen and (max-width: 650px) {
-		.header {
-			flex-direction: column;
-			align-items: start;
-			gap: 1em;
-		}
-	}
-
-	@media only screen and (max-width: 570px) {
-		.filters {
-			flex-direction: column;
-			gap: 1em;
-		}
 	}
 </style>

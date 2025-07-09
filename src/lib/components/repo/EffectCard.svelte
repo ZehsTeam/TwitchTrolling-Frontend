@@ -1,12 +1,12 @@
 <script lang="ts">
 	import bitsImage from '$lib/media/bits.png';
-	import type { CardData } from '$lib/state/PageState.svelte';
+	import type { EffectData } from '$lib/state/repo/PageState.svelte';
 
 	let {
 		card,
 		image
 	}: {
-		card: CardData;
+		card: EffectData;
 		image: string;
 	} = $props();
 </script>

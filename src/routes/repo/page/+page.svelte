@@ -1,14 +1,14 @@
 <script lang="ts">
 	import { onMount, onDestroy } from 'svelte';
 	import { enemyImageMap, eventImageMap } from '$lib/imageMaps';
-	import { getPageState } from '$lib/state/PageState.svelte';
+	import { setPageState } from '$lib/state/repo/PageState.svelte';
 	import SEO from '$lib/components/SEO.svelte';
 	import Header from '$lib/components/ui/Header.svelte';
 	import Main from '$lib/components/ui/Main.svelte';
 	import PageInfo from '$lib/components/repo/PageInfo.svelte';
-	import CardList from '$lib/components/repo/CardList.svelte';
+	import EffectCardList from '$lib/components/repo/EffectCardList.svelte';
 
-	const pageState = getPageState();
+	const pageState = setPageState();
 
 	$effect(() => {
 		if (pageState.state === 'loaded') {
@@ -35,7 +35,7 @@
 	}}
 />
 
-<Header />
+<Header homeLink="/repo" />
 
 <Main>
 	{#if pageState.state === 'loading'}
@@ -85,11 +85,23 @@
 		{/if}
 
 		{#if pageState.enemies.length}
-			<CardList title="Enemies" cards={pageState.enemies} cardImageMap={enemyImageMap} />
+			<EffectCardList
+				title="Enemies"
+				searchPlaceholder="Name"
+				defaultSort="default"
+				cards={pageState.enemies}
+				cardImageMap={enemyImageMap}
+			/>
 		{/if}
 
 		{#if pageState.events.length}
-			<CardList title="Events" cards={pageState.events} cardImageMap={eventImageMap} />
+			<EffectCardList
+				title="Events"
+				searchPlaceholder="Name"
+				defaultSort="default"
+				cards={pageState.events}
+				cardImageMap={eventImageMap}
+			/>
 		{/if}
 
 		{#if !pageState.enemies.length && !pageState.events.length}

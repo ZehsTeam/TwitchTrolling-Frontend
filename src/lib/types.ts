@@ -1,4 +1,5 @@
-export interface BaseListItem {
-	getId: () => string;
-	[key: string]: unknown; // Allows flexibility
-}
+export type GameData = {
+	name: string;
+	link: string;
+	image: string;
+};

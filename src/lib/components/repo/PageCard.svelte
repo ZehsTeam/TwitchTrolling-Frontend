@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { base } from '$app/paths';
-	import type { PageData } from '../../state/PagesState.svelte';
+	import type { PageData } from '$lib/state/repo/PagesState.svelte';
 	import twitchImage from '$lib/media/twitch-64x64.png';
 	import { timeAgo, formatRemaining, getRemaining } from '$lib/utils';
 
@@ -20,7 +20,7 @@
 	let expiresIn = $derived.by(() => formatRemaining(getRemaining(page.expiresAt)));
 </script>
 
-<a href="{base}/page?id={page.id}">
+<a href="{base}/repo/page?id={page.id}">
 	<section>
 		<div class="top">
 			<img src={twitchImage} alt="Twitch" />
