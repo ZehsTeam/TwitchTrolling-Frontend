@@ -88,6 +88,7 @@
 					options={cardSortOptions}
 					value={cardSort}
 					handleChanged={(value) => (cardSort = value as CardSort)}
+                    class="sort-select"
 				/>
 			</div>
 		</div>
@@ -140,7 +141,7 @@
 		gap: 1rem;
 	}
 
-	@media only screen and (max-width: 650px) {
+	@media only screen and (max-width: 730px) {
 		.header {
 			flex-direction: column;
 			align-items: start;
@@ -148,10 +149,22 @@
 		}
 	}
 
-	@media only screen and (max-width: 570px) {
+	@media only screen and (max-width: 600px) {
 		.filters {
 			flex-direction: column;
 			gap: 1em;
 		}
+	}
+
+    @media only screen and (max-width: 420px) {
+        .filters,
+        .input-container {
+            width: 100%;
+        }
+
+		input,
+        :global(.sort-select) {
+            flex-grow: 1;
+        }
 	}
 </style>

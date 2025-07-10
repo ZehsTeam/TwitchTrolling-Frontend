@@ -68,10 +68,10 @@
 				);
 				break;
 			case 'live viewers: highest to lowest':
-				result = [...result].sort((a, b) => (b.pageViewers || 0) - (a.pageViewers || 0));
+				result = [...result].sort((a, b) => (b.liveViewers || 0) - (a.liveViewers || 0));
 				break;
 			case 'live viewers: lowest to highest':
-				result = [...result].sort((a, b) => (a.pageViewers || 0) - (b.pageViewers || 0));
+				result = [...result].sort((a, b) => (a.liveViewers || 0) - (b.liveViewers || 0));
 				break;
 			case 'expires: latest to soonest':
 				result = [...result].sort(
@@ -103,6 +103,7 @@
 					options={pageSortOptions}
 					value={pageSort}
 					handleChanged={(value) => (pageSort = value as PageSort)}
+                    class="sort-select"
 				/>
 			</div>
 		</div>
@@ -155,7 +156,7 @@
 		gap: 1rem;
 	}
 
-	@media only screen and (max-width: 650px) {
+	@media only screen and (max-width: 730px) {
 		.header {
 			flex-direction: column;
 			align-items: start;
@@ -163,10 +164,22 @@
 		}
 	}
 
-	@media only screen and (max-width: 570px) {
+	@media only screen and (max-width: 640px) {
 		.filters {
 			flex-direction: column;
 			gap: 1em;
 		}
+	}
+
+    @media only screen and (max-width: 420px) {
+        .filters,
+        .input-container {
+            width: 100%;
+        }
+
+		input,
+        :global(.sort-select) {
+            flex-grow: 1;
+        }
 	}
 </style>

@@ -7,7 +7,8 @@ export type PageData = {
 	expiresAt: string;
 	createdAt: string;
 	updatedAt: string;
-	pageViewers?: number;
+	liveViewers: number;
+	uniqueViews: number;
 };
 
 interface PagesState {

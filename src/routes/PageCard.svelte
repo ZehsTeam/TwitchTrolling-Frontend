@@ -27,8 +27,11 @@
 			<h2>{page.channel}</h2>
 		</div>
 		<div class="bottom">
-			{#if page.pageViewers !== undefined}
-				<p>Live Viewers: {page.pageViewers}</p>
+			{#if page.liveViewers !== undefined}
+				<p>Live Viewers: {page.liveViewers}</p>
+			{/if}
+			{#if page.uniqueViews !== undefined}
+				<p>Views: {page.uniqueViews}</p>
 			{/if}
 			<p>Created {createdAgo}</p>
 			<p>Updated {updatedAgo}</p>

@@ -52,7 +52,8 @@
 			createdAgo={pageState.createdAgo}
 			updatedAgo={pageState.updatedAgo}
 			expiresInCountdown={pageState.expiresInCountdown}
-			pageViewers={pageState.pageViewers}
+			liveViewers={pageState.liveViewers}
+			uniqueViews={pageState.uniqueViews}
 		/>
 
 		{#if pageState.enemies.length || pageState.events.length}
@@ -125,7 +126,7 @@
 		}
 	}
 
-	@media only screen and (max-width: 960px) {
+	@media only screen and (max-width: 1000px) {
 		main {
 			margin: 0 2em;
 		}

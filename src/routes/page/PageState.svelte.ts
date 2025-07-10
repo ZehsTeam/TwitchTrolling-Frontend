@@ -27,7 +27,8 @@ export type PageData = {
 	expiresAt: string;
 	createdAt: string;
 	updatedAt: string;
-	pageViewers?: number;
+	liveViewers: number;
+	uniqueViews: number;
 };
 
 interface PageState {
@@ -40,13 +41,13 @@ interface PageState {
 	expiresAt: string;
 	createdAt: string;
 	updatedAt: string;
-	pageViewers: number;
+	liveViewers: number;
+	uniqueViews: number;
 	expiresInCountdown: string;
 	createdAgo: string;
 	updatedAgo: string;
 	load: (id: string) => Promise<void>;
 	unload: () => Promise<void>;
-	stopTimer: () => void;
 }
 
 export class PageStateClass implements PageState {
@@ -59,7 +60,8 @@ export class PageStateClass implements PageState {
 	expiresAt = $state('');
 	createdAt = $state('');
 	updatedAt = $state('');
-	pageViewers = $state(0);
+	liveViewers = $state(0);
+	uniqueViews = $state(0);
 	expiresInCountdown = $state('');
 	createdAgo = $state('');
 	updatedAgo = $state('');
@@ -131,11 +133,19 @@ export class PageStateClass implements PageState {
 			}
 		});
 
-		this.eventSource.addEventListener('page-viewers', (event) => {
+		this.eventSource.addEventListener('live-viewers', (event) => {
 			try {
-				this.pageViewers = parseInt(event.data);
+				this.liveViewers = parseInt(event.data);
 			} catch (err) {
-				console.warn('Invalid SSE viewers payload:', event.data);
+				console.warn('Invalid SSE live viewers payload:', event.data);
+			}
+		});
+
+		this.eventSource.addEventListener('unique-views', (event) => {
+			try {
+				this.uniqueViews = parseInt(event.data);
+			} catch (err) {
+				console.warn('Invalid SSE unique views payload:', event.data);
 			}
 		});
 
@@ -163,7 +173,8 @@ export class PageStateClass implements PageState {
 		if (data.expiresAt) this.expiresAt = data.expiresAt;
 		if (data.createdAt) this.createdAt = data.createdAt;
 		if (data.updatedAt) this.updatedAt = data.updatedAt;
-		if (data.pageViewers) this.pageViewers = data.pageViewers;
+		if (data.liveViewers) this.liveViewers = data.liveViewers;
+		if (data.uniqueViews) this.uniqueViews = data.uniqueViews;
 	};
 
 	private startTimer = () => {
@@ -215,7 +226,7 @@ export class PageStateClass implements PageState {
 		}
 	};
 
-	stopTimer = () => {
+	private stopTimer = () => {
 		clearInterval(this.timerInterval!);
 	};
 }

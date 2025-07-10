@@ -6,13 +6,15 @@
 		createdAgo,
 		updatedAgo,
 		expiresInCountdown,
-		pageViewers
+		liveViewers,
+		uniqueViews
 	}: {
 		channel: string;
 		createdAgo: string;
 		updatedAgo: string;
 		expiresInCountdown: string;
-		pageViewers: number;
+		liveViewers: number;
+		uniqueViews: number;
 	} = $props();
 </script>
 
@@ -22,7 +24,8 @@
 		<h1><a href="https://www.twitch.tv/{channel}" target="_blank">{channel}</a></h1>
 	</div>
 	<div class="times-container">
-		<p>Live Viewers: {pageViewers}</p>
+		<p>Live Viewers: {liveViewers}</p>
+		<p>Views: {uniqueViews}</p>
 		<p>Created {createdAgo}</p>
 		<p>Updated {updatedAgo}</p>
 		<p>Expires in {expiresInCountdown}</p>
@@ -71,7 +74,7 @@
 		text-decoration: underline;
 	}
 
-	@media only screen and (max-width: 1550px) {
+	@media only screen and (max-width: 1600px) {
 		section {
 			flex-direction: column;
 			justify-content: start;
@@ -80,7 +83,7 @@
 		}
 	}
 
-	@media only screen and (max-width: 700px) {
+	@media only screen and (max-width: 750px) {
 		.times-container {
 			flex-direction: column;
 		}

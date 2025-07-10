@@ -31,7 +31,7 @@
 		}
 	}
 
-	@media only screen and (max-width: 960px) {
+	@media only screen and (max-width: 1000px) {
 		main {
 			margin: 0 2em;
 		}
