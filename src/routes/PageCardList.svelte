@@ -58,14 +58,20 @@
 				);
 				break;
 			case 'updated: newest to oldest':
-				result = [...result].sort(
-					(a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()
-				);
+				result = [...result].sort((a, b) => {
+					// Handle null values - treat them as earliest possible date
+					const aTime = a.updatedByOwnerAt ? new Date(a.updatedByOwnerAt).getTime() : 0;
+					const bTime = b.updatedByOwnerAt ? new Date(b.updatedByOwnerAt).getTime() : 0;
+					return bTime - aTime;
+				});
 				break;
 			case 'updated: oldest to newest':
-				result = [...result].sort(
-					(a, b) => new Date(a.updatedAt).getTime() - new Date(b.updatedAt).getTime()
-				);
+				result = [...result].sort((a, b) => {
+					// Handle null values - treat them as earliest possible date
+					const aTime = a.updatedByOwnerAt ? new Date(a.updatedByOwnerAt).getTime() : 0;
+					const bTime = b.updatedByOwnerAt ? new Date(b.updatedByOwnerAt).getTime() : 0;
+					return aTime - bTime;
+				});
 				break;
 			case 'live viewers: highest to lowest':
 				result = [...result].sort((a, b) => (b.liveViewers || 0) - (a.liveViewers || 0));

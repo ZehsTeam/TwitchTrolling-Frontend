@@ -12,10 +12,10 @@
 
 	let createdAgo = $derived.by(() => timeAgo(page.createdAt));
 	let updatedAgo = $derived.by(() => {
-		if (page.updatedAt === page.createdAt) {
+		if (page.updatedByOwnerAt === null) {
 			return 'never';
 		}
-		return timeAgo(page.updatedAt);
+		return timeAgo(page.updatedByOwnerAt);
 	});
 	let expiresIn = $derived.by(() => formatRemaining(getRemaining(page.expiresAt)));
 </script>

@@ -26,7 +26,7 @@ export type PageData = {
 	events: CardData[];
 	expiresAt: string;
 	createdAt: string;
-	updatedAt: string;
+	updatedByOwnerAt: string | null;
 	liveViewers: number;
 	uniqueViews: number;
 };
@@ -40,7 +40,7 @@ interface PageState {
 	events: CardData[];
 	expiresAt: string;
 	createdAt: string;
-	updatedAt: string;
+	updatedByOwnerAt: string | null;
 	liveViewers: number;
 	uniqueViews: number;
 	expiresInCountdown: string;
@@ -59,7 +59,7 @@ export class PageStateClass implements PageState {
 	events = $state<CardData[]>([]);
 	expiresAt = $state('');
 	createdAt = $state('');
-	updatedAt = $state('');
+	updatedByOwnerAt = $state<string | null>(null);
 	liveViewers = $state(0);
 	uniqueViews = $state(0);
 	expiresInCountdown = $state('');
@@ -172,9 +172,9 @@ export class PageStateClass implements PageState {
 		if (data.events) this.events = data.events;
 		if (data.expiresAt) this.expiresAt = data.expiresAt;
 		if (data.createdAt) this.createdAt = data.createdAt;
-		if (data.updatedAt) this.updatedAt = data.updatedAt;
-		if (data.liveViewers) this.liveViewers = data.liveViewers;
-		if (data.uniqueViews) this.uniqueViews = data.uniqueViews;
+		if (data.updatedByOwnerAt !== undefined) this.updatedByOwnerAt = data.updatedByOwnerAt;
+		if (data.liveViewers !== undefined) this.liveViewers = data.liveViewers;
+		if (data.uniqueViews !== undefined) this.uniqueViews = data.uniqueViews;
 	};
 
 	private startTimer = () => {
@@ -193,14 +193,14 @@ export class PageStateClass implements PageState {
 		};
 
 		const updateUpdatedAgo = () => {
-			if (expired || !this.updatedAt) return;
+			if (expired) return;
 
-			if (this.updatedAt === this.createdAt) {
+			if (this.updatedByOwnerAt === null) {
 				this.updatedAgo = 'never';
 				return;
 			}
 
-			this.updatedAgo = timeAgo(this.updatedAt);
+			this.updatedAgo = timeAgo(this.updatedByOwnerAt);
 		};
 
 		const updateExpiresInCountdown = () => {

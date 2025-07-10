@@ -6,7 +6,7 @@ export type PageData = {
 	channel: string;
 	expiresAt: string;
 	createdAt: string;
-	updatedAt: string;
+	updatedByOwnerAt: string | null;
 	liveViewers: number;
 	uniqueViews: number;
 };
