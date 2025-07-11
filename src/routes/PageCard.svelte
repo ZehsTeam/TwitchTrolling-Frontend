@@ -28,10 +28,10 @@
 		</div>
 		<div class="bottom">
 			{#if page.liveViewers !== undefined}
-				<p>{page.liveViewers} Live Viewers</p>
+				<p>{page.liveViewers} Live Viewer{page.liveViewers === 1 ? '' : 's'}</p>
 			{/if}
 			{#if page.uniqueViews !== undefined}
-				<p>{page.uniqueViews} Views</p>
+				<p>{page.uniqueViews} View{page.uniqueViews === 1 ? '' : 's'}</p>
 			{/if}
 			<p>Created {createdAgo}</p>
 			<p>Updated {updatedAgo}</p>

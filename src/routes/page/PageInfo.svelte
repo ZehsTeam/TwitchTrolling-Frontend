@@ -24,8 +24,8 @@
 		<h1><a href="https://www.twitch.tv/{channel}" target="_blank">{channel}</a></h1>
 	</div>
 	<div class="times-container">
-		<p>{liveViewers} Live Viewers</p>
-		<p>{uniqueViews} Views</p>
+		<p>{liveViewers} Live Viewer{liveViewers === 1 ? '' : 's'}</p>
+		<p>{uniqueViews} View{uniqueViews === 1 ? '' : 's'}</p>
 		<p>Created {createdAgo}</p>
 		<p>Updated {updatedAgo}</p>
 		<p>Expires in {expiresInCountdown}</p>
