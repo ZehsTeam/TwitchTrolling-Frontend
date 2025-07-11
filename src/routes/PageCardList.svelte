@@ -109,7 +109,7 @@
 					options={pageSortOptions}
 					value={pageSort}
 					handleChanged={(value) => (pageSort = value as PageSort)}
-                    class="sort-select"
+					class="sort-select"
 				/>
 			</div>
 		</div>
@@ -177,15 +177,15 @@
 		}
 	}
 
-    @media only screen and (max-width: 420px) {
-        .filters,
-        .input-container {
-            width: 100%;
-        }
+	@media only screen and (max-width: 420px) {
+		.filters,
+		.input-container {
+			width: 100%;
+		}
 
 		input,
-        :global(.sort-select) {
-            flex-grow: 1;
-        }
+		:global(.sort-select) {
+			flex-grow: 1;
+		}
 	}
 </style>
