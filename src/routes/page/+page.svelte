@@ -6,6 +6,8 @@
 	import Header from '../Header.svelte';
 	import PageInfo from './PageInfo.svelte';
 	import CardList from './CardList.svelte';
+	import bitsImage from '$lib/assets/bits.png';
+	import Star from '../Star.svelte';
 
 	const pageState = getPageState();
 
@@ -57,34 +59,45 @@
 		/>
 
 		{#if pageState.enemies.length || pageState.events.length}
-			<div class="usage-info">
+			<div class="info-section">
 				<p>
 					To spawn enemies or trigger events, simply cheer the specified amount of bits in the
 					streamer's chat.
 				</p>
 				<p>
-					If multiple enemies share the same prices, or multiple events, one will be chosen at random from
-					that group.
+					If multiple enemies share the same prices, or multiple events, one will be chosen at
+					random from that group.
 				</p>
 			</div>
-            <div class="usage-info">
-                <h2>Important Information</h2>
-                <p>
-                    Enemy prices can't match event prices. While duplicate prices are allowed within enemies or within events, no enemy can have the same price as any event.
-                </p>
-                <p>
-                    RANDOM ENEMY and RANDOM EVENT cannot share the same price.
-                </p>
-                <p>
-                    Please notify the streamer if you notice any prices like this.
-                </p>
-            </div>
+			<div class="info-section">
+				<h2>Important Information</h2>
+				<p>Only the host of the lobby can spawn enemies and trigger events!</p>
+				<p>You can edit the prices in the in-game MODS menu.</p>
+				<p>
+					Enemy prices can't match event prices. While duplicate prices are allowed within enemies
+					or within events, no enemy can have the same price as any event.
+				</p>
+				<p>RANDOM ENEMY and RANDOM EVENT cannot share the same price.</p>
+				<p>Please notify the streamer if you notice any prices like this.</p>
+				<div class="currencies-container">
+					<div class="currency-container">
+						<img src={bitsImage} alt="Twitch Bits" />
+						<p>Twitch bits</p>
+					</div>
+					<div class="currency-container">
+						<Star />
+						<p>Twitch subs</p>
+					</div>
+				</div>
+			</div>
 		{/if}
 
 		{#if pageState.enemies.length && pageState.subEnemySpawnCountMultipliers}
-			<div class="sub-info">
+			<div class="info-section">
 				<h2>Sub Tier Multipliers</h2>
-                <p>Using subs to spawn enemies will multiply the enemy spawn count by the tier of the sub.</p>
+				<p>
+					Using subs to spawn enemies will multiply the enemy spawn count by the tier of the sub.
+				</p>
 				<p>
 					Tier 1: Multiplies enemy spawn count by {pageState.subEnemySpawnCountMultipliers.tier1}
 				</p>
@@ -119,12 +132,29 @@
 		margin: 0 20em;
 	}
 
-	.usage-info {
+	.info-section {
 		margin-bottom: 1em;
 	}
 
-	.sub-info {
-		margin-bottom: 1em;
+	.currencies-container {
+		display: flex;
+		gap: 0.75em;
+	}
+
+	.currency-container {
+		display: flex;
+		align-items: center;
+	}
+
+	.currency-container img {
+		width: 15px;
+		height: 15px;
+		margin-right: 4px;
+	}
+
+	.currency-container:not(:last-child)::after {
+		content: '/';
+		margin-left: 0.75em;
 	}
 
 	@media only screen and (max-width: 1420px) {
