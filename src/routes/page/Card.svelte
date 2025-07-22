@@ -1,5 +1,5 @@
 <script lang="ts">
-	import bitsImage from '$lib/assets/bits.png';
+	import Bit from '../Bit.svelte';
 	import Star from '../Star.svelte';
 	import type { CardData } from './PageState.svelte';
 
@@ -14,18 +14,19 @@
 
 <section>
 	<div class="name-container">
-		<p>
-			{card.name}
-			{#if card.spawnCount}
-				<span class="spawn-count">(x{card.spawnCount})</span>
-			{/if}
-		</p>
+		<p>{card.name}</p>
+		{#if card.spawnCount}
+			<p class="spawn-count">(Spawns x{card.spawnCount})</p>
+		{:else}
+			<p class="spawn-count">-</p>
+		{/if}
 	</div>
 	<div class="image-container">
 		<img src={image} alt="Icon" />
 	</div>
+	<div class="push-down"></div>
 	<div class="price-container">
-		<img src={bitsImage} alt="Twitch Bits" />
+        <Bit />
 		<p class="price">{card.price}</p>
 		{#if card.subPrice}
 			<p class="price-separator">/</p>
@@ -38,6 +39,8 @@
 <style>
 	section {
 		width: 100%;
+		display: flex;
+		flex-direction: column;
 		border-radius: 8px;
 		border: var(--purple) solid 2px;
 		box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
@@ -52,6 +55,7 @@
 	.name-container {
 		margin: 0.35rem 0;
 		display: flex;
+		flex-direction: column;
 		justify-content: center;
 		align-items: center;
 		text-align: center;
@@ -75,21 +79,15 @@
 		object-position: center;
 	}
 
+	.push-down {
+		flex-grow: 1;
+	}
+
 	.price-container {
 		margin: 0.35rem 0;
 		display: flex;
 		justify-content: center;
 		align-items: center;
-	}
-
-	.price-container img {
-		width: 15px;
-		height: 15px;
-		margin-right: 4px;
-	}
-
-	.price-container img {
-		transform: translateY(-2px);
 	}
 
 	.price {

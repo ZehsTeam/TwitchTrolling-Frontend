@@ -6,7 +6,7 @@
 	import Header from '../Header.svelte';
 	import PageInfo from './PageInfo.svelte';
 	import CardList from './CardList.svelte';
-	import bitsImage from '$lib/assets/bits.png';
+    import Bit from '../Bit.svelte';
 	import Star from '../Star.svelte';
 
 	const pageState = getPageState();
@@ -65,10 +65,44 @@
 					streamer's chat.
 				</p>
 				<p>
-					If multiple enemies share the same prices, or multiple events, one will be chosen at
+					If multiple enemies share the same prices or multiple events share the same prices, one will be chosen at
 					random from that group.
 				</p>
 			</div>
+            <div class="info-section">
+                <div class="currencies-container">
+                    <p>Key: </p>
+					<div class="currency-container">
+                        <dt><Bit yOffset="0" /></dt>
+                        <dd>Twitch Bits</dd>
+					</div>
+					<div class="currency-container">
+                        <dt><Star yOffset="0" /></dt>
+                        <dd>Twitch Subs</dd>
+					</div>
+				</div>
+            </div>
+		{/if}
+
+        {#if pageState.enemies.length && pageState.subEnemySpawnCountMultipliers}
+			<div class="info-section">
+				<h2>Sub Tier Multipliers</h2>
+				<p>
+					Using subs to spawn enemies will multiply the enemy spawn count by the tier of the sub.
+				</p>
+				<p>
+					Tier 1 <Star yOffset="2px" /> multiplies enemy spawn count by {pageState.subEnemySpawnCountMultipliers.tier1}
+				</p>
+				<p>
+					Tier 2 <Star yOffset="2px" /> multiplies enemy spawn count by {pageState.subEnemySpawnCountMultipliers.tier2}
+				</p>
+				<p>
+					Tier 3 <Star yOffset="2px" /> multiplies enemy spawn count by {pageState.subEnemySpawnCountMultipliers.tier3}
+				</p>
+			</div>
+		{/if}
+
+        {#if pageState.enemies.length || pageState.events.length}
 			<div class="info-section">
 				<h2>Important Information</h2>
 				<p>Only the host of the lobby can spawn enemies and trigger events!</p>
@@ -79,34 +113,6 @@
 				</p>
 				<p>RANDOM ENEMY and RANDOM EVENT cannot share the same price.</p>
 				<p>Please notify the streamer if you notice any prices like this.</p>
-				<div class="currencies-container">
-					<div class="currency-container">
-						<img src={bitsImage} alt="Twitch Bits" />
-						<p>Twitch bits</p>
-					</div>
-					<div class="currency-container">
-						<Star />
-						<p>Twitch subs</p>
-					</div>
-				</div>
-			</div>
-		{/if}
-
-		{#if pageState.enemies.length && pageState.subEnemySpawnCountMultipliers}
-			<div class="info-section">
-				<h2>Sub Tier Multipliers</h2>
-				<p>
-					Using subs to spawn enemies will multiply the enemy spawn count by the tier of the sub.
-				</p>
-				<p>
-					Tier 1: Multiplies enemy spawn count by {pageState.subEnemySpawnCountMultipliers.tier1}
-				</p>
-				<p>
-					Tier 2: Multiplies enemy spawn count by {pageState.subEnemySpawnCountMultipliers.tier2}
-				</p>
-				<p>
-					Tier 3: Multiplies enemy spawn count by {pageState.subEnemySpawnCountMultipliers.tier3}
-				</p>
 			</div>
 		{/if}
 
@@ -144,17 +150,6 @@
 	.currency-container {
 		display: flex;
 		align-items: center;
-	}
-
-	.currency-container img {
-		width: 15px;
-		height: 15px;
-		margin-right: 4px;
-	}
-
-	.currency-container:not(:last-child)::after {
-		content: '/';
-		margin-left: 0.75em;
 	}
 
 	@media only screen and (max-width: 1420px) {

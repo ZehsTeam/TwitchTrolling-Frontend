@@ -14,7 +14,6 @@
 
 <svg
 	viewBox="0 0 20 20"
-	aria-hidden="true"
 	style="width: {size}; height: {size}; fill: {color}; margin: {margin}; transform: translateY({yOffset});"
 >
 	<path
