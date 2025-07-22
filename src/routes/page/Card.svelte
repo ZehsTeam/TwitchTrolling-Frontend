@@ -16,7 +16,7 @@
 	<div class="name-container">
 		<p>{card.name}</p>
 		{#if card.spawnCount}
-			<p class="spawn-count">(Spawns x{card.spawnCount})</p>
+			<p class="spawn-count">Spawns x{card.spawnCount}</p>
 		{:else}
 			<p class="spawn-count">-</p>
 		{/if}
