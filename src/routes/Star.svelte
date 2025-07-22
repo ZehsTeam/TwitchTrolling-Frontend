@@ -1,11 +1,11 @@
 <script lang="ts">
 	let {
-		size = 17,
+		size = '17px',
 		color = 'var(--purple-light)',
 		margin = '0 4px 0 0',
 		yOffset = '-2px'
 	}: {
-		size?: number;
+		size?: string;
 		color?: string;
 		margin?: string;
 		yOffset?: string;
