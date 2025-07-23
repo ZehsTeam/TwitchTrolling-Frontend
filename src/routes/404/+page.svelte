@@ -1,6 +1,6 @@
 <script lang="ts">
-	import SEO from '../SEO.svelte';
-	import Header from '../Header.svelte';
+	import SEO from '$lib/components/SEO.svelte';
+	import Header from '$lib/components/Header.svelte';
 </script>
 
 <SEO

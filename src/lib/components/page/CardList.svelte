@@ -1,8 +1,8 @@
 <script lang="ts">
-	import type { CardData } from './PageState.svelte';
-	import Card from './Card.svelte';
-	import emptyImage from '$lib/assets/empty.png';
-	import Select from '../Select.svelte';
+	import type { CardData } from '$lib/PageState.svelte';
+	import Card from '$lib/components/page/Card.svelte';
+	import emptyImage from '$lib/media/empty.png';
+	import Select from '$lib/components/Select.svelte';
 
 	let {
 		title,

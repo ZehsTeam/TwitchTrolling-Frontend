@@ -1,7 +1,8 @@
 <script lang="ts">
-	import Bit from '../Bit.svelte';
-	import Star from '../Star.svelte';
-	import type { CardData } from './PageState.svelte';
+	import Bit from '$lib/components/Bit.svelte';
+	import Star from '$lib/components/Star.svelte';
+	import Gift from '$lib/components/Gift.svelte';
+	import type { CardData } from '$lib/PageState.svelte';
 
 	let {
 		card,
@@ -26,12 +27,20 @@
 	</div>
 	<div class="push-down"></div>
 	<div class="price-container">
-        <Bit />
+		<Bit />
 		<p class="price">{card.price}</p>
 		{#if card.subPrice}
 			<p class="price-separator">/</p>
-			<Star />
-			<p class="price">{card.subPrice}</p>
+			{#if card.subPrice > 1}
+				<Gift />
+				<p class="price">{card.subPrice}</p>
+			{:else}
+				<Star />
+				<p class="price">{card.subPrice}</p>
+				<p class="price-separator">/</p>
+				<Gift />
+				<p class="price">{card.subPrice}</p>
+			{/if}
 		{/if}
 	</div>
 </section>

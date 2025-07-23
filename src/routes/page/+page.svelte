@@ -1,15 +1,16 @@
 <script lang="ts">
 	import { onMount, onDestroy } from 'svelte';
 	import { enemyImageMap, eventImageMap } from '$lib/imageMaps';
-	import { getPageState } from './PageState.svelte';
-	import SEO from '../SEO.svelte';
-	import Header from '../Header.svelte';
-	import PageInfo from './PageInfo.svelte';
-	import CardList from './CardList.svelte';
-    import Bit from '../Bit.svelte';
-	import Star from '../Star.svelte';
+	import { setPageState } from '$lib/PageState.svelte';
+	import SEO from '$lib/components/SEO.svelte';
+	import Header from '$lib/components/Header.svelte';
+	import PageInfo from '$lib/components/page/PageInfo.svelte';
+	import CardList from '$lib/components/page/CardList.svelte';
+	import Bit from '$lib/components/Bit.svelte';
+	import Star from '$lib/components/Star.svelte';
+	import Gift from '$lib/components/Gift.svelte';
 
-	const pageState = getPageState();
+	const pageState = setPageState();
 
 	$effect(() => {
 		if (pageState.state === 'loaded') {
@@ -61,48 +62,54 @@
 		{#if pageState.enemies.length || pageState.events.length}
 			<div class="info-section">
 				<p>
-					To spawn enemies or trigger events, simply cheer the specified amount of bits in the
-					streamer's chat.
+					To spawn enemies or trigger events, simply cheer the specified amount of bits, subscribe,
+					or gift subscriptions in the streamer's chat.
 				</p>
 				<p>
-					If multiple enemies share the same prices or multiple events share the same prices, one will be chosen at
-					random from that group.
+					If multiple enemies share the same prices or multiple events share the same prices, one
+					will be chosen at random from that group.
 				</p>
 			</div>
-            <div class="info-section">
-                <div class="currencies-container">
-                    <p>Key: </p>
+			<div class="info-section">
+				<div class="currencies-container">
 					<div class="currency-container">
-                        <dt><Bit yOffset="0" /></dt>
-                        <dd>Twitch Bits</dd>
+						<dt><Bit yOffset="0" /></dt>
+						<dd>Twitch Bit</dd>
 					</div>
 					<div class="currency-container">
-                        <dt><Star yOffset="0" /></dt>
-                        <dd>Twitch Subs</dd>
+						<dt><Star yOffset="0" /></dt>
+						<dd>Twitch Sub</dd>
+					</div>
+					<div class="currency-container">
+						<dt><Gift yOffset="0" /></dt>
+						<dd>Twitch Gift Sub</dd>
 					</div>
 				</div>
-            </div>
+			</div>
 		{/if}
 
-        {#if pageState.enemies.length && pageState.subEnemySpawnCountMultipliers}
+		{#if pageState.enemies.length && pageState.subEnemySpawnCountMultipliers}
 			<div class="info-section">
 				<h2>Sub Tier Multipliers</h2>
 				<p>
 					Using subs to spawn enemies will multiply the enemy spawn count by the tier of the sub.
 				</p>
 				<p>
-					Tier 1 <Star yOffset="2px" /> multiplies enemy spawn count by {pageState.subEnemySpawnCountMultipliers.tier1}
+					Tier 1 <Star yOffset="2px" /> or <Gift yOffset="2px" /> multiplies enemy spawn count by {pageState
+						.subEnemySpawnCountMultipliers.tier1}
 				</p>
 				<p>
-					Tier 2 <Star yOffset="2px" /> multiplies enemy spawn count by {pageState.subEnemySpawnCountMultipliers.tier2}
+					Tier 2 <Star yOffset="2px" /> or <Gift yOffset="2px" /> multiplies enemy spawn count by {pageState
+						.subEnemySpawnCountMultipliers.tier2}
 				</p>
 				<p>
-					Tier 3 <Star yOffset="2px" /> multiplies enemy spawn count by {pageState.subEnemySpawnCountMultipliers.tier3}
+					Tier 3 <Star yOffset="2px" /> or <Gift yOffset="2px" /> multiplies enemy spawn count by {pageState
+						.subEnemySpawnCountMultipliers.tier3}
 				</p>
 			</div>
 		{/if}
 
-        {#if pageState.enemies.length || pageState.events.length}
+		{#if pageState.enemies.length || pageState.events.length}
 			<div class="info-section">
 				<h2>Important Information</h2>
 				<p>Only the host of the lobby can spawn enemies and trigger events!</p>
@@ -111,7 +118,7 @@
 					Enemy prices can't match event prices. While duplicate prices are allowed within enemies
 					or within events, no enemy can have the same price as any event.
 				</p>
-				<p>RANDOM ENEMY and RANDOM EVENT cannot share the same price.</p>
+				<p>RANDOM ENEMY and RANDOM EVENT must have unique prices.</p>
 				<p>Please notify the streamer if you notice any prices like this.</p>
 			</div>
 		{/if}

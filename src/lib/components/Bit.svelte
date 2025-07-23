@@ -13,6 +13,8 @@
 </script>
 
 <svg
+	xmlns:xlink="http://www.w3.org/1999/xlink"
+	xmlns="http://www.w3.org/2000/svg"
 	viewBox="0 0 20 20"
 	style="width: {size}; height: {size}; fill: {color}; margin: {margin}; transform: translateY({yOffset});"
 	><path
