@@ -72,6 +72,7 @@
 			</div>
 			<div class="info-section">
 				<div class="currencies-container">
+					<p>Key:</p>
 					<div class="currency-container">
 						<dt><Bit yOffset="0" /></dt>
 						<dd>Twitch Bit</dd>
