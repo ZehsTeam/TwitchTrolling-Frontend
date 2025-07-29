@@ -4,6 +4,9 @@ import { apiOrigin } from '$lib/config';
 export type PageData = {
 	id: string;
 	channel: string;
+	isPartner: boolean;
+	logo: string;
+	followers: number | null;
 	expiresAt: string;
 	createdAt: string;
 	updatedByOwnerAt: string | null;

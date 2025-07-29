@@ -1,34 +1,40 @@
 <script lang="ts">
+	import type { PageState } from '$lib/PageState.svelte';
 	import twitchImage from '$lib/media/twitch-64x64.png';
+	import Partner from '../Partner.svelte';
 
 	let {
-		channel,
-		createdAgo,
-		updatedAgo,
-		expiresInCountdown,
-		liveViewers,
-		uniqueViews
+		pageState
 	}: {
-		channel: string;
-		createdAgo: string;
-		updatedAgo: string;
-		expiresInCountdown: string;
-		liveViewers: number;
-		uniqueViews: number;
+		pageState: PageState;
 	} = $props();
 </script>
 
 <section>
 	<div class="channel-container">
-		<img src={twitchImage} alt="Twitch" />
-		<h1><a href="https://www.twitch.tv/{channel}" target="_blank">{channel}</a></h1>
+		{#if pageState.logo}
+			<img src={pageState.logo} alt="Logo" class="full-circle" />
+		{:else}
+			<img src={twitchImage} alt="Logo" />
+		{/if}
+		<h1>
+			<a href="https://www.twitch.tv/{pageState.channel}" target="_blank">{pageState.channel}</a>
+		</h1>
+		{#if pageState.isPartner}
+			<div class="partner-container">
+				<Partner margin="0 0 0 4px" />
+			</div>
+		{/if}
 	</div>
 	<div class="times-container">
-		<p>{liveViewers} Live Viewer{liveViewers === 1 ? '' : 's'}</p>
-		<p>{uniqueViews} View{uniqueViews === 1 ? '' : 's'}</p>
-		<p>Created {createdAgo}</p>
-		<p>Updated {updatedAgo}</p>
-		<p>Expires in {expiresInCountdown}</p>
+		<p>
+			{pageState.liveViewers} Live Viewer{pageState.liveViewers === 1 ? '' : 's'}
+			<span class="small-text">(Page)</span>
+		</p>
+		<p>{pageState.uniqueViews} View{pageState.uniqueViews === 1 ? '' : 's'}</p>
+		<p>Created {pageState.createdAgo}</p>
+		<p>Updated {pageState.updatedAgo}</p>
+		<p>Expires in {pageState.expiresInCountdown}</p>
 	</div>
 </section>
 
@@ -72,6 +78,19 @@
 
 	a:hover {
 		text-decoration: underline;
+	}
+
+	.full-circle {
+		border-radius: 50%;
+	}
+
+	.small-text {
+		font-size: 0.8em;
+	}
+
+	.partner-container {
+		display: flex;
+		align-items: end;
 	}
 
 	@media only screen and (max-width: 1600px) {

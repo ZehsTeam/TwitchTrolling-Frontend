@@ -21,6 +21,9 @@ export type CardData = {
 export type PageData = {
 	id: string;
 	channel: string;
+	isPartner: boolean;
+	logo: string;
+	followers: number | null;
 	subEnemySpawnCountMultipliers?: SubMultipliers;
 	enemies: CardData[];
 	events: CardData[];
@@ -31,10 +34,13 @@ export type PageData = {
 	uniqueViews: number;
 };
 
-interface PageState {
+export interface PageState {
 	state: State;
 	id: string;
 	channel: string;
+	isPartner: boolean;
+	logo: string;
+	followers: number | null;
 	subEnemySpawnCountMultipliers: SubMultipliers | undefined;
 	enemies: CardData[];
 	events: CardData[];
@@ -54,6 +60,9 @@ export class PageStateClass implements PageState {
 	state = $state<State>('loading');
 	id = $state('');
 	channel = $state('');
+	isPartner = $state(false);
+	logo = $state('');
+	followers = $state<number | null>(null);
 	subEnemySpawnCountMultipliers = $state<SubMultipliers | undefined>(undefined);
 	enemies = $state<CardData[]>([]);
 	events = $state<CardData[]>([]);
@@ -166,6 +175,9 @@ export class PageStateClass implements PageState {
 
 	private handleData = (data: Partial<PageData>) => {
 		if (data.channel) this.channel = data.channel;
+		if (data.isPartner) this.isPartner = data.isPartner;
+		if (data.logo) this.logo = data.logo;
+		if (data.followers) this.followers = data.followers;
 		if (data.subEnemySpawnCountMultipliers)
 			this.subEnemySpawnCountMultipliers = data.subEnemySpawnCountMultipliers;
 		if (data.enemies) this.enemies = data.enemies;

@@ -50,14 +50,7 @@
 		<br />
 		<h2>This page has been deleted.</h2>
 	{:else if pageState.state == 'loaded'}
-		<PageInfo
-			channel={pageState.channel}
-			createdAgo={pageState.createdAgo}
-			updatedAgo={pageState.updatedAgo}
-			expiresInCountdown={pageState.expiresInCountdown}
-			liveViewers={pageState.liveViewers}
-			uniqueViews={pageState.uniqueViews}
-		/>
+		<PageInfo {pageState} />
 
 		{#if pageState.enemies.length || pageState.events.length}
 			<div class="info-section">

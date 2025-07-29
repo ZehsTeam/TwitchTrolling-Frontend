@@ -3,6 +3,7 @@
 	import type { PageData } from '$lib/PagesState.svelte';
 	import twitchImage from '$lib/media/twitch-64x64.png';
 	import { timeAgo, formatRemaining, getRemaining } from '$lib/utils';
+	import Partner from '../Partner.svelte';
 
 	let {
 		page
@@ -23,12 +24,32 @@
 <a href="{base}/page?id={page.id}">
 	<section>
 		<div class="top">
-			<img src={twitchImage} alt="Twitch" />
+			{#if page.logo}
+				<img src={page.logo} alt="Logo" class="full-circle" />
+			{:else}
+				<img src={twitchImage} alt="Logo" />
+			{/if}
 			<h2>{page.channel}</h2>
+			{#if page.isPartner}
+				<div class="partner-container">
+					<Partner margin="0 0 0 4px" />
+				</div>
+			{/if}
 		</div>
 		<div class="bottom">
+			<p>
+				{#if page.followers}
+					{page.followers}
+				{:else}
+					?
+				{/if}
+				Followers
+			</p>
 			{#if page.liveViewers !== undefined}
-				<p>{page.liveViewers} Live Viewer{page.liveViewers === 1 ? '' : 's'}</p>
+				<p>
+					{page.liveViewers} Live Viewer{page.liveViewers === 1 ? '' : 's'}
+					<span class="small-text">(Page)</span>
+				</p>
 			{/if}
 			{#if page.uniqueViews !== undefined}
 				<p>{page.uniqueViews} View{page.uniqueViews === 1 ? '' : 's'}</p>
@@ -66,5 +87,18 @@
 
 	.bottom p {
 		color: var(--gray);
+	}
+
+	.full-circle {
+		border-radius: 50%;
+	}
+
+	.small-text {
+		font-size: 0.8em;
+	}
+
+	.partner-container {
+		display: flex;
+		align-items: end;
 	}
 </style>
