@@ -9,6 +9,7 @@
 	import Bit from '$lib/components/Bit.svelte';
 	import Star from '$lib/components/Star.svelte';
 	import Gift from '$lib/components/Gift.svelte';
+	import Main from '$lib/components/Main.svelte';
 
 	const pageState = setPageState();
 
@@ -39,7 +40,7 @@
 
 <Header />
 
-<main>
+<Main>
 	{#if pageState.state === 'loading'}
 		<br />
 		<h2>Loading...</h2>
@@ -49,6 +50,9 @@
 	{:else if pageState.state === 'deleted'}
 		<br />
 		<h2>This page has been deleted.</h2>
+	{:else if pageState.state === 'failed'}
+		<br />
+		<h2>Failed to fetch page data.</h2>
 	{:else if pageState.state == 'loaded'}
 		<PageInfo {pageState} />
 
@@ -132,13 +136,9 @@
 		<br />
 		<h2>This page does not exist.</h2>
 	{/if}
-</main>
+</Main>
 
 <style>
-	main {
-		margin: 0 20em;
-	}
-
 	.info-section {
 		margin-bottom: 1em;
 	}
@@ -151,23 +151,5 @@
 	.currency-container {
 		display: flex;
 		align-items: center;
-	}
-
-	@media only screen and (max-width: 1420px) {
-		main {
-			margin: 0 15em;
-		}
-	}
-
-	@media only screen and (max-width: 1250px) {
-		main {
-			margin: 0 10em;
-		}
-	}
-
-	@media only screen and (max-width: 1000px) {
-		main {
-			margin: 0 2em;
-		}
 	}
 </style>

@@ -2,7 +2,7 @@ import { getContext, setContext } from 'svelte';
 import { apiOrigin } from '$lib/config';
 import { timeAgo, getRemaining, formatRemaining } from '$lib/utils';
 
-export type State = 'loading' | 'loaded' | 'not found' | 'expired' | 'deleted';
+export type State = 'loading' | 'loaded' | 'not found' | 'expired' | 'deleted' | 'failed';
 
 export type SubMultipliers = {
 	tier1: number;
@@ -81,6 +81,10 @@ export class PageStateClass implements PageState {
 	private timerInterval: ReturnType<typeof setInterval> | null = null;
 
 	load = async (id: string) => {
+		if (id === null || id === undefined || id === '') {
+			id = 'null';
+		}
+
 		if (this.id === id) return;
 
 		await this.unload();
@@ -107,8 +111,9 @@ export class PageStateClass implements PageState {
 			const res = await fetch(`${apiOrigin}/api/pages/${this.id}`);
 
 			if (!res.ok) {
+				console.error('Failed to fetch page data');
 				this.state = 'not found';
-				throw new Error('Failed to fetch page data');
+				return;
 			}
 
 			const data: PageData = await res.json();
@@ -116,7 +121,7 @@ export class PageStateClass implements PageState {
 			this.state = 'loaded';
 		} catch (err) {
 			console.error('Fetch error:', err);
-			this.state = 'not found';
+			this.state = 'failed';
 		}
 	};
 

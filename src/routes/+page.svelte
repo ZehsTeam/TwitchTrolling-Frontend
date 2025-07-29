@@ -4,6 +4,7 @@
 	import Header from '$lib/components/Header.svelte';
 	import PageCardList from '$lib/components/home/PageCardList.svelte';
 	import { setPagesState } from '$lib/PagesState.svelte';
+	import Main from '$lib/components/Main.svelte';
 
 	const pagesState = setPagesState();
 
@@ -16,7 +17,7 @@
 
 <Header />
 
-<main>
+<Main>
 	<div class="header">
 		<p>
 			R.E.P.O. mod to let Twitch chat spawn monsters and trigger events with custom bit amounts and
@@ -28,35 +29,20 @@
 			> mod on Thunderstore.
 		</p>
 	</div>
-	{#if pagesState.pages.length}
-		<PageCardList pages={pagesState.pages} />
+
+    {#if pagesState.state === 'loading'}
+		<h2>Loading...</h2>
+    {:else if pagesState.state == 'loaded' && pagesState.pages.length}
+        <PageCardList pages={pagesState.pages} />
+    {:else if pagesState.state === 'failed'}
+        <h2>Failed to fetch pages data.</h2>
+	{:else}
+		<h2>No pages found.</h2>
 	{/if}
-</main>
+</Main>
 
 <style>
-	main {
-		margin: 0 20em;
-	}
-
 	.header {
 		margin: 1em 0;
-	}
-
-	@media only screen and (max-width: 1420px) {
-		main {
-			margin: 0 15em;
-		}
-	}
-
-	@media only screen and (max-width: 1250px) {
-		main {
-			margin: 0 10em;
-		}
-	}
-
-	@media only screen and (max-width: 1000px) {
-		main {
-			margin: 0 2em;
-		}
 	}
 </style>
