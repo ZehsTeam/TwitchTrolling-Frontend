@@ -174,16 +174,16 @@ export class PageStateClass implements PageState {
 	};
 
 	private handleData = (data: Partial<PageData>) => {
-		if (data.channel) this.channel = data.channel;
-		if (data.isPartner) this.isPartner = data.isPartner;
-		if (data.logo) this.logo = data.logo;
-		if (data.followers) this.followers = data.followers;
-		if (data.subEnemySpawnCountMultipliers)
+		if (data.channel !== undefined) this.channel = data.channel;
+		if (data.isPartner !== undefined) this.isPartner = data.isPartner;
+		if (data.logo !== undefined) this.logo = data.logo;
+		if (data.followers !== undefined) this.followers = data.followers;
+		if (data.subEnemySpawnCountMultipliers !== undefined)
 			this.subEnemySpawnCountMultipliers = data.subEnemySpawnCountMultipliers;
-		if (data.enemies) this.enemies = data.enemies;
-		if (data.events) this.events = data.events;
-		if (data.expiresAt) this.expiresAt = data.expiresAt;
-		if (data.createdAt) this.createdAt = data.createdAt;
+		if (data.enemies !== undefined) this.enemies = data.enemies;
+		if (data.events !== undefined) this.events = data.events;
+		if (data.expiresAt !== undefined) this.expiresAt = data.expiresAt;
+		if (data.createdAt !== undefined) this.createdAt = data.createdAt;
 		if (data.updatedByOwnerAt !== undefined) this.updatedByOwnerAt = data.updatedByOwnerAt;
 		if (data.liveViewers !== undefined) this.liveViewers = data.liveViewers;
 		if (data.uniqueViews !== undefined) this.uniqueViews = data.uniqueViews;
