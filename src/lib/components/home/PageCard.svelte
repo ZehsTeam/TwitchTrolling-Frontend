@@ -29,13 +29,18 @@
 			{:else}
 				<img src={twitchImage} alt="Logo" />
 			{/if}
-			<h2>{page.channel}</h2>
+			{#if page.displayName}
+				<h2>{page.displayName}</h2>
+			{:else}
+				<h2>{page.channel}</h2>
+			{/if}
 			{#if page.isPartner}
 				<div class="partner-container">
 					<Partner margin="0 0 0 4px" />
 				</div>
 			{/if}
 		</div>
+		<div class="push-down"></div>
 		<div class="bottom">
 			<p>
 				{#if page.followers}
@@ -63,7 +68,10 @@
 
 <style>
 	section {
+		height: 100%;
 		padding: 0.5em;
+		display: flex;
+		flex-direction: column;
 		border-radius: 8px;
 		border: var(--purple) solid 2px;
 		box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
@@ -83,6 +91,10 @@
 	.top {
 		display: flex;
 		align-items: center;
+	}
+
+	.push-down {
+		flex-grow: 1;
 	}
 
 	.bottom p {

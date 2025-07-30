@@ -30,12 +30,12 @@
 		</p>
 	</div>
 
-    {#if pagesState.state === 'loading'}
+	{#if pagesState.state === 'loading'}
 		<h2>Loading...</h2>
-    {:else if pagesState.state == 'loaded' && pagesState.pages.length}
-        <PageCardList pages={pagesState.pages} />
-    {:else if pagesState.state === 'failed'}
-        <h2>Failed to fetch pages data.</h2>
+	{:else if pagesState.state == 'loaded' && pagesState.pages.length}
+		<PageCardList pages={pagesState.pages} />
+	{:else if pagesState.state === 'failed'}
+		<h2>Failed to fetch pages data.</h2>
 	{:else}
 		<h2>No pages found.</h2>
 	{/if}

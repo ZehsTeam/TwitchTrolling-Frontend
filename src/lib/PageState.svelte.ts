@@ -21,6 +21,7 @@ export type CardData = {
 export type PageData = {
 	id: string;
 	channel: string;
+	displayName: string;
 	isPartner: boolean;
 	logo: string;
 	followers: number | null;
@@ -38,6 +39,7 @@ export interface PageState {
 	state: State;
 	id: string;
 	channel: string;
+	displayName: string;
 	isPartner: boolean;
 	logo: string;
 	followers: number | null;
@@ -60,6 +62,7 @@ export class PageStateClass implements PageState {
 	state = $state<State>('loading');
 	id = $state('');
 	channel = $state('');
+	displayName = $state('');
 	isPartner = $state(false);
 	logo = $state('');
 	followers = $state<number | null>(null);
@@ -180,6 +183,7 @@ export class PageStateClass implements PageState {
 
 	private handleData = (data: Partial<PageData>) => {
 		if (data.channel !== undefined) this.channel = data.channel;
+		if (data.displayName !== undefined) this.displayName = data.displayName;
 		if (data.isPartner !== undefined) this.isPartner = data.isPartner;
 		if (data.logo !== undefined) this.logo = data.logo;
 		if (data.followers !== undefined) this.followers = data.followers;

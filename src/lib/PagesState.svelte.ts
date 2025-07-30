@@ -6,6 +6,7 @@ export type State = 'loading' | 'loaded' | 'not found' | 'failed';
 export type PageData = {
 	id: string;
 	channel: string;
+	displayName: string;
 	isPartner: boolean;
 	logo: string;
 	followers: number | null;

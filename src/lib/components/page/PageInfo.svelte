@@ -18,7 +18,13 @@
 			<img src={twitchImage} alt="Logo" />
 		{/if}
 		<h1>
-			<a href="https://www.twitch.tv/{pageState.channel}" target="_blank">{pageState.channel}</a>
+			<a href="https://www.twitch.tv/{pageState.channel}" target="_blank">
+				{#if pageState.displayName}
+					{pageState.displayName}
+				{:else}
+					{pageState.channel}
+				{/if}
+			</a>
 		</h1>
 		{#if pageState.isPartner}
 			<div class="partner-container">
