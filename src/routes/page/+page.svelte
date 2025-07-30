@@ -10,6 +10,7 @@
 	import Star from '$lib/components/Star.svelte';
 	import Gift from '$lib/components/Gift.svelte';
 	import Main from '$lib/components/Main.svelte';
+	import BrowsePagesButton from '$lib/components/BrowsePagesButton.svelte';
 
 	const pageState = setPageState();
 
@@ -47,9 +48,13 @@
 	{:else if pageState.state === 'expired'}
 		<br />
 		<h2>This page has expired.</h2>
+		<br />
+		<BrowsePagesButton />
 	{:else if pageState.state === 'deleted'}
 		<br />
 		<h2>This page has been deleted.</h2>
+		<br />
+		<BrowsePagesButton />
 	{:else if pageState.state === 'failed'}
 		<br />
 		<h2>Failed to fetch page data.</h2>
@@ -134,7 +139,9 @@
 		{/if}
 	{:else}
 		<br />
-		<h2>This page does not exist.</h2>
+		<h2>Error 404. This page does not exist.</h2>
+		<br />
+		<BrowsePagesButton />
 	{/if}
 </Main>
 

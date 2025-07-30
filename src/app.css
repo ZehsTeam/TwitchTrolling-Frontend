@@ -5,6 +5,7 @@
 	--gray: #adadb8;
 	--purple: #9146ff;
 	--purple-light: #a78bfa;
+	--purple-dark: #772ce8;
 	--background: #0e0e10;
 	--background-light: #201c24;
 	--background-light-2: #2f2f35;
@@ -72,4 +73,19 @@ select {
 
 select:focus {
 	outline: none;
+}
+
+button {
+	padding: 8px 12px;
+	color: var(--white);
+	font-size: 0.9em;
+	font-weight: 600;
+	background: var(--purple);
+	border: none;
+	border-radius: 50px;
+}
+
+button:hover {
+	cursor: pointer;
+	background: var(--purple-dark);
 }
