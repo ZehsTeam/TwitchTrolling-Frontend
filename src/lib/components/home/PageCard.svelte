@@ -29,11 +29,7 @@
 			{:else}
 				<img src={twitchImage} alt="Logo" />
 			{/if}
-			{#if page.displayName}
-				<h2>{page.displayName}</h2>
-			{:else}
-				<h2>{page.channel}</h2>
-			{/if}
+			<h2>{page.displayName}</h2>
 			{#if page.isPartner}
 				<div class="partner-container">
 					<Partner margin="0 0 0 4px" />

@@ -19,11 +19,7 @@
 		{/if}
 		<h1>
 			<a href="https://www.twitch.tv/{pageState.channel}" target="_blank">
-				{#if pageState.displayName}
-					{pageState.displayName}
-				{:else}
-					{pageState.channel}
-				{/if}
+				{pageState.displayName}
 			</a>
 		</h1>
 		{#if pageState.isPartner}
