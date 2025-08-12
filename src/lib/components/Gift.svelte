@@ -1,7 +1,7 @@
 <script lang="ts">
 	let {
 		size = '17px',
-		color = 'var(--purple-light)',
+		color = 'var(--accent-light)',
 		margin = '0 4px 0 0',
 		yOffset = '-2px'
 	}: {

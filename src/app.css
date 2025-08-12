@@ -1,16 +1,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Teko:wght@300;400;500;600;700&display=swap');
 
 :root {
-	--white: #efeff1;
-	--gray: #adadb8;
-	--purple: #9146ff;
-	--purple-light: #a78bfa;
-	--purple-dark: #772ce8;
-	--background: #0e0e10;
-	--background-light: #201c24;
-	--background-light-2: #2f2f35;
-
-	--input-border-radius: 3px;
+	--bg-dark: hsl(0 0% 0%);
+	--bg: hsl(0 0% 5%);
+	--bg-light: hsl(0 0% 10%);
+	--text: hsl(0 0% 95%);
+	--text-muted: hsl(0 0% 70%);
+	--border: hsl(0 0% 30%);
+	--accent: #9146ff;
+	--accent-light: #a78bfa;
+	--accent-dark: #772ce8;
+	--border-radius: 3px;
+	--border-radius-card: 8px;
 }
 
 * {
@@ -20,10 +21,10 @@
 }
 
 body {
-	color: var(--white);
+	color: var(--text);
 	font-family: 'Teko', sans-serif;
 	font-weight: 400;
-	background-color: var(--background);
+	background: var(--bg-dark);
 }
 
 h1,
@@ -37,7 +38,7 @@ p {
 }
 
 a {
-	color: var(--white);
+	color: var(--text);
 	text-decoration: underline;
 }
 
@@ -46,46 +47,36 @@ img {
 	pointer-events: none;
 }
 
-input {
+input,
+select {
 	padding: 0.75em;
 	border: none;
-	color: var(--white);
-	background: var(--background-light-2);
-	border: 0.5px solid rgba(189, 195, 199, 0.5);
-	border-radius: var(--input-border-radius);
+	color: var(--text);
+	background: var(--bg-light);
+	border: 1px solid var(--border);
+	border-radius: var(--border-radius);
 }
 
 input::placeholder {
 	color: rgba(239, 239, 241, 0.75);
 }
 
-input:focus {
-	outline: none;
-}
-
-select {
-	padding: 0.75em;
-	border: none;
-	color: var(--white);
-	background: var(--background-light-2);
-	border-radius: var(--input-border-radius);
-}
-
+input:focus,
 select:focus {
 	outline: none;
 }
 
 button {
 	padding: 8px 12px;
-	color: var(--white);
+	color: var(--text);
 	font-size: 0.9em;
 	font-weight: 600;
-	background: var(--purple);
+	background: var(--accent);
 	border: none;
 	border-radius: 50px;
 }
 
 button:hover {
 	cursor: pointer;
-	background: var(--purple-dark);
+	background: var(--accent-dark);
 }

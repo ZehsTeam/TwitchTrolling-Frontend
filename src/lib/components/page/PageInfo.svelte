@@ -68,6 +68,7 @@
 	.times-container p:not(:last-child)::after {
 		content: '/';
 		margin-left: 0.75em;
+		color: var(--text-muted);
 	}
 
 	h1 {

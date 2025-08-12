@@ -15,7 +15,7 @@
 		display: flex;
 		flex-direction: row;
 		align-items: end;
-		background-color: var(--purple);
+		background-color: var(--accent);
 		padding: 1rem 20em;
 		user-select: none;
 	}

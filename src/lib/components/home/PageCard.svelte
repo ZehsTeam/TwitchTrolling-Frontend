@@ -68,10 +68,9 @@
 		padding: 0.5em;
 		display: flex;
 		flex-direction: column;
-		border-radius: 8px;
-		border: var(--purple) solid 2px;
-		box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-		background: var(--background-light);
+		background: var(--bg-light);
+		border: 1px solid var(--border);
+		border-radius: var(--border-radius-card);
 	}
 
 	img {
@@ -94,7 +93,7 @@
 	}
 
 	.bottom p {
-		color: var(--gray);
+		color: var(--text-muted);
 	}
 
 	.full-circle {

@@ -136,7 +136,7 @@
 
 	.count {
 		font-size: 1.2rem;
-		color: var(--purple-light);
+		color: var(--text-muted);
 		text-transform: none;
 	}
 

@@ -50,10 +50,9 @@
 		width: 100%;
 		display: flex;
 		flex-direction: column;
-		border-radius: 8px;
-		border: var(--purple) solid 2px;
-		box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-		background: var(--background-light);
+		background: var(--bg-light);
+		border: 1px solid var(--border);
+		border-radius: var(--border-radius-card);
 	}
 
 	p {
@@ -71,8 +70,8 @@
 	}
 
 	.spawn-count {
-		font-size: 0.8em;
-		color: var(--purple-light);
+		font-size: 0.9em;
+		color: var(--text-muted);
 		text-transform: none;
 	}
 
@@ -100,11 +99,11 @@
 	}
 
 	.price {
-		color: var(--purple-light);
+		color: var(--accent-light);
 	}
 
 	.price-separator {
 		margin: 0 8px;
-		color: var(--white);
+		color: var(--text-muted);
 	}
 </style>
