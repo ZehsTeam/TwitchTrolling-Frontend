@@ -74,7 +74,7 @@
 	}
 </script>
 
-<section>
+<div class="card-list">
 	<div class="header">
 		<h2>{title} <span class="count">(x{filteredCards.length})</span></h2>
 		<div class="filters">
@@ -98,10 +98,10 @@
 			<Card {card} image={getCardImage(card)} />
 		{/each}
 	</div>
-</section>
+</div>
 
 <style>
-	section {
+	.card-list {
 		margin-bottom: 2em;
 	}
 

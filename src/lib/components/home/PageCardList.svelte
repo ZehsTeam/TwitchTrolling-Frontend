@@ -95,7 +95,7 @@
 	});
 </script>
 
-<section>
+<div class="page-card-list">
 	<div class="header">
 		<h2>Pages <span class="count">(x{filteredPages.length})</span></h2>
 		<div class="filters">
@@ -119,10 +119,10 @@
 			<PageCard {page} />
 		{/each}
 	</div>
-</section>
+</div>
 
 <style>
-	section {
+	.page-card-list {
 		margin-bottom: 2em;
 	}
 

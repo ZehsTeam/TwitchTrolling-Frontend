@@ -22,7 +22,7 @@
 </script>
 
 <a href="{base}/page?id={page.id}">
-	<section>
+	<div class="page-card">
 		<div class="top">
 			{#if page.logo}
 				<img src={page.logo} alt="Logo" class="full-circle" />
@@ -59,11 +59,11 @@
 			<p>Updated {updatedAgo}</p>
 			<p>Expires in {expiresIn}</p>
 		</div>
-	</section>
+	</div>
 </a>
 
 <style>
-	section {
+	.page-card {
 		height: 100%;
 		padding: 0.5em;
 		display: flex;

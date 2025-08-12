@@ -2,7 +2,7 @@
 	import { onMount, type Snippet } from 'svelte';
 	import { slide } from 'svelte/transition';
 	import Fa from 'svelte-fa';
-	import { faChevronDown, faChevronUp, faUpDown } from '@fortawesome/free-solid-svg-icons';
+	import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
 
 	let {
 		title,

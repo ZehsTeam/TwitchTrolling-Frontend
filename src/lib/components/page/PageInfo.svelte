@@ -10,7 +10,7 @@
 	} = $props();
 </script>
 
-<section>
+<div class="page-info">
 	<div class="channel-container">
 		{#if pageState.logo}
 			<img src={pageState.logo} alt="Logo" class="full-circle" />
@@ -38,10 +38,10 @@
 		<p>Updated {pageState.updatedAgo}</p>
 		<p>Expires in {pageState.expiresInCountdown}</p>
 	</div>
-</section>
+</div>
 
 <style>
-	section {
+	.page-info {
 		padding: 1em 0;
 		display: flex;
 		flex-direction: row;
@@ -97,7 +97,7 @@
 	}
 
 	@media only screen and (max-width: 1600px) {
-		section {
+		.page-info {
 			flex-direction: column;
 			justify-content: start;
 			align-items: start;

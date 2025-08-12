@@ -13,7 +13,7 @@
 	} = $props();
 </script>
 
-<section>
+<div class="card">
 	<div class="name-container">
 		<p>{card.name}</p>
 		{#if card.spawnCount}
@@ -43,10 +43,10 @@
 			{/if}
 		{/if}
 	</div>
-</section>
+</div>
 
 <style>
-	section {
+	.card {
 		width: 100%;
 		display: flex;
 		flex-direction: column;
