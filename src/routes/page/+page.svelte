@@ -10,6 +10,7 @@
 	import Gift from '$lib/components/Gift.svelte';
 	import BrowsePagesButton from '$lib/components/BrowsePagesButton.svelte';
 	import Accordion from '$lib/components/Accordion.svelte';
+	import SupportBanner from '$lib/components/SupportBanner.svelte';
 
 	const pageState = setPageState();
 
@@ -55,6 +56,8 @@
 	<br />
 	<h2>Failed to fetch page data.</h2>
 {:else if pageState.state == 'loaded'}
+	<SupportBanner />
+
 	<PageInfo {pageState} />
 
 	{#if pageState.enemies.length || pageState.events.length}
@@ -63,10 +66,7 @@
 				To spawn enemies or trigger events, simply cheer the specified amount of bits, subscribe, or
 				gift subscriptions in the streamer's chat.
 			</p>
-			<p>
-				If multiple enemies share the same prices or multiple events share the same prices, one will
-				be chosen at random from that group.
-			</p>
+			<p>100% of the bits go directly to the streamer.</p>
 		</div>
 		<div class="info-section">
 			<div class="currencies-container">
@@ -112,14 +112,24 @@
 	{#if pageState.enemies.length || pageState.events.length}
 		<div class="info-section">
 			<Accordion title="Additional Information">
-				<p>Only the host of the lobby can spawn enemies and trigger events!</p>
 				<p>You can edit the prices in the in-game MODS menu.</p>
+				<p>This mod currently only works to spawn enemies and events from the lobby host.</p>
+				<p>
+					If you are playing with multiple streamers, only the host will be able to spawn enemies
+					and events.
+				</p>
+				<p>
+					If multiple enemies share the same prices or multiple events share the same prices, one
+					will be chosen at random from that group.
+				</p>
 				<p>
 					Enemy prices can't match event prices. While duplicate prices are allowed within enemies
 					or within events, no enemy can have the same price as any event.
 				</p>
 				<p>RANDOM ENEMY and RANDOM EVENT must have unique prices.</p>
-				<p>Please notify the streamer if you notice any prices like this.</p>
+				<p>
+					Please notify the streamer if you notice anything wrong based on the information above.
+				</p>
 			</Accordion>
 		</div>
 	{/if}

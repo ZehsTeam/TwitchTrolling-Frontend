@@ -28,6 +28,10 @@
 {#if pagesState.state === 'loading'}
 	<h2>Loading...</h2>
 {:else if pagesState.state == 'loaded' && pagesState.pages.length}
+	<div class="info-section">
+		<p>Check out some streamers using the mod right now!</p>
+	</div>
+
 	<PageCardList pages={pagesState.pages} />
 {:else if pagesState.state === 'failed'}
 	<h2>Failed to fetch pages data.</h2>
