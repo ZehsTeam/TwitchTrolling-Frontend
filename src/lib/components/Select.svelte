@@ -28,7 +28,7 @@
 	}
 
 	select {
-		padding: 0.75em;
+		padding: 0.75em 0.45em;
 		border: none;
 		color: var(--text);
 		background: var(--bg-light);

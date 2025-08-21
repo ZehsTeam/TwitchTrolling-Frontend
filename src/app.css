@@ -48,13 +48,11 @@ img {
 }
 
 button,
-input,
-select {
+input {
 	font-family: 'Roboto', sans-serif;
 }
 
-input,
-select {
+input {
 	padding: 0.75em;
 	border: none;
 	color: var(--text);
@@ -67,13 +65,8 @@ input::placeholder {
 	color: rgba(239, 239, 241, 0.75);
 }
 
-input:focus,
-select:focus {
+input:focus {
 	outline: none;
-}
-
-select:hover {
-	cursor: pointer;
 }
 
 button {
