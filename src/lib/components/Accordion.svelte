@@ -64,6 +64,8 @@
 	}
 
 	.icon {
+		width: 34px;
+		height: 34px;
 		display: flex;
 		justify-content: center;
 		align-items: center;

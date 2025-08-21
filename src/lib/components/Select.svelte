@@ -23,4 +23,24 @@
 </select>
 
 <style>
+	select {
+		font-family: 'Roboto', sans-serif;
+	}
+
+	select {
+		padding: 0.75em;
+		border: none;
+		color: var(--text);
+		background: var(--bg-light);
+		border: 1px solid var(--border);
+		border-radius: var(--border-radius);
+	}
+
+	select:focus {
+		outline: none;
+	}
+
+	select:hover {
+		cursor: pointer;
+	}
 </style>
