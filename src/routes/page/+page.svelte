@@ -87,7 +87,7 @@
 		</div>
 	{/if}
 
-	{#if pageState.enemies.length && pageState.subEnemySpawnCountMultipliers}
+	{#if pageState.enemies.length && pageState.subEnabled && pageState.subEnemySpawnCountMultipliers}
 		<div class="info-section">
 			<Accordion title="Sub Tier Multipliers" open={true}>
 				<p>
@@ -104,6 +104,18 @@
 				<p>
 					Tier 3 <Star yOffset="2px" /> or <Gift yOffset="2px" /> multiplies enemy spawn count by {pageState
 						.subEnemySpawnCountMultipliers.tier3}
+				</p>
+			</Accordion>
+		</div>
+	{/if}
+
+	{#if pageState.enemies.length && pageState.raidEnabled && pageState.raid}
+		<div class="info-section">
+			<Accordion title="Raid Information" open={true}>
+				<p>Raids from other streamers will spawn random enemies.</p>
+				<p>
+					Every {pageState.raid.viewersPerRandomEnemy} viewers will spawn 1 random enemy for a max of
+					{pageState.raid.maxEnemySpawnCount} enemies.
 				</p>
 			</Accordion>
 		</div>

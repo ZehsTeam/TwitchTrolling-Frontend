@@ -10,6 +10,11 @@ export type SubMultipliers = {
 	tier3: number;
 };
 
+export type Raid = {
+	viewersPerRandomEnemy: number;
+	maxEnemySpawnCount: number;
+};
+
 export type CardData = {
 	_id: string;
 	name: string;
@@ -25,9 +30,13 @@ export type PageData = {
 	isPartner: boolean;
 	logo: string;
 	followers: number | null;
-	subEnemySpawnCountMultipliers?: SubMultipliers;
+	cheerEnabled: boolean;
+	subEnabled: boolean;
+	raidEnabled: boolean;
 	enemies: CardData[];
 	events: CardData[];
+	raid?: Raid | undefined;
+	subEnemySpawnCountMultipliers?: SubMultipliers;
 	expiresAt: string;
 	createdAt: string;
 	updatedByOwnerAt: string | null;
@@ -43,9 +52,13 @@ export interface PageState {
 	isPartner: boolean;
 	logo: string;
 	followers: number | null;
-	subEnemySpawnCountMultipliers: SubMultipliers | undefined;
+	cheerEnabled: boolean;
+	subEnabled: boolean;
+	raidEnabled: boolean;
 	enemies: CardData[];
 	events: CardData[];
+	raid: Raid | undefined;
+	subEnemySpawnCountMultipliers: SubMultipliers | undefined;
 	expiresAt: string;
 	createdAt: string;
 	updatedByOwnerAt: string | null;
@@ -66,9 +79,13 @@ export class PageStateClass implements PageState {
 	isPartner = $state(false);
 	logo = $state('');
 	followers = $state<number | null>(null);
-	subEnemySpawnCountMultipliers = $state<SubMultipliers | undefined>(undefined);
+	cheerEnabled = $state(false);
+	subEnabled = $state(false);
+	raidEnabled = $state(false);
 	enemies = $state<CardData[]>([]);
 	events = $state<CardData[]>([]);
+	raid = $state<Raid | undefined>(undefined);
+	subEnemySpawnCountMultipliers = $state<SubMultipliers | undefined>(undefined);
 	expiresAt = $state('');
 	createdAt = $state('');
 	updatedByOwnerAt = $state<string | null>(null);
@@ -187,10 +204,14 @@ export class PageStateClass implements PageState {
 		if (data.isPartner !== undefined) this.isPartner = data.isPartner;
 		if (data.logo !== undefined) this.logo = data.logo;
 		if (data.followers !== undefined) this.followers = data.followers;
-		if (data.subEnemySpawnCountMultipliers !== undefined)
-			this.subEnemySpawnCountMultipliers = data.subEnemySpawnCountMultipliers;
+		if (data.cheerEnabled !== undefined) this.cheerEnabled = data.cheerEnabled;
+		if (data.subEnabled !== undefined) this.subEnabled = data.subEnabled;
+		if (data.raidEnabled !== undefined) this.raidEnabled = data.raidEnabled;
 		if (data.enemies !== undefined) this.enemies = data.enemies;
 		if (data.events !== undefined) this.events = data.events;
+		if (data.raid !== undefined) this.raid = data.raid;
+		if (data.subEnemySpawnCountMultipliers !== undefined)
+			this.subEnemySpawnCountMultipliers = data.subEnemySpawnCountMultipliers;
 		if (data.expiresAt !== undefined) this.expiresAt = data.expiresAt;
 		if (data.createdAt !== undefined) this.createdAt = data.createdAt;
 		if (data.updatedByOwnerAt !== undefined) this.updatedByOwnerAt = data.updatedByOwnerAt;
