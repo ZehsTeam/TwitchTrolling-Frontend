@@ -6,8 +6,7 @@
 
 	let { show: showProp = true }: { show?: boolean } = $props();
 
-	//const closeDuration = 1000 * 60 * 60; // 60 minutes
-	const closeDuration = 5000; // 60 minutes
+	const closeDuration = 1000 * 60 * 60; // 60 minutes
     
 	// persisted timestamp (ISO) or null
 	let closedAt = new PersistedState<string | null>("supportBannerClosedAt", null);
