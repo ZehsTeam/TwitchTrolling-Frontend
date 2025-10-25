@@ -2,56 +2,35 @@
 	import Fa from 'svelte-fa';
 	import { faHeart, faClose } from '@fortawesome/free-solid-svg-icons';
 	import { onMount } from 'svelte';
+    import { PersistedState } from "runed";
 
 	let { show: showProp = true }: { show?: boolean } = $props();
 
-	const closeDuration = 1000 * 60 * 60; // 60 minutes
-
+	//const closeDuration = 1000 * 60 * 60; // 60 minutes
+	const closeDuration = 5000; // 60 minutes
+    
 	// persisted timestamp (ISO) or null
-	let closedAt = $state<string | null>(null);
+	let closedAt = new PersistedState<string | null>("supportBannerClosedAt", null);
 
 	// a ticking value so $derived can re-evaluate over time
 	let now = $state<number>(Date.now());
 
 	// compute visibility (reacts to showProp, closedAt, and 'now')
 	let show = $derived(
-		showProp && (!closedAt || now - new Date(closedAt).getTime() > closeDuration)
+		showProp && (!closedAt.current || now - new Date(closedAt.current).getTime() > closeDuration)
 	);
 
 	function handleClose() {
-		closedAt = new Date().toISOString();
+		closedAt.current = new Date().toISOString();
 	}
 
 	onMount(() => {
-		// initial load from localStorage
-		const saved = localStorage.getItem('donationClosedAt');
-		closedAt = saved && saved !== '' ? saved : null;
-
 		// tick every second so 'show' can flip back when time expires
 		const interval = setInterval(() => {
 			now = Date.now();
 		}, 1000);
 
-		// cross-tab sync
-		const onStorage = (e: StorageEvent) => {
-			if (e.key === 'donationClosedAt') {
-				closedAt = e.newValue && e.newValue !== '' ? e.newValue : null;
-			}
-		};
-		window.addEventListener('storage', onStorage);
-
-		return () => {
-			clearInterval(interval);
-			window.removeEventListener('storage', onStorage);
-		};
-	});
-
-	$effect(() => {
-		if (closedAt == null) {
-			localStorage.removeItem('donationClosedAt');
-		} else {
-			localStorage.setItem('donationClosedAt', closedAt);
-		}
+        return () => clearInterval(interval);
 	});
 </script>
 

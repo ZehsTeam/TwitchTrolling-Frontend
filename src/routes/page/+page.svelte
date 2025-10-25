@@ -9,7 +9,7 @@
 	import Star from '$lib/components/Star.svelte';
 	import Gift from '$lib/components/Gift.svelte';
 	import BrowsePagesButton from '$lib/components/BrowsePagesButton.svelte';
-	import Accordion from '$lib/components/Accordion.svelte';
+	import Accordion from '$lib/components/ui/Accordion.svelte';
 	import SupportBanner from '$lib/components/SupportBanner.svelte';
 
 	const pageState = setPageState();

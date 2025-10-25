@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { PageData } from '$lib/PagesState.svelte';
 	import PageCard from '$lib/components/home/PageCard.svelte';
-	import Select from '$lib/components/Select.svelte';
+	import Select from '$lib/components/ui/Select.svelte';
 
 	let {
 		pages

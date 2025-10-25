@@ -2,7 +2,7 @@
 	import type { CardData } from '$lib/PageState.svelte';
 	import Card from '$lib/components/page/Card.svelte';
 	import emptyImage from '$lib/media/empty.png';
-	import Select from '$lib/components/Select.svelte';
+	import Select from '$lib/components/ui/Select.svelte';
 
 	let {
 		title,
