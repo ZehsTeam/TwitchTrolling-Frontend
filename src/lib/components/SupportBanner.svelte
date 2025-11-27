@@ -2,14 +2,14 @@
 	import Fa from 'svelte-fa';
 	import { faHeart, faClose } from '@fortawesome/free-solid-svg-icons';
 	import { onMount } from 'svelte';
-    import { PersistedState } from "runed";
+	import { PersistedState } from 'runed';
 
 	let { show: showProp = true }: { show?: boolean } = $props();
 
 	const closeDuration = 1000 * 60 * 60; // 60 minutes
-    
+
 	// persisted timestamp (ISO) or null
-	let closedAt = new PersistedState<string | null>("supportBannerClosedAt", null);
+	let closedAt = new PersistedState<string | null>('supportBannerClosedAt', null);
 
 	// a ticking value so $derived can re-evaluate over time
 	let now = $state<number>(Date.now());
@@ -29,7 +29,7 @@
 			now = Date.now();
 		}, 1000);
 
-        return () => clearInterval(interval);
+		return () => clearInterval(interval);
 	});
 </script>
 

@@ -6,11 +6,11 @@
 	let {
 		name,
 		namespace,
-        game
+		game
 	}: {
 		name: string;
 		namespace: string;
-        game?: string;
+		game?: string;
 	} = $props();
 
 	let data = $state<ThunderstorePackage | null>(null);
@@ -23,14 +23,13 @@
 		data = await FetchThunderstorePackage(name, namespace);
 	}
 
-    function handleDownload() {
-        if (data === null)
-            return;
+	function handleDownload() {
+		if (data === null) return;
 
-        const url = `https://thunderstore.io/c/${data.community_listings[0].community}/p/${data.latest.namespace}/${data.latest.name}`;
+		const url = `https://thunderstore.io/c/${data.community_listings[0].community}/p/${data.latest.namespace}/${data.latest.name}`;
 
-        window.open(url, '_blank');
-    }
+		window.open(url, '_blank');
+	}
 </script>
 
 {#if data}
@@ -40,18 +39,18 @@
 		</div>
 		<div class="content-container">
 			<div class="info-container">
-                {#if game}
-                    <h2 class="name">{data.latest.name} for {game}</h2>
-                {:else}
-                    <h2 class="name">{data.latest.name}</h2>
-                {/if}
+				{#if game}
+					<h2 class="name">{data.latest.name} for {game}</h2>
+				{:else}
+					<h2 class="name">{data.latest.name}</h2>
+				{/if}
 				<p class="description">{data.latest.description}</p>
 			</div>
-            <div class="push-down"></div>
-            <div class="stats-container">
-                <p>Version {data.latest.version_number}</p>
-                <p>{data.latest.downloads} Downloads</p>
-            </div>
+			<div class="push-down"></div>
+			<div class="stats-container">
+				<p>Version {data.latest.version_number}</p>
+				<p>{data.latest.downloads} Downloads</p>
+			</div>
 			<div class="button-container">
 				<button onclick={handleDownload}>Download</button>
 			</div>
@@ -63,7 +62,7 @@
 	.thunderstore-mod {
 		padding: 0.5em;
 		display: flex;
-        flex-direction: row;
+		flex-direction: row;
 		gap: 0.5em;
 		background: var(--bg-light);
 		border: 1px solid var(--border);
@@ -76,33 +75,33 @@
 		flex-direction: column;
 	}
 
-    .push-down {
-        flex: 1;   
-    }
-
-	.icon {
-        height: 150px;
+	.push-down {
+		flex: 1;
 	}
 
-    .stats-container {
-        display: flex;
-        gap: 0.75em;
-    }
+	.icon {
+		height: 150px;
+	}
 
-    .stats-container p:not(:last-child)::after {
-        content: '/';
+	.stats-container {
+		display: flex;
+		gap: 0.75em;
+	}
+
+	.stats-container p:not(:last-child)::after {
+		content: '/';
 		margin-left: 0.75em;
 		color: var(--text-muted);
-    }
+	}
 
 	.button-container {
 		display: flex;
 		gap: 0.5em;
 	}
 
-    @media only screen and (max-width: 1600px) {
-        .icon-container {
-            display: none;
-        }
+	@media only screen and (max-width: 1600px) {
+		.icon-container {
+			display: none;
+		}
 	}
 </style>

@@ -95,16 +95,16 @@ export const enemyImageMap: Record<string, string> = {
 	'Lost droid': LostDroid,
 	Soldier: Soldier,
 	'Lost Destroyer': LostDestroyer,
-    Tick: Tick,
-    'Birthday Boy': BirthdayBoy,
-    Elsa: Elsa,
-    Bella: Bella,
-    Gambit: Gambit,
-    'Heart Hugger': HeartHugger,
-    Headgrab: Headgrab,
-    Oogly: Oogly,
-    Loom: Loom,
-    'Cleanup Crew': CleanupCrew
+	Tick: Tick,
+	'Birthday Boy': BirthdayBoy,
+	Elsa: Elsa,
+	Bella: Bella,
+	Gambit: Gambit,
+	'Heart Hugger': HeartHugger,
+	Headgrab: Headgrab,
+	Oogly: Oogly,
+	Loom: Loom,
+	'Cleanup Crew': CleanupCrew
 };
 
 export const eventImageMap: Record<string, string> = {
