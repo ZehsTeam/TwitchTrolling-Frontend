@@ -31,6 +31,16 @@ import Roaster from '$lib/media/cards/enemies/Roaster.png';
 import LostDroid from '$lib/media/cards/enemies/Lost droid.gif';
 import Soldier from '$lib/media/cards/enemies/Soldier.png';
 import LostDestroyer from '$lib/media/cards/enemies/Lost Destroyer.gif';
+import Tick from '$lib/media/cards/enemies/Tick.png';
+import BirthdayBoy from '$lib/media/cards/enemies/Birthday Boy.png';
+import Elsa from '$lib/media/cards/enemies/Elsa.png';
+import Bella from '$lib/media/cards/enemies/Bella.png';
+import Gambit from '$lib/media/cards/enemies/Gambit.png';
+import HeartHugger from '$lib/media/cards/enemies/Heart Hugger.png';
+import Headgrab from '$lib/media/cards/enemies/Headgrab.png';
+import Oogly from '$lib/media/cards/enemies/Oogly.png';
+import Loom from '$lib/media/cards/enemies/Loom.png';
+import CleanupCrew from '$lib/media/cards/enemies/Cleanup Crew.png';
 
 // --- EVENT CARD IMAGES ---
 import RandomEvent from '$lib/media/cards/random.png';
@@ -84,7 +94,17 @@ export const enemyImageMap: Record<string, string> = {
 	Roaster: Roaster,
 	'Lost droid': LostDroid,
 	Soldier: Soldier,
-	'Lost Destroyer': LostDestroyer
+	'Lost Destroyer': LostDestroyer,
+    Tick: Tick,
+    'Birthday Boy': BirthdayBoy,
+    Elsa: Elsa,
+    Bella: Bella,
+    Gambit: Gambit,
+    'Heart Hugger': HeartHugger,
+    Headgrab: Headgrab,
+    Oogly: Oogly,
+    Loom: Loom,
+    'Cleanup Crew': CleanupCrew
 };
 
 export const eventImageMap: Record<string, string> = {
