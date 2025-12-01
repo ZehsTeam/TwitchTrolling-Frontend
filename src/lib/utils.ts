@@ -1,26 +1,13 @@
 export function timeAgo(date: string) {
 	const now = new Date();
 	const target = new Date(date);
-	const diff = Math.max(now.getTime() - target.getTime(), 0);
+	const diffMs = Math.max(now.getTime() - target.getTime(), 0);
 
-	const totalSeconds = Math.floor(diff / 1000);
-	const seconds = totalSeconds % 60;
-	const totalMinutes = Math.floor(totalSeconds / 60);
-	const minutes = totalMinutes % 60;
-	const totalHours = Math.floor(totalMinutes / 60);
-	const hours = totalHours % 24;
-	const days = Math.floor(totalHours / 24);
-
-	const parts = [];
-	if (days > 0) parts.push(`${days} day${days > 1 ? 's' : ''}`);
-	if (hours > 0) parts.push(`${hours} hr${hours > 1 ? 's' : ''}`);
-	if (minutes > 0) {
-		parts.push(`${minutes} min${minutes > 1 ? 's' : ''}`);
-	} else if (parts.length === 0) {
-		parts.push(`${seconds} sec${seconds > 1 ? 's' : ''}`);
+	if (diffMs < 1000) {
+		return 'just now';
+	} else {
+		return `${formatDuration(diffMs)} ago`;
 	}
-
-	return `${parts.join(' ')} ago`;
 }
 
 export function getRemaining(date: string) {
@@ -30,23 +17,35 @@ export function getRemaining(date: string) {
 	return Math.max(diff, 0);
 }
 
-export function formatRemaining(ms: number) {
-	const totalSeconds = Math.max(Math.floor(ms / 1000), 0);
-	const hours = Math.floor(totalSeconds / 3600);
-	const minutes = Math.floor((totalSeconds % 3600) / 60);
+export function formatDuration(ms: number) {
+	ms = Math.abs(ms);
+
+	const totalSeconds = Math.floor(ms / 1000);
+
 	const seconds = totalSeconds % 60;
+	const totalMinutes = Math.floor(totalSeconds / 60);
 
-	const parts = [];
-	if (hours > 0) parts.push(`${hours} hr${hours > 1 ? 's' : ''}`);
-	if (minutes > 0) parts.push(`${minutes} min${minutes > 1 ? 's' : ''}`);
+	const minutes = totalMinutes % 60;
+	const totalHours = Math.floor(totalMinutes / 60);
 
+	const hours = totalHours % 24;
+	const totalDays = Math.floor(totalHours / 24);
+
+	const days = totalDays % 7;
+	const weeks = Math.floor(totalDays / 7);
+
+	const parts: string[] = [];
+
+	if (weeks > 0) parts.push(`${weeks} week${weeks !== 1 ? 's' : ''}`);
+	if (days > 0) parts.push(`${days} day${days !== 1 ? 's' : ''}`);
+	if (hours > 0) parts.push(`${hours} hr${hours !== 1 ? 's' : ''}`);
+	if (minutes > 0) parts.push(`${minutes} min${minutes !== 1 ? 's' : ''}`);
+
+	// Fallback to seconds if nothing else is shown
 	if (parts.length === 0) {
-		if (seconds > 0) {
-			parts.push(`${seconds} sec${seconds > 1 ? 's' : ''}`);
-		} else {
-			parts.push('now');
-		}
+		parts.push(`${seconds} sec${seconds !== 1 ? 's' : ''}`);
 	}
 
-	return parts.join(' ');
+	// Only show the top two units
+	return parts.slice(0, 2).join(' ');
 }

@@ -1,6 +1,6 @@
 import { getContext, setContext } from 'svelte';
 import { apiOrigin } from '$lib/config';
-import { timeAgo, getRemaining, formatRemaining } from '$lib/utils';
+import { timeAgo, getRemaining, formatDuration } from '$lib/utils';
 
 export type State = 'loading' | 'loaded' | 'not found' | 'expired' | 'deleted' | 'failed';
 
@@ -151,11 +151,11 @@ export class PageStateClass implements PageState {
 		this.eventSource = new EventSource(`${apiOrigin}/api/pages/${this.id}/sse`);
 
 		this.eventSource.onopen = () => {
-			//console.log(`✅ Connected to page ${pageId} SSE`);
+			//console.log(`Connected to page ${pageId} SSE`);
 		};
 
 		this.eventSource.onerror = () => {
-			//console.error('❌ SSE connection error');
+			//console.error('SSE connection error');
 		};
 
 		this.eventSource.addEventListener('update', (event) => {
@@ -251,7 +251,7 @@ export class PageStateClass implements PageState {
 			const remaining = getRemaining(this.expiresAt);
 			expired = remaining <= 0;
 
-			this.expiresInCountdown = expired ? 'Expired' : formatRemaining(remaining);
+			this.expiresInCountdown = expired ? 'Expired' : formatDuration(remaining);
 
 			if (expired) {
 				this.state = 'expired';

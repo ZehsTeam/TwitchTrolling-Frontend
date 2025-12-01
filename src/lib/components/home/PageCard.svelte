@@ -2,7 +2,7 @@
 	import { base } from '$app/paths';
 	import type { PageData } from '$lib/PagesState.svelte';
 	import twitchImage from '$lib/media/twitch-64x64.png';
-	import { timeAgo, formatRemaining, getRemaining } from '$lib/utils';
+	import { timeAgo, formatDuration, getRemaining } from '$lib/utils';
 	import Partner from '../Partner.svelte';
 
 	let {
@@ -18,7 +18,7 @@
 		}
 		return timeAgo(page.updatedByOwnerAt);
 	});
-	let expiresIn = $derived.by(() => formatRemaining(getRemaining(page.expiresAt)));
+	let expiresIn = $derived.by(() => formatDuration(getRemaining(page.expiresAt)));
 </script>
 
 <a href="{base}/page?id={page.id}">
