@@ -1,15 +1,23 @@
 <script lang="ts">
 	import Fa from 'svelte-fa';
-	import { faHeart, faClose } from '@fortawesome/free-solid-svg-icons';
-	import { onMount } from 'svelte';
+	import { faClose } from '@fortawesome/free-solid-svg-icons';
+	import { onMount, type Snippet } from 'svelte';
 	import { PersistedState } from 'runed';
 
-	let { show: showProp = true }: { show?: boolean } = $props();
+	let {
+		id = 'messageBanner',
+		content,
+		show: showProp = true
+	}: {
+		id: string;
+		content: Snippet;
+		show?: boolean;
+	} = $props();
 
 	const closeDuration = 1000 * 60 * 60; // 60 minutes
 
 	// persisted timestamp (ISO) or null
-	let closedAt = new PersistedState<string | null>('supportBannerClosedAt', null);
+	let closedAt = new PersistedState<string | null>(`${id}ClosedAt`, null);
 
 	// a ticking value so $derived can re-evaluate over time
 	let now = $state<number>(Date.now());
@@ -36,11 +44,7 @@
 <div class="support-banner {show ? '' : 'hidden'}">
 	<div class="content">
 		<div class="left">
-			<p>
-				This mod does not take a cut from the streamer. If you like this mod, please consider
-				supporting on <a href="https://ko-fi.com/zehsteam" target="_blank">Ko-fi</a>
-				<Fa size="sm" icon={faHeart} />
-			</p>
+			{@render content()}
 		</div>
 		<div class="right">
 			<button onclick={handleClose} class="close-btn">

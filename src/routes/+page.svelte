@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import SEO from '$lib/components/SEO.svelte';
-	import PageCardList from '$lib/components/home/PageCardList.svelte';
+	import PageCardList from './PageCardList.svelte';
 	import { setPagesState } from '$lib/PagesState.svelte';
 
 	const pagesState = setPagesState();

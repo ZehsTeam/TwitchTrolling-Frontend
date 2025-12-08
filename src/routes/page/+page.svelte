@@ -3,14 +3,16 @@
 	import { enemyImageMap, eventImageMap } from '$lib/imageMaps';
 	import { setPageState } from '$lib/PageState.svelte';
 	import SEO from '$lib/components/SEO.svelte';
-	import PageInfo from '$lib/components/page/PageInfo.svelte';
-	import CardList from '$lib/components/page/CardList.svelte';
+	import PageInfo from './PageInfo.svelte';
+	import CardList from './CardList.svelte';
 	import Bit from '$lib/components/Bit.svelte';
 	import Star from '$lib/components/Star.svelte';
 	import Gift from '$lib/components/Gift.svelte';
 	import BrowsePagesButton from '$lib/components/BrowsePagesButton.svelte';
 	import Accordion from '$lib/components/ui/Accordion.svelte';
-	import SupportBanner from '$lib/components/SupportBanner.svelte';
+	import MessageBanner from '$lib/components/MessageBanner.svelte';
+	import Fa from 'svelte-fa';
+	import { faHeart } from '@fortawesome/free-solid-svg-icons';
 
 	const pageState = setPageState();
 
@@ -39,6 +41,14 @@
 	}}
 />
 
+{#snippet supportBanner()}
+	<p>
+		This mod does not take a cut from the streamer. If you like this mod, please consider supporting
+		CritHaxXoG on <a href="https://ko-fi.com/zehsteam" target="_blank">Ko-fi</a>
+		<Fa size="sm" icon={faHeart} />
+	</p>
+{/snippet}
+
 {#if pageState.state === 'loading'}
 	<br />
 	<h2>Loading...</h2>
@@ -56,7 +66,7 @@
 	<br />
 	<h2>Failed to fetch page data.</h2>
 {:else if pageState.state == 'loaded'}
-	<SupportBanner />
+	<MessageBanner id="supportBanner" content={supportBanner} />
 
 	<PageInfo {pageState} />
 

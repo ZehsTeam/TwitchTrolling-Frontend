@@ -1,69 +1,12 @@
 import { getContext, setContext } from 'svelte';
 import { apiOrigin } from '$lib/config';
 import { timeAgo, getRemaining, formatDuration } from '$lib/utils';
+import type { PageData, SubMultipliers, Raid, CardData } from '$lib/types';
 
 export type State = 'loading' | 'loaded' | 'not found' | 'expired' | 'deleted' | 'failed';
 
-export type SubMultipliers = {
-	tier1: number;
-	tier2: number;
-	tier3: number;
-};
-
-export type Raid = {
-	viewersPerRandomEnemy: number;
-	maxEnemySpawnCount: number;
-};
-
-export type CardData = {
-	_id: string;
-	name: string;
-	price: number;
-	subPrice?: number;
-	spawnCount?: number;
-};
-
-export type PageData = {
-	id: string;
-	channel: string;
-	displayName: string;
-	isPartner: boolean;
-	logo: string;
-	followers: number | null;
-	cheerEnabled: boolean;
-	subEnabled: boolean;
-	raidEnabled: boolean;
-	enemies: CardData[];
-	events: CardData[];
-	raid?: Raid | undefined;
-	subEnemySpawnCountMultipliers?: SubMultipliers;
-	expiresAt: string;
-	createdAt: string;
-	updatedByOwnerAt: string | null;
-	liveViewers: number;
-	uniqueViews: number;
-};
-
-export interface PageState {
+export interface PageState extends PageData {
 	state: State;
-	id: string;
-	channel: string;
-	displayName: string;
-	isPartner: boolean;
-	logo: string;
-	followers: number | null;
-	cheerEnabled: boolean;
-	subEnabled: boolean;
-	raidEnabled: boolean;
-	enemies: CardData[];
-	events: CardData[];
-	raid: Raid | undefined;
-	subEnemySpawnCountMultipliers: SubMultipliers | undefined;
-	expiresAt: string;
-	createdAt: string;
-	updatedByOwnerAt: string | null;
-	liveViewers: number;
-	uniqueViews: number;
 	expiresInCountdown: string;
 	createdAgo: string;
 	updatedAgo: string;
@@ -86,7 +29,7 @@ export class PageStateClass implements PageState {
 	events = $state<CardData[]>([]);
 	raid = $state<Raid | undefined>(undefined);
 	subEnemySpawnCountMultipliers = $state<SubMultipliers | undefined>(undefined);
-	expiresAt = $state('');
+	expiresAt = $state<string | null>(null);
 	createdAt = $state('');
 	updatedByOwnerAt = $state<string | null>(null);
 	liveViewers = $state(0);
@@ -246,12 +189,17 @@ export class PageStateClass implements PageState {
 		};
 
 		const updateExpiresInCountdown = () => {
-			if (expired || !this.expiresAt) return;
+			if (expired) return;
+
+			if (!this.expiresAt) {
+				this.expiresInCountdown = 'never';
+				return;
+			}
 
 			const remaining = getRemaining(this.expiresAt);
 			expired = remaining <= 0;
 
-			this.expiresInCountdown = expired ? 'Expired' : formatDuration(remaining);
+			this.expiresInCountdown = expired ? 'Expired' : `in ${formatDuration(remaining)}`;
 
 			if (expired) {
 				this.state = 'expired';

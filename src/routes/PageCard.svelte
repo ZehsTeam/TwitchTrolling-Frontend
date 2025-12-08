@@ -1,24 +1,22 @@
 <script lang="ts">
 	import { base } from '$app/paths';
-	import type { PageData } from '$lib/PagesState.svelte';
+	import type { PageDataCompact } from '$lib/types';
 	import twitchImage from '$lib/media/twitch-64x64.png';
-	import { timeAgo, formatDuration, getRemaining } from '$lib/utils';
-	import Partner from '../Partner.svelte';
+	import { timeAgo, formatDuration, getRemaining, formatNumber } from '$lib/utils';
+	import Partner from '$lib/components/Partner.svelte';
 
 	let {
 		page
 	}: {
-		page: PageData;
+		page: PageDataCompact;
 	} = $props();
 
-	let createdAgo = $derived.by(() => timeAgo(page.createdAt));
-	let updatedAgo = $derived.by(() => {
-		if (page.updatedByOwnerAt === null) {
-			return 'never';
-		}
-		return timeAgo(page.updatedByOwnerAt);
-	});
-	let expiresIn = $derived.by(() => formatDuration(getRemaining(page.expiresAt)));
+	let createdAgo = $derived(page.createdAt ? timeAgo(page.createdAt) : 'never');
+	let updatedAgo = $derived(page.updatedByOwnerAt ? timeAgo(page.updatedByOwnerAt) : 'never');
+	let expiresIn = $derived(
+		page.expiresAt ? `in ${formatDuration(getRemaining(page.expiresAt))}` : 'never'
+	);
+	let followersFormatted = $derived(formatNumber(page.followers || 0));
 </script>
 
 <a href="{base}/page?id={page.id}">
@@ -39,11 +37,7 @@
 		<div class="push-down"></div>
 		<div class="bottom">
 			<p>
-				{#if page.followers}
-					{page.followers}
-				{:else}
-					?
-				{/if}
+				{followersFormatted}
 				Followers
 			</p>
 			{#if page.liveViewers !== undefined}
@@ -57,7 +51,7 @@
 			{/if}
 			<p>Created {createdAgo}</p>
 			<p>Updated {updatedAgo}</p>
-			<p>Expires in {expiresIn}</p>
+			<p>Expires {expiresIn}</p>
 		</div>
 	</div>
 </a>

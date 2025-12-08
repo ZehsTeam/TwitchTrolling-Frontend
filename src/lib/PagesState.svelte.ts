@@ -1,31 +1,18 @@
 import { getContext, setContext } from 'svelte';
 import { apiOrigin } from '$lib/config';
+import type { PageDataCompact } from '$lib/types';
 
 export type State = 'loading' | 'loaded' | 'not found' | 'failed';
 
-export type PageData = {
-	id: string;
-	channel: string;
-	displayName: string;
-	isPartner: boolean;
-	logo: string;
-	followers: number | null;
-	expiresAt: string;
-	createdAt: string;
-	updatedByOwnerAt: string | null;
-	liveViewers: number;
-	uniqueViews: number;
-};
-
 interface PagesState {
 	state: State;
-	pages: PageData[];
+	pages: PageDataCompact[];
 	load: () => Promise<void>;
 }
 
 export class PagesStateClass implements PagesState {
 	state = $state<State>('loading');
-	pages = $state<PageData[]>([]);
+	pages = $state<PageDataCompact[]>([]);
 
 	load = async () => {
 		await this.fetchData();
@@ -43,7 +30,7 @@ export class PagesStateClass implements PagesState {
 				return;
 			}
 
-			const data: PageData[] = await res.json();
+			const data: PageDataCompact[] = await res.json();
 			this.pages = data;
 			this.state = 'loaded';
 		} catch (err) {

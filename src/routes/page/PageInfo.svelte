@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { PageState } from '$lib/PageState.svelte';
 	import twitchImage from '$lib/media/twitch-64x64.png';
-	import Partner from '../Partner.svelte';
+	import Partner from '$lib/components/Partner.svelte';
 
 	let {
 		pageState
@@ -36,7 +36,7 @@
 		<p>{pageState.uniqueViews} View{pageState.uniqueViews === 1 ? '' : 's'}</p>
 		<p>Created {pageState.createdAgo}</p>
 		<p>Updated {pageState.updatedAgo}</p>
-		<p>Expires in {pageState.expiresInCountdown}</p>
+		<p>Expires {pageState.expiresInCountdown}</p>
 	</div>
 </div>
 

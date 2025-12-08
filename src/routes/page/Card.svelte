@@ -2,7 +2,7 @@
 	import Bit from '$lib/components/Bit.svelte';
 	import Star from '$lib/components/Star.svelte';
 	import Gift from '$lib/components/Gift.svelte';
-	import type { CardData } from '$lib/PageState.svelte';
+	import type { CardData } from '$lib/types';
 
 	let {
 		card,

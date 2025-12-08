@@ -1,12 +1,12 @@
 <script lang="ts">
-	import type { PageData } from '$lib/PagesState.svelte';
-	import PageCard from '$lib/components/home/PageCard.svelte';
+	import type { PageDataCompact } from '$lib/types';
+	import PageCard from './PageCard.svelte';
 	import Select from '$lib/components/ui/Select.svelte';
 
 	let {
 		pages
 	}: {
-		pages: PageData[];
+		pages: PageDataCompact[];
 	} = $props();
 
 	let search = $state('');
@@ -81,12 +81,12 @@
 				break;
 			case 'expires: latest to soonest':
 				result = [...result].sort(
-					(a, b) => new Date(b.expiresAt).getTime() - new Date(a.expiresAt).getTime()
+					(a, b) => new Date(b.expiresAt || 0).getTime() - new Date(a.expiresAt || 0).getTime()
 				);
 				break;
 			case 'expires: soonest to latest':
 				result = [...result].sort(
-					(a, b) => new Date(a.expiresAt).getTime() - new Date(b.expiresAt).getTime()
+					(a, b) => new Date(a.expiresAt || 0).getTime() - new Date(b.expiresAt || 0).getTime()
 				);
 				break;
 		}

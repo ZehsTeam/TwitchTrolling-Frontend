@@ -1,6 +1,6 @@
 <script lang="ts">
-	import type { CardData } from '$lib/PageState.svelte';
-	import Card from '$lib/components/page/Card.svelte';
+	import type { CardData } from '$lib/types';
+	import Card from './Card.svelte';
 	import emptyImage from '$lib/media/empty.png';
 	import Select from '$lib/components/ui/Select.svelte';
 

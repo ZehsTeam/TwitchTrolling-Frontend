@@ -49,3 +49,12 @@ export function formatDuration(ms: number) {
 	// Only show the top two units
 	return parts.slice(0, 2).join(' ');
 }
+
+const formatter = Intl.NumberFormat('en', {
+	notation: 'compact',
+	maximumFractionDigits: 1
+});
+
+export function formatNumber(num: number) {
+	return formatter.format(num);
+}
